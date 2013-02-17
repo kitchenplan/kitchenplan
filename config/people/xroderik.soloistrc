@@ -1,0 +1,8 @@
+- pivotal_workstation::1password
+- pivotal_workstation::bartender
+- pivotal_workstation::istatmenus
+- pivotal_workstation::things
+- pivotal_workstation::viscosity
+- pivotal_workstation::tower
+- pivotal_workstation::kaleidoscope2
+- pivotal_workstation::omnigraffle

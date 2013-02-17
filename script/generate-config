@@ -14,3 +14,13 @@ cat config/default.soloistrc >> soloistrc
 if [[ -f config/people/$USER.soloistrc ]]; then
     cat config/people/$USER.soloistrc >> soloistrc
 fi
+
+cat >> soloistrc <<EOF
+node_attributes:
+EOF
+
+cat config/default.attributes >> soloistrc
+
+if [[ -f config/people/$USER.attributes ]]; then
+    cat config/people/$USER.attributes >> soloistrc
+fi

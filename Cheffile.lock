@@ -4,14 +4,29 @@ SITE
     dmg (1.1.0)
 
 GIT
-  remote: https://github.com/pivotal/pivotal_workstation.git
+  remote: https://github.com/Kitchenplan/chef-homebrew.git
   ref: master
-  sha: 278f4b03062000c42ba2af14e152ae21e5015210
+  sha: d5b9ae1bb527fd2d1dc75aade0d100d1183b58d8
   specs:
-    pivotal_workstation (1.0.0)
-      dmg (>= 0.0.0)
+    homebrew (0.0.1)
+
+GIT
+  remote: https://github.com/fnichol/chef-rbenv
+  ref: master
+  sha: 3b1c59abc1134a50b0b8844954eca9a566aaffb8
+  specs:
+    rbenv (0.7.3)
+
+GIT
+  remote: https://github.com/fnichol/chef-ruby_build
+  ref: master
+  sha: c940b5e9cd40eaba10d6285de6648f4d25fe959d
+  specs:
+    ruby_build (0.7.2)
 
 DEPENDENCIES
   dmg (>= 0)
-  pivotal_workstation (>= 0)
+  homebrew (>= 0)
+  rbenv (>= 0)
+  ruby_build (>= 0)
 

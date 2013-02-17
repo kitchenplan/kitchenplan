@@ -1,3 +1,12 @@
-- pivotal_workstation::create_var_chef_cache
-- pivotal_workstation::xquartz
-- pivotal_workstation::locate_on
+- homebrew::bash4
+- homebrew::bash-completion
+- homebrew::coreutils
+- homebrew::findutils
+- homebrew::git
+- homebrew::hub
+- homebrew::gnu-tar
+- homebrew::siege
+- homebrew::watch
+- homebrew::wget
+- ruby_build
+- rbenv::system
