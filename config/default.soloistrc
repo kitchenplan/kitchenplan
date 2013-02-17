@@ -16,3 +16,7 @@
 - applications::sequelpro
 - applications::virtualbox
 - applications::xquartz
+- applications::sublime_text
+- dotfiles::bash_it
+- dotfiles::inputrc
+- dotfiles::gitconfig
