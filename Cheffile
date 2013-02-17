@@ -5,6 +5,8 @@ cookbook "homebrew",        :git => "https://github.com/Kitchenplan/chef-homebre
 cookbook "rbenv",           :git => "https://github.com/fnichol/chef-rbenv"
 cookbook "ruby_build",      :git => "https://github.com/fnichol/chef-ruby_build"
 cookbook "applications",    :git => "https://github.com/Kitchenplan/chef-applications.git"
+cookbook "osxdefaults",    :git => "https://github.com/Kitchenplan/chef-osxdefaults.git"
+
 
 #cookbook "pivotal_workstation", :git => "https://github.com/pivotal/pivotal_workstation.git"
 
