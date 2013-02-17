@@ -1,0 +1,5 @@
+site "http://community.opscode.com/api/v1"
+
+cookbook "dmg"
+cookbook "pivotal_workstation", :git => "https://github.com/pivotal/pivotal_workstation.git"
+#cookbook "kmachine", :git => "git@github.com:Kunstmaan/kmachine.git"

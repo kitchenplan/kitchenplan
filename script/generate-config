@@ -1,0 +1,16 @@
+#!/bin/sh
+# Make sure all our local dependencies are available.
+
+set -e
+
+cat > soloistrc <<EOF
+cookbook_paths:
+- $PWD/cookbooks
+recipes:
+EOF
+
+cat config/default.soloistrc >> soloistrc
+
+if [[ -f config/people/$USER.soloistrc ]]; then
+    cat config/people/$USER.soloistrc >> soloistrc
+fi

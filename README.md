@@ -9,3 +9,4 @@ For a few months I've been working with Chef and pivotal_workstation to setup my
 * Clean separate cookbooks
 * Using Librarian to get the dependencies
 * Doing as little custom as possible
+* Adding the ability to use person and project settings

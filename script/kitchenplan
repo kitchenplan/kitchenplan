@@ -1,0 +1,72 @@
+#!/usr/bin/ruby
+# Run Kitchenplan.
+
+require "pathname"
+
+if ENV["USER"] == "root"
+  abort "Run this as a normal user, I'll sudo if I need to."
+end
+
+# Make sure only one boxen process runs at a time.
+
+myself = File.new __FILE__
+
+unless myself.flock File::LOCK_EX | File::LOCK_NB
+  abort "You're already running a boxen process! Know a patience."
+end
+
+# Yeah yeah, I like to be explicit.
+
+at_exit { myself.flock File::LOCK_UN }
+
+# Put us where we belong, in the root dir of our boxen repo.
+
+Dir.chdir Pathname.new(__FILE__).realpath + "../.."
+
+# Auto-update code. This is done as early as possible so that changes
+# to boxen support code or dependencies can be grabbed.
+
+unless ENV["KITCHENPLAN_NO_PULL"] || ARGV.include?("--no-pull")
+  if system("which git > /dev/null") && File.directory?(".git")
+    clean  = `git status --porcelain`.empty?
+    current_branch = `git symbolic-ref HEAD`.chomp
+    master = current_branch == "refs/heads/master"
+    no_new_commits = system('git diff --exit-code --quiet origin/master master')
+
+    short_branch = current_branch.split('/').last
+
+    if !master
+      warn "Kitchenplan on a non-master branch '#{short_branch}', won't auto-update!"
+    elsif !no_new_commits
+      warn "Kitchenplan has unpushed commits on master, won't auto-update!"
+    elsif !clean
+      warn "Kitchenplan has a dirty tree, won't auto-update!"
+    end
+
+    if clean && master && no_new_commits
+      quietly = "> /dev/null 2>&1"
+      fetch   = "(git fetch origin #{quietly})"
+      reset   = "(git reset --hard origin/master #{quietly})"
+      reclean = "(git clean -df #{quietly})"
+
+      unless system "#{fetch} && #{reset} && #{reclean}"
+        warn "Auto-update of Kitchenplan FAILED, continuing."
+      end
+    end
+  end
+end
+
+# Make sure our local dependencies are up to date.
+
+strap = %w(script/bootstrap --deployment --local --without development:test)
+abort "Can't bootstrap, dependencies are outdated." unless system *strap
+
+# Generate the soloist config
+
+gc = %w(script/generate-config)
+abort "Can't generate the solosist config." unless system *gc
+
+# Run soloist
+
+solo = %w(bin/soloist)
+abort "Failed to run soloist successfully" unless system *solo
