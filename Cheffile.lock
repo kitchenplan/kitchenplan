@@ -4,9 +4,17 @@ SITE
     dmg (1.1.0)
 
 GIT
+  remote: https://github.com/Kitchenplan/chef-applications.git
+  ref: master
+  sha: 51dc642cb92f674921d7db5f3a6c196620ab600a
+  specs:
+    applications (0.0.1)
+      dmg (>= 0.0.0)
+
+GIT
   remote: https://github.com/Kitchenplan/chef-homebrew.git
   ref: master
-  sha: d5b9ae1bb527fd2d1dc75aade0d100d1183b58d8
+  sha: c64cd2c3a4a6feb7047c9d032fadf6569c348039
   specs:
     homebrew (0.0.1)
 
@@ -25,6 +33,7 @@ GIT
     ruby_build (0.7.2)
 
 DEPENDENCIES
+  applications (>= 0)
   dmg (>= 0)
   homebrew (>= 0)
   rbenv (>= 0)

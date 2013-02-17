@@ -9,14 +9,12 @@ set -e
   sudo gem install bundler --no-rdoc --no-ri
 
 # We don't want old config hanging around.
-
 rm -rf .bundle/config
-#rm -rf .librarian/puppet/config
 
 # Bundle install unless we're already up to date.
-
-bundle install --binstubs bin --path .bundle --quiet "$@"
+echo "checking bundles dependencies"
+bundle install --deployment --quiet
 
 # Librarian run
-
-bin/librarian-chef install --quiet --clean
+echo "checking chef dependencies"
+librarian-chef install --quiet

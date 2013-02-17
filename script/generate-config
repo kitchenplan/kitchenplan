@@ -3,6 +3,8 @@
 
 set -e
 
+echo "generating soloistrc config"
+
 cat > soloistrc <<EOF
 cookbook_paths:
 - $PWD/cookbooks

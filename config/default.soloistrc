@@ -8,5 +8,11 @@
 - homebrew::siege
 - homebrew::watch
 - homebrew::wget
+- homebrew::pwgen
 - ruby_build
 - rbenv::system
+- applications::google-chrome
+- applications::firefox
+- applications::sequelpro
+- applications::virtualbox
+- applications::xquartz
