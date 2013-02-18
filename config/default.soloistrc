@@ -17,6 +17,9 @@
 - applications::virtualbox
 - applications::xquartz
 - applications::sublime_text
+- applications::vagrant
+- applications::kstrano
 - dotfiles::bash_it
 - dotfiles::inputrc
 - dotfiles::gitconfig
+- dotfiles::kms

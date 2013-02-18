@@ -1,13 +1,10 @@
 #!/bin/sh
-# Make sure all our local dependencies are available.
 
 set -e
 
-echo "generating soloistrc config"
-
 cat > soloistrc <<EOF
 cookbook_paths:
-- $PWD/cookbooks
+- $PWD/vendor/cookbooks
 recipes:
 EOF
 

@@ -1,6 +1,5 @@
 /.bundle
 /bin
-/cookbooks
 /soloistrc
 /tmp
-/vendor/
+/.librarian

@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 # Run Kitchenplan.
 
 require "pathname"
@@ -7,26 +7,26 @@ if ENV["USER"] == "root"
   abort "Run this as a normal user, I'll sudo if I need to."
 end
 
-# Make sure only one boxen process runs at a time.
+# Make sure only one kitchenplan process runs at a time.
 
 myself = File.new __FILE__
 
 unless myself.flock File::LOCK_EX | File::LOCK_NB
-  abort "You're already running a boxen process! Know a patience."
+  abort "You're already running a kitchenpan process! Know a patience."
 end
 
 # Yeah yeah, I like to be explicit.
 
 at_exit { myself.flock File::LOCK_UN }
 
-# Put us where we belong, in the root dir of our boxen repo.
+# Put us where we belong, in the root dir of our kitchenplan repo.
 
 Dir.chdir Pathname.new(__FILE__).realpath + "../.."
 
 # Auto-update code. This is done as early as possible so that changes
 # to boxen support code or dependencies can be grabbed.
 
-unless ENV["KITCHENPLAN_NO_PULL"] || ARGV.include?("--no-pull")
+unless ARGV.include?("--no-pull")
   if system("which git > /dev/null") && File.directory?(".git")
     clean  = `git status --porcelain`.empty?
     current_branch = `git symbolic-ref HEAD`.chomp
@@ -56,10 +56,52 @@ unless ENV["KITCHENPLAN_NO_PULL"] || ARGV.include?("--no-pull")
   end
 end
 
-# Make sure our local dependencies are up to date.
+# Add local deps to the load path.
 
-strap = %w(script/bootstrap)
-abort "Can't bootstrap, dependencies are outdated." unless system *strap
+require "rubygems"
+require "bundler/setup"
+
+# Flags
+help = ARGV.include?("--help")
+debug = ARGV.include?("--debug")
+update_gems = ARGV.include?("--update-gems")
+update_cookbooks = ARGV.include?("--update-cookbooks")
+
+# Help
+
+if help
+    puts "Usage: kitchenplan [options]"
+    puts
+    puts "        --debug                      Be really verbose."
+    puts "        --help                       Show help."
+    puts "        --update-gems                Update the lockfile and gems in the vendor folder."
+    puts "        --update-cookbooks           Update the lockfile and cookbooks in the vendor folder."
+    exit 0
+end
+
+# Bootstrapping dependencies
+
+bundle_command = ["bundle"]
+bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--path", ".bundle"] unless update_gems
+bundle_command = bundle_command + [ "install", "--no-deployment"] if update_gems
+bundle_command << "--verbose" if debug
+bundle_command << "--quiet" unless debug
+warn bundle_command.join(" ") if debug
+unless system *bundle_command
+    abort "There was a problem bootstrapping. Run using --debug for more information"
+end
+
+# Possibly updating the cookbooks
+
+if update_cookbooks
+    librarian_command = ["bin/librarian-chef", "install", "--clean", "--strip-dot-git", "--path=vendor/cookbooks"]
+    librarian_command << "--verbose" if debug
+    librarian_command << "--quiet" unless debug
+    warn librarian_command.join(" ") if debug
+    unless system *librarian_command
+        abort "Can't update Chef cookbooks with librarian-chef. Run using --debug if you need more information."
+    end
+end
 
 # Generate the soloist config
 
