@@ -27,9 +27,11 @@ end
 execute "set user name" do
     command "git config --global user.name \"#{node["git"]["name"]}\""
     user node['current_user']
+    only_if node.attribute?("git_name")
 end
 
 execute "set user email" do
     command "git config --global user.email \"#{node["git"]["email"]}\""
     user node['current_user']
+    only_if node.attribute?("git_email")
 end
