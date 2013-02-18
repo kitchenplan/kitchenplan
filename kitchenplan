@@ -21,45 +21,7 @@ at_exit { myself.flock File::LOCK_UN }
 
 # Put us where we belong, in the root dir of our kitchenplan repo.
 
-Dir.chdir Pathname.new(__FILE__).realpath + "../.."
-
-# Auto-update code. This is done as early as possible so that changes
-# to boxen support code or dependencies can be grabbed.
-
-unless ARGV.include?("--no-pull")
-  if system("which git > /dev/null") && File.directory?(".git")
-    clean  = `git status --porcelain`.empty?
-    current_branch = `git symbolic-ref HEAD`.chomp
-    master = current_branch == "refs/heads/master"
-    no_new_commits = system('git diff --exit-code --quiet origin/master master')
-
-    short_branch = current_branch.split('/').last
-
-    if !master
-      warn "Kitchenplan on a non-master branch '#{short_branch}', won't auto-update!"
-    elsif !no_new_commits
-      warn "Kitchenplan has unpushed commits on master, won't auto-update!"
-    elsif !clean
-      warn "Kitchenplan has a dirty tree, won't auto-update!"
-    end
-
-    if clean && master && no_new_commits
-      quietly = "> /dev/null 2>&1"
-      fetch   = "(git fetch origin #{quietly})"
-      reset   = "(git reset --hard origin/master #{quietly})"
-      reclean = "(git clean -df #{quietly})"
-
-      unless system "#{fetch} && #{reset} && #{reclean}"
-        warn "Auto-update of Kitchenplan FAILED, continuing."
-      end
-    end
-  end
-end
-
-# Add local deps to the load path.
-
-require "rubygems"
-require "bundler/setup"
+Dir.chdir Pathname.new(__FILE__).realpath + ".."
 
 # Flags
 help = ARGV.include?("--help")
@@ -67,6 +29,36 @@ debug = ARGV.include?("--debug")
 update_gems = ARGV.include?("--update-gems")
 update_cookbooks = ARGV.include?("--update-cookbooks")
 no_soloist = ARGV.include?("--no-soloist")
+no_update = ARGV.include?("--no-pull")
+
+# Auto-update code. This is done as early as possible so that changes
+# to kitchenplan support code or dependencies can be grabbed.
+
+unless no_update
+    if system("which git > /dev/null") && File.directory?(".git")
+        clean  = `git status --porcelain`.empty?
+        current_branch = `git symbolic-ref HEAD`.chomp
+        master = current_branch == "refs/heads/master"
+        no_new_commits = system('git diff --exit-code --quiet origin/master master')
+        short_branch = current_branch.split('/').last
+        if !master
+            warn "Kitchenplan on a non-master branch '#{short_branch}', won't auto-update!"
+        elsif !no_new_commits
+            warn "Kitchenplan has unpushed commits on master, won't auto-update!"
+        elsif !clean
+            warn "Kitchenplan has a dirty tree, won't auto-update!"
+        end
+        if clean && master && no_new_commits
+            quietly = "> /dev/null 2>&1"
+            fetch   = "(git fetch origin #{quietly})"
+            reset   = "(git reset --hard origin/master #{quietly})"
+            reclean = "(git clean -df #{quietly})"
+            unless system "#{fetch} && #{reset} && #{reclean}"
+                warn "Auto-update of Kitchenplan FAILED, continuing."
+            end
+        end
+    end
+end
 
 # Help
 
@@ -78,6 +70,7 @@ if help
     puts "        --update-gems                Update the lockfile and gems in the vendor folder."
     puts "        --update-cookbooks           Update the lockfile and cookbooks in the vendor folder."
     puts "        --no-soloist                 Don't run soloist"
+    puts "        --no-pull                    Don't update the kitchenplan source"
     exit 0
 end
 
@@ -92,6 +85,11 @@ warn bundle_command.join(" ") if debug
 unless system *bundle_command
     abort "There was a problem bootstrapping. Run using --debug for more information"
 end
+
+# Add local deps to the load path.
+
+require "rubygems"
+require "bundler/setup"
 
 # Possibly updating the cookbooks
 
