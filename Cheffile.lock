@@ -28,7 +28,7 @@ GIT
 GIT
   remote: https://github.com/kitchenplan/chef-dotfiles
   ref: master
-  sha: 86a07876b9f457a75044d28a61668510f786426d
+  sha: 875b5f3cf43c73422f0692de1f7a08ad27e12c52
   specs:
     dotfiles (0.0.1)
       homebrew (>= 0.0.0)
