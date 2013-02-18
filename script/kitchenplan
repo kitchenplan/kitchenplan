@@ -66,6 +66,7 @@ help = ARGV.include?("--help")
 debug = ARGV.include?("--debug")
 update_gems = ARGV.include?("--update-gems")
 update_cookbooks = ARGV.include?("--update-cookbooks")
+no_soloist = ARGV.include?("--no-soloist")
 
 # Help
 
@@ -76,6 +77,7 @@ if help
     puts "        --help                       Show help."
     puts "        --update-gems                Update the lockfile and gems in the vendor folder."
     puts "        --update-cookbooks           Update the lockfile and cookbooks in the vendor folder."
+    puts "        --no-soloist                 Don't run soloist"
     exit 0
 end
 
@@ -127,6 +129,8 @@ File.open("soloistrc", 'w') do |out|
 end
 
 # Run soloist
+
+exit 0 if no_soloist
 
 soloist_command = ["bin/soloist"]
 ENV["LOG_LEVEL"] = "error"
