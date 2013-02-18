@@ -37,3 +37,9 @@ Now you have your own kichenplan repo that you can hack on.
 1. Point them at your private install of [kitchenplan-web](https://github.com/kitchenplan/kitchenplan-web) and run the command
 1. Wait...
 1. Done
+
+If you did this user version of the install, the /opt/kitchenplan/repo will not be a git repository. If you want to work on your own user.ym file, just clone your private repo somewhere and add/edit it. After committing and pushing (your maintainer might require a pull request), execute the following and then rerun the installation command.
+
+```bash
+rm /opt/kitchenplan/repo/.snapshot
+```
