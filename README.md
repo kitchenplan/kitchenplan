@@ -12,7 +12,8 @@ This is a template Kitchenplan project designed for your organization to duplica
   * If using full Xcode, you'll need to install the developer tools from the preferences in Xcode
 1. Create a new repository on GitHub as your user for your Kitchenplan. (eg. `my-org/kitchenplan`). **Make sure it is a private repository!**
 1. Get running manually like so:
-  ```
+
+```bash
   mkdir -p ~/src/kitchenplan
   cd ~/src/kitchenplan
   git init
@@ -26,7 +27,7 @@ This is a template Kitchenplan project designed for your organization to duplica
   ln -sf ~/src/kitchenplan /opt/kitchenplan/repo
   ln -sf /opt/kitchenplan/repo/kitchenplan /usr/bin/kitchenplan
   kitchenplan
-  ```
+```
 
 Now you have your own kichenplan repo that you can hack on.
 
