@@ -1,6 +1,0 @@
-# indent one level
-    rbenv:
-        upgrade: true
-        rubies:
-            - 1.9.3-p385
-        global: 1.9.3-p385

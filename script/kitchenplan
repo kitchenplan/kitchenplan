@@ -105,10 +105,33 @@ end
 
 # Generate the soloist config
 
-gc = %w(script/generate-config)
-abort "Can't generate the solosist config." unless system *gc
+require 'yaml'
+require 'etc'
+default = YAML.load_file('config/default.yml')
+recipes = default["recipes"]
+attributes = default["attributes"]
+
+peopleconfig = "config/people/#{Etc.getlogin}.yml"
+if File.exist?(peopleconfig)
+    user = YAML.load_file(peopleconfig)
+    recipes = recipes + user["recipes"]
+    attributes = attributes.merge!(user["attributes"])
+end
+
+soloistrc = Hash.new
+soloistrc["cookbook_paths"] = ["/Users/roderik/src/kitchenplan/vendor/cookbooks"]
+soloistrc["recipes"] = recipes
+soloistrc["attributes"] = attributes
+File.open("soloistrc", 'w') do |out|
+    YAML.dump(soloistrc, out)
+end
 
 # Run soloist
 
-solo = %w(bin/soloist)
-abort "Failed to run soloist successfully" unless system *solo
+soloist_command = ["bin/soloist"]
+ENV["LOG_LEVEL"] = "error"
+ENV["LOG_LEVEL"] = "debug" if debug
+warn soloist_command.join(" ") if debug
+unless system *soloist_command
+    abort "There was a problem running solist. Run using --debug for more information"
+end
