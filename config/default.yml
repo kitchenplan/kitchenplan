@@ -27,6 +27,8 @@ attributes:
     rbenv:
         upgrade: true
         rubies:
-            - 1.9.3-p385
+            -
+                name: 1.9.3-p385
+                environment: { CC: gcc }
         global: 1.9.3-p385
 
