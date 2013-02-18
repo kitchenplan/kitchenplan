@@ -76,6 +76,10 @@ end
 
 # Bootstrapping dependencies
 
+unless system("(gem spec bundler -v '~> 1.2.0' > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri")
+    abort "Failed to install bundler"
+end
+
 bundle_command = ["bundle"]
 bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--path", ".bundle"] unless update_gems
 bundle_command = bundle_command + [ "install", "--no-deployment"] if update_gems
