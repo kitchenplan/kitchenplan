@@ -5,21 +5,21 @@ SITE
 
 GIT
   remote: https://github.com/fnichol/chef-rbenv
-  ref: v0.7.2
-  sha: f2b53292e810dd2b43f6121f9958f5f29979dcb1
+  ref: master
+  sha: 3b1c59abc1134a50b0b8844954eca9a566aaffb8
   specs:
-    rbenv (0.7.2)
+    rbenv (0.7.3)
 
 GIT
   remote: https://github.com/fnichol/chef-ruby_build
-  ref: v0.7.2
+  ref: master
   sha: c940b5e9cd40eaba10d6285de6648f4d25fe959d
   specs:
     ruby_build (0.7.2)
 
 GIT
   remote: https://github.com/kitchenplan/chef-applications
-  ref: 0.0.1
+  ref: master
   sha: 65f16df02b1b0f82caf725834b876e94aa92661a
   specs:
     applications (0.0.1)
@@ -27,22 +27,22 @@ GIT
 
 GIT
   remote: https://github.com/kitchenplan/chef-dotfiles
-  ref: 0.0.1
-  sha: 6dda7db4e9a0b3f8555d18a06849e957c2b33102
+  ref: master
+  sha: cfc2677fef5877f95a61d072516fd5b96c2a54b5
   specs:
     dotfiles (0.0.1)
       homebrew (>= 0.0.0)
 
 GIT
   remote: https://github.com/kitchenplan/chef-homebrew
-  ref: 0.0.1
+  ref: master
   sha: c64cd2c3a4a6feb7047c9d032fadf6569c348039
   specs:
     homebrew (0.0.1)
 
 GIT
   remote: https://github.com/kitchenplan/chef-osxdefaults
-  ref: 0.0.1
+  ref: master
   sha: 235b3f9884fc6fa808f8859573de300c7767b4e1
   specs:
     osxdefaults (0.0.1)

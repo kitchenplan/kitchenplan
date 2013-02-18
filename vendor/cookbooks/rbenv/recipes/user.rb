@@ -24,10 +24,19 @@ Array(node['rbenv']['user_installs']).each do |rbenv_user|
   gem_hash  = rbenv_user['gems'] || node['rbenv']['user_gems']
 
   rubies.each do |rubie|
-    rbenv_ruby "#{rubie} (#{rbenv_user['user']})" do
-      definition  rubie
-      user        rbenv_user['user']
-      root_path   rbenv_user['root_path'] if rbenv_user['root_path']
+    if rubie.is_a?(Hash)
+      rbenv_ruby "#{rubie} (#{rbenv_user['user']})" do
+        definition  rubie
+        user        rbenv_user['user']
+        root_path   rbenv_user['root_path'] if rbenv_user['root_path']
+        environment rubie['environment'] if rubie['environment']
+      end
+    else
+      rbenv_ruby "#{rubie} (#{rbenv_user['user']})" do
+        definition  rubie
+        user        rbenv_user['user']
+        root_path   rbenv_user['root_path'] if rbenv_user['root_path']
+      end
     end
   end
 

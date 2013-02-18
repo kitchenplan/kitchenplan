@@ -3,17 +3,18 @@ include_recipe 'dotfiles::bash_it'
 
 # Getting the kms sources
 
-directory "/opt" do
-  owner "root"
-  group "admin"
-  mode 0777
-  action :create
-end
-
 git "/opt/kms" do
   repository "https://github.com/Kunstmaan/kms.git"
   reference "master"
   action :sync
+end
+
+directory "/opt/kms" do
+  owner node['current_user']
+  group "admin"
+  mode 0777
+  recursive true
+  action :create
 end
 
 # Add to the bash_profile settings

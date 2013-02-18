@@ -121,9 +121,9 @@ if File.exist?(peopleconfig)
 end
 
 soloistrc = Hash.new
-soloistrc["cookbook_paths"] = ["/Users/roderik/src/kitchenplan/vendor/cookbooks"]
+soloistrc["cookbook_paths"] = ["#{Dir.pwd}/vendor/cookbooks"]
 soloistrc["recipes"] = recipes
-soloistrc["attributes"] = attributes
+soloistrc["node_attributes"] = attributes
 File.open("soloistrc", 'w') do |out|
     YAML.dump(soloistrc, out)
 end

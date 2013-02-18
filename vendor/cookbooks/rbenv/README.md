@@ -228,7 +228,7 @@ example, to pin rbenv to a specific release:
 
     node.default['ruby_build']['git_ref'] = "v0.2.1"
 
-The default is `"master"`.
+The default is `"v0.4.0"`.
 
 ### <a name="attributes-upgrade"></a> upgrade
 
@@ -258,6 +258,16 @@ in your run\_list for the `rbenv_ruby` LWRP to work properly. For example:
 
 The default is an empty array: `[]`.
 
+Additional environment variables can be passed to ruby_build via the environment variable.
+For example:
+
+    node.default['rbenv']['rubies'] = [ "1.9.3-p0", "jruby-1.6.5",
+      {
+      :name => '1.9.3-327',
+      :environment => { 'CFLAGS' => '-march=native -O2 -pipe' }
+      }
+    ]
+
 ### <a name="attributes-user-rubies"></a> user_rubies
 
 A list of additional system-wide rubies to be built and installed (using the
@@ -268,6 +278,15 @@ For example:
 
 The default is an empty array: `[]`.
 
+Additional environment variables can be passed to ruby_build via the environment variable.
+For example:
+
+    node.default['rbenv']['user_rubies'] = [ "1.8.7-p352",
+      {
+      :name => '1.9.3-327',
+      :environment => { 'CFLAGS' => '-march=native -O2 -pipe' }
+      }
+    ]
 ### <a name="attributes-gems"></a> gems
 
 A hash of gems to be installed into arbitrary rbenv-managed rubies system wide.

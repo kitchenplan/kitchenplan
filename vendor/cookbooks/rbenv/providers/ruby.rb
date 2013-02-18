@@ -25,6 +25,7 @@ def load_current_resource
   @rubie      = new_resource.definition
   @root_path  = new_resource.root_path
   @user       = new_resource.user
+  @environment = new_resource.environment
 end
 
 action :install do
@@ -54,12 +55,14 @@ def perform_install
     rbenv_user    = @user
     rubie         = @rubie
     rbenv_prefix  = @root_path
+    rbenv_env     = @environment
     command       = %{rbenv install #{rubie}}
 
     rbenv_script "#{command} #{which_rbenv}" do
       code        command
       user        rbenv_user    if rbenv_user
       root_path   rbenv_prefix  if rbenv_prefix
+      environment rbenv_env     if rbenv_env
 
       action      :nothing
     end.run_action(:run)

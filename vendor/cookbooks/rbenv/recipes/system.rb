@@ -20,7 +20,13 @@
 include_recipe "rbenv::system_install"
 
 Array(node['rbenv']['rubies']).each do |rubie|
-  rbenv_ruby rubie
+  if rubie.is_a?(Hash)
+    rbenv_ruby rubie['name'] do
+      environment rubie['environment'] if rubie['environment']
+    end
+  else
+    rbenv_ruby rubie
+  end
 end
 
 if node['rbenv']['global']
