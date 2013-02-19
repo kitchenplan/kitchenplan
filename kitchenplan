@@ -98,7 +98,7 @@ require "bundler/setup"
 # Possibly updating the cookbooks
 
 if update_cookbooks
-    librarian_command = ["bin/librarian-chef", "install", "--clean", "--strip-dot-git", "--path=vendor/cookbooks"]
+    librarian_command = ["bin/librarian-chef", "update"]
     librarian_command << "--verbose" if debug
     librarian_command << "--quiet" unless debug
     warn librarian_command.join(" ") if debug

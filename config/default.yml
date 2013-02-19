@@ -19,6 +19,7 @@ recipes:
     - applications::xquartz
     - applications::sublime_text
     - applications::vagrant
+    - applications::java
     - dotfiles::bash_it
     - dotfiles::inputrc
     - dotfiles::gitconfig
@@ -31,4 +32,7 @@ attributes:
                 name: 1.9.3-p385
                 environment: { CC: gcc }
         global: 1.9.3-p385
-
+    drivers:
+        xerox: 172.18.19.67
+    osxdefaults:
+        loginmessage: Property of Kunstmaan NV - 016 300 780 - hello@kunstmaan.be

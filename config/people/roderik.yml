@@ -60,10 +60,12 @@ recipes:
     - osxdefaults::speed_up_mission_control_animations
     - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
     - osxdefaults::use_column_view_in_all_finder_windows_by_default
+    - osxdefaults::set_computer_name
+    - osxdefaults::add_note_to_loginscreen
     - drivers::xerox550
 attributes:
     git:
         name: Roderik van der Veer
         email: roderik@vanderveer.be
-    drivers:
-        xerox: 172.18.19.67
+    osxdefaults:
+        computername: Thor
