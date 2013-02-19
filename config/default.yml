@@ -11,6 +11,7 @@ recipes:
     - homebrew::wget
     - homebrew::pwgen
     - homebrew::dnsmasq
+    - homebrew::xmlstarlet
     - ruby_build
     - rbenv::system
     - applications::google-chrome
@@ -21,6 +22,7 @@ recipes:
     - applications::sublime_text
     - applications::vagrant
     - applications::java
+    - applications::composer
     - dotfiles::bash_it
     - dotfiles::inputrc
     - dotfiles::gitconfig

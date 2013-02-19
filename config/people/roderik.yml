@@ -83,3 +83,20 @@ attributes:
                 - kunstmaan-kitchenplan: git@github.com:Kunstmaan/kitchenplan.git
             bundles:
                 - KunstmaanSentryBundle: git@github.com:Kunstmaan/KunstmaanSentryBundle.git
+                - KunstmaanAdminListBundle: git@github.com:Kunstmaan/KunstmaanAdminListBundle.git
+                - KunstmaanAdminBundle: git@github.com:Kunstmaan/KunstmaanAdminBundle.git
+                - KunstmaanMediaPagePartBundle: git@github.com:Kunstmaan/KunstmaanMediaPagePartBundle.git
+                - KunstmaanGeneratorBundle: git@github.com:Kunstmaan/KunstmaanGeneratorBundle.git
+                - KunstmaanPagePartBundle: git@github.com:Kunstmaan/KunstmaanPagePartBundle.git
+                - KunstmaanNodeBundle: git@github.com:Kunstmaan/KunstmaanNodeBundle.git
+                - KunstmaanMediaBundle: git@github.com:Kunstmaan/KunstmaanMediaBundle.git
+                - KunstmaanVotingBundle: git@github.com:Kunstmaan/KunstmaanVotingBundle.git
+                - KunstmaanSearchBundle: git@github.com:Kunstmaan/KunstmaanSearchBundle.git
+                - KunstmaanSeoBundle: git@github.com:Kunstmaan/KunstmaanSeoBundle.git
+                - KunstmaanNewRelicBundle: git@github.com:Kunstmaan/KunstmaanNewRelicBundle.git
+                - KunstmaanFormBundle: git@github.com:Kunstmaan/KunstmaanFormBundle.git
+                - KunstmaanUtilitiesBundle: git@github.com:Kunstmaan/KunstmaanUtilitiesBundle.git
+                - KunstmaanTemplateBundle: git@github.com:Kunstmaan/KunstmaanTemplateBundle.git
+            devops:
+                - kms: git@github.com:Kunstmaan/kms.git
+                - kstrano: git@github.com:Kunstmaan/kStrano.git

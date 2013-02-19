@@ -1,0 +1,38 @@
+{
+  "name": "composer",
+  "description": "Installs/Configures php composer",
+  "long_description": "Description\n===========\nA cookbook to install [Composer](http://getcomposer.org) and maintain composer packages within project deployments.\n\nRequirements\n============\nn/a\n\nAttributes\n==========\n\n - `:install_path`: The path which composer will be installed\n - `:owner`: The owner of the file\n - `:dev`: Whether to execute the project activities with the `--dev` flag.\n\n```ruby\ndefault[:composer][:install_path] = \"/usr/local/bin\"\ndefault[:composer][:owner] = \"root\" # apache|www-data|root|whatever\ndefault[:composer][:project][:dev] = false\n```\n\nUsage\n=====\n\n## `composer`\n\n### Actions:\n\n - `:install`\n - `:uninstall`\n - `:update`\n \n### Example:\n\n```ruby\ncomposer \"/usr/local/bin\" do\n  owner \"root\" # optional\n  action [:install, :update]\nend\n\ncomposer \"/usr/local/bin\" do\n  action :uninstall\ndo\n```\n\n## `composer_project`\n\n### Actions:\n - `:install`\n - `:update`\n - `:dump_autoload`\n \n### Example:\n\n```ruby\ncomposer_project \"/var/www/pr1\" do\n dev true # optional\n run_as \"www-data\" # optional\n composer_path \"/usr/local/bin\" #optional\n action [:install, :update, :dump_autoload]\nend\n```\n",
+  "maintainer": "Robert Allen",
+  "maintainer_email": "zircote@gmail.com",
+  "license": "Apache 2.0",
+  "platforms": {
+    "debian": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0",
+    "centos": ">= 0.0.0",
+    "redhat": ">= 0.0.0",
+    "fedora": ">= 0.0.0",
+    "scientific": ">= 0.0.0",
+    "amazon": ">= 0.0.0",
+    "suse": ">= 0.0.0"
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "composer": "PHP Composer Installation and project interactions"
+  },
+  "version": "0.1.0"
+}
