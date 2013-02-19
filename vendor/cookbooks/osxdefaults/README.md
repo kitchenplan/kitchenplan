@@ -1,4 +1,4 @@
-osxdefaults Cookbook [![Build Status](https://travis-ci.org/Kitchenplan/chef-osxdefaults.png?branch=master)](https://travis-ci.org/Kitchenplan/chef-osxdefaults)
+osxdefaults Cookbook [![Build Status](https://travis-ci.org/kitchenplan/chef-osxdefaults.png?branch=master)](https://travis-ci.org/kitchenplan/chef-osxdefaults)
 =====================
 
 A cookbook, that combines a lot of settings to tweak your osx install. It is based on Mathias Bynens' dotfiles repo but tailored to more general needs.

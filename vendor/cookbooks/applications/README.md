@@ -1,4 +1,4 @@
-applications Cookbook [![Build Status](https://travis-ci.org/Kitchenplan/chef-applications.png?branch=master)](https://travis-ci.org/Kitchenplan/chef-applications)
+applications Cookbook [![Build Status](https://travis-ci.org/kitchenplan/chef-applications.png?branch=master)](https://travis-ci.org/kitchenplan/chef-applications)
 =====================
 
 A cookbook, based on the pivotal_workstation, but without a lot of custom providers and a lot cleaner.

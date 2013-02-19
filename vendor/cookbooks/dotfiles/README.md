@@ -1,4 +1,4 @@
-dotfiles Cookbook [![Build Status](https://travis-ci.org/Kitchenplan/chef-dotfiles.png?branch=master)](https://travis-ci.org/Kitchenplan/chef-dotfiles)
+dotfiles Cookbook [![Build Status](https://travis-ci.org/kitchenplan/chef-dotfiles.png?branch=master)](https://travis-ci.org/kitchenplan/chef-dotfiles)
 =================
 
 A cookbook that installs bash_it globally and sets your prompt, gitconfigs, inputrc, etc
