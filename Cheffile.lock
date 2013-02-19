@@ -20,7 +20,7 @@ GIT
 GIT
   remote: https://github.com/kitchenplan/chef-applications
   ref: master
-  sha: 1cf69146923f096b17c8c683d4152884b5e5ac23
+  sha: f70ee47692366cc4fe3278fd164aeeed9e7c6c69
   specs:
     applications (0.0.1)
       dmg (>= 0.0.0)
@@ -28,7 +28,7 @@ GIT
 GIT
   remote: https://github.com/kitchenplan/chef-dotfiles
   ref: master
-  sha: d609aa3b976fada7c997c9447614c5398bb828dd
+  sha: 0a9eec25d0878f9e585cd627b2a8241a5dfa380b
   specs:
     dotfiles (0.0.1)
       homebrew (>= 0.0.0)
@@ -43,7 +43,7 @@ GIT
 GIT
   remote: https://github.com/kitchenplan/chef-homebrew
   ref: master
-  sha: 32eaab6c947970b9dc5b8321ec759ca5b2de4289
+  sha: 01d0b9ecd98d90ac06b3c18e0afbde080388d6ce
   specs:
     homebrew (0.0.1)
 
