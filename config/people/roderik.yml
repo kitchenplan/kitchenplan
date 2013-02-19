@@ -63,9 +63,23 @@ recipes:
     - osxdefaults::set_computer_name
     - osxdefaults::add_note_to_loginscreen
     - drivers::xerox550
+    - dotfiles::projects
 attributes:
     git:
         name: Roderik van der Veer
         email: roderik@vanderveer.be
     osxdefaults:
         computername: Thor
+    dotfiles:
+        projects:
+            kitchenplan:
+                - chef-homebrew: git@github.com:kitchenplan/chef-homebrew.git
+                - chef-applications: git@github.com:kitchenplan/chef-applications.git
+                - our-kitchenplan: git@github.com:kitchenplan/our-kitchenplan.git
+                - chef-osxdefaults: git@github.com:kitchenplan/chef-osxdefaults.git
+                - chef-drivers: git@github.com:kitchenplan/chef-drivers.git
+                - chef-dotfiles: git@github.com:kitchenplan/chef-dotfiles.git
+                - kitchenplan-web: git@github.com:kitchenplan/kitchenplan-web.git
+                - kunstmaan-kitchenplan: git@github.com:Kunstmaan/kitchenplan.git
+            bundles:
+                - KunstmaanSentryBundle: git@github.com:Kunstmaan/KunstmaanSentryBundle.git

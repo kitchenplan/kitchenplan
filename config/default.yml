@@ -10,6 +10,7 @@ recipes:
     - homebrew::watch
     - homebrew::wget
     - homebrew::pwgen
+    - homebrew::dnsmasq
     - ruby_build
     - rbenv::system
     - applications::google-chrome
@@ -24,6 +25,7 @@ recipes:
     - dotfiles::inputrc
     - dotfiles::gitconfig
     - dotfiles::kms
+    - dotfiles::workspace
 attributes:
     rbenv:
         upgrade: true
