@@ -1,4 +1,4 @@
 applications_package "Kaleidoscope" do
-  source  "http://www.kaleidoscopeapp.com/download"
+  source  "https://updates.blackpixel.com/latest?app=ks"
 end
 
