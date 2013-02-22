@@ -1,4 +1,5 @@
 recipes:
+    - applications::create_var_chef_cache
     - homebrew::bash4
     - homebrew::bash-completion
     - homebrew::coreutils
