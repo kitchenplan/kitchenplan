@@ -20,7 +20,7 @@ GIT
 GIT
   remote: https://github.com/kitchenplan/chef-applications
   ref: master
-  sha: 187fc18c4f36bd15a4edf87c333fac638cf200e5
+  sha: 921d731f6ae596c16d9b7f3e669ecdead0b3fd97
   specs:
     applications (0.0.1)
       composer (>= 0.0.0)
