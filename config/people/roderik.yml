@@ -1,4 +1,5 @@
 recipes:
+    - homebrew::heroku
     - applications::1password
     - applications::alfred
     - applications::bartender
@@ -11,6 +12,7 @@ recipes:
     - applications::tower
     - applications::viscosity
     - applications::vlc
+    - applications::superduper
     - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
     - osxdefaults::automatically_hide_and_show_the_dock
     - osxdefaults::automatically_illuminate_built-in_macbook_keyboard_in_low_light
