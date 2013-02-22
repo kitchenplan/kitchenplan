@@ -28,6 +28,7 @@ recipes:
     - dotfiles::gitconfig
     - dotfiles::kms
     - dotfiles::workspace
+    - dotfiles::set_terminal_profile
 attributes:
     rbenv:
         upgrade: true
