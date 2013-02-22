@@ -1,5 +1,6 @@
 recipes:
     - homebrew::heroku
+    - applications::alfred
     - applications::1password
     - applications::bartender
     - applications::dropbox
