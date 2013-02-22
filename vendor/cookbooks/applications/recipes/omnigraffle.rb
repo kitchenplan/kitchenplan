@@ -76,7 +76,7 @@ unless File.exists?(stencils)
     end
 
     execute "move Konigi.gdiagramstyle" do
-        command "mv #{Chef::Config[:file_cache_path]}/#{Regexp.escape("Konigi Wireframe Stencils v3")} #{Regexp.escape("#{WS_HOME}/Library/Application Support/OmniGraffle/Stencils/")}"
+        command "mv #{Chef::Config[:file_cache_path]}/#{Regexp.escape("Konigi Wireframe Stencils v3")} #{Regexp.escape("#{node['etc']['passwd'][node['current_user']]['dir']}/Library/Application Support/OmniGraffle/Stencils/")}"
         user node['current_user']
     end
 end
