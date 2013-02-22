@@ -1,5 +1,6 @@
 dmg_package "Alfred" do
   volumes_dir "Alfred.app"
-  source "http://cachefly.alfredapp.com/alfred_1.3.2_265.zip"
+  source "http://media.alfredapp.com/alfred_1.3.3_267.zip"
   action :install
+  owner node['current_user']
 end
