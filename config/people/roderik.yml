@@ -42,6 +42,8 @@ recipes:
     - osxdefaults::expand_save_panel_by_default
     - osxdefaults::finder_allow_text_selection_in_quick_look
     - osxdefaults::finder_display_full_path
+    - osxdefaults::finder_use_column_view_in_all_finder_windows_by_default
+    - osxdefaults::finder_new_finder_windows_shows_homefolder
     - osxdefaults::increase_sound_quality_for_bluetooth_headphones
     - osxdefaults::increase_window_resize_speed_for_cocoa_applications
     - osxdefaults::make_dock_icons_of_hidden_applications_translucent
@@ -60,7 +62,6 @@ recipes:
     - osxdefaults::show_indicator_lights_for_open_applications_in_the_dock
     - osxdefaults::speed_up_mission_control_animations
     - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
-    - osxdefaults::use_column_view_in_all_finder_windows_by_default
     - osxdefaults::set_computer_name
     - osxdefaults::add_note_to_loginscreen
     - osxdefaults::small_sidebar_icon_size
