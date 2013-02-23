@@ -13,8 +13,8 @@ recipes:
     - homebrew::pwgen
     - homebrew::dnsmasq
     - homebrew::xmlstarlet
-    - ruby_build
-    - rbenv::system
+    - homebrew::gcc42
+    - rvm::system
     - applications::google-chrome
     - applications::firefox
     - applications::sequelpro
@@ -31,13 +31,9 @@ recipes:
     - dotfiles::workspace
     - osxdefaults::set_terminal_profile
 attributes:
-    rbenv:
-        upgrade: true
-        rubies:
-            -
-                name: 1.9.3-p385
-                environment: { CC: gcc }
-        global: 1.9.3-p385
+    rvm:
+        upgrade: latest
+        default_ruby: 1.9.3-p385
     drivers:
         xerox: 172.18.19.67
     osxdefaults:
