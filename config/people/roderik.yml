@@ -13,61 +13,63 @@ recipes:
     - applications::vlc
     - applications::superduper
     - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
-    - osxdefaults::automatically_hide_and_show_the_dock
     - osxdefaults::automatically_illuminate_built-in_macbook_keyboard_in_low_light
-    - osxdefaults::automatically_open_a_new_finder_window_when_a_volume_is_mounted
     - osxdefaults::automatically_quit_printer_app_once_the_print_jobs_complete
     - osxdefaults::avoid_creating_ds_store_files_on_network_volumes
     - osxdefaults::check_for_software_updates_daily
-    - osxdefaults::copy_email_addresses_instead_of_names_in_mail
     - osxdefaults::disable_auto-correct
     - osxdefaults::disable_disk_image_verification
     - osxdefaults::disable_front_row
     - osxdefaults::disable_gatekeeper
     - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
     - osxdefaults::disable_resume_system-wide
-    - osxdefaults::disable_send_and_reply_animations_in_mail
-    - osxdefaults::disable_the_warning_before_emptying_the_trash
-    - osxdefaults::disable_the_warning_when_changing_a_file_extension
-    - osxdefaults::do_not_animate_opening_applications_from_the_dock
     - osxdefaults::do_not_group_windows_by_application_in_mission_control
     - osxdefaults::do_not_show_dashboard_as_a_space
     - osxdefaults::enable_assistive_devices
     - osxdefaults::enable_full_keyboard_access_for_all_controls
-    - osxdefaults::enable_highlight_hover_effect_for_the_grid_view_of_a_stack
     - osxdefaults::enable_safari_debug_menu
-    - osxdefaults::enable_spring_loading_for_all_dock_items
     - osxdefaults::enable_subpixel_font_rendering_on_non-apple_lcds
     - osxdefaults::expand_print_panel_by_default
     - osxdefaults::expand_save_panel_by_default
-    - osxdefaults::finder_allow_text_selection_in_quick_look
-    - osxdefaults::finder_display_full_path
-    - osxdefaults::finder_use_column_view_in_all_finder_windows_by_default
-    - osxdefaults::finder_new_finder_windows_shows_homefolder
     - osxdefaults::increase_sound_quality_for_bluetooth_headphones
     - osxdefaults::increase_window_resize_speed_for_cocoa_applications
-    - osxdefaults::make_dock_icons_of_hidden_applications_translucent
     - osxdefaults::make_safari_search_banners_default_to_contains_instead_of_starts_with
-    - osxdefaults::position_the_dock_on_the_left_side
     - osxdefaults::prevent_time_machine_from_prompting_to_use_new_hard_drives_as_backup_volume
-    - osxdefaults::remove_the_animation_when_hiding_showing_the_dock
-    - osxdefaults::remove_the_auto-hiding_dock_delay
     - osxdefaults::restart_automatically_if_the_computer_freezes
     - osxdefaults::save_screenshots_in_png_format
     - osxdefaults::save_screenshots_to_the_desktop
     - osxdefaults::save_to_disk_not_to_iCloud_by_default
-    - osxdefaults::search_the_current_folder_by_default
     - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
-    - osxdefaults::set_the_icon_size_of_dock_items_to_36_pixels
-    - osxdefaults::show_indicator_lights_for_open_applications_in_the_dock
     - osxdefaults::speed_up_mission_control_animations
     - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
     - osxdefaults::set_computer_name
     - osxdefaults::add_note_to_loginscreen
-    - osxdefaults::small_sidebar_icon_size
     - osxdefaults::tap_to_click
     - osxdefaults::mail_check_for_new_messages
     - osxdefaults::mail_when_searching_do_not_include_trash
+    - osxdefaults::mail_copy_email_addresses_instead_of_names_in_mail
+    - osxdefaults::mail_disable_send_and_reply_animations_in_mail
+    - osxdefaults::dock_automatically_hide_and_show_the_dock
+    - osxdefaults::dock_do_not_animate_opening_applications_from_the_dock
+    - osxdefaults::dock_enable_spring_loading_for_all_dock_items
+    - osxdefaults::dock_make_dock_icons_of_hidden_applications_translucent
+    - osxdefaults::dock_minimize_to_application
+    - osxdefaults::dock_set_magnification_on
+    - osxdefaults::dock_set_the_icon_size_of_dock_items_to_36_pixels
+    - osxdefaults::dock_show_indicator_lights_for_open_applications_in_the_dock
+    - osxdefaults::dock_position_the_dock_on_the_left_side
+    - osxdefaults::dock_enable_highlight_hover_effect_for_the_grid_view_of_a_stack
+    - osxdefaults::dock_remove_the_animation_when_hiding_showing_the_dock
+    - osxdefaults::dock_remove_the_auto-hiding_dock_delay
+    - osxdefaults::finder_allow_text_selection_in_quick_look
+    - osxdefaults::finder_display_full_path
+    - osxdefaults::finder_use_column_view_in_all_finder_windows_by_default
+    - osxdefaults::finder_new_finder_windows_shows_homefolder
+    - osxdefaults::finder_automatically_open_a_new_finder_window_when_a_volume_is_mounted
+    - osxdefaults::finder_disable_the_warning_before_emptying_the_trash
+    - osxdefaults::finder_disable_the_warning_when_changing_a_file_extension
+    - osxdefaults::finder_search_the_current_folder_by_default
+    - osxdefaults::finder_small_sidebar_icon_size
     - drivers::xerox550
     - dotfiles::projects
 attributes:
