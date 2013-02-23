@@ -2,3 +2,6 @@
 /bin
 /soloistrc
 /tmp
+/vendor/cookbooks
+
+/Cheffile.lock
