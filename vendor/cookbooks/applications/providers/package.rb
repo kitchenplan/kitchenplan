@@ -27,7 +27,7 @@ end
 action :install do
   unless @zip_pkg.installed
     zip_file = new_resource.zip_file || new_resource.source.split('/').last
-    downloaded_file = "#{Chef::Config[:file_cache_path]}/#{zip_file}"
+    downloaded_file = "#{Chef::Config[:file_cache_path]}/#{new_resource.app}-#{zip_file}"
 
     remote_file downloaded_file do
       source    new_resource.source
