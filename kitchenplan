@@ -97,12 +97,14 @@ require "bundler/setup"
 
 # Possibly updating the cookbooks
 
-librarian_command = ["bin/librarian-chef", "install", "--path=vendor/cookbooks", "--clean" ]
-librarian_command << "--verbose" if debug
-librarian_command << "--quiet" unless debug
-warn librarian_command.join(" ") if debug
-unless system *librarian_command
-    abort "Can't install Chef cookbooks with librarian-chef. Run using --debug if you need more information."
+unless File.exists?("vendor/cookbooks")
+    librarian_command = ["bin/librarian-chef", "install", "--path=vendor/cookbooks", "--clean" ]
+    librarian_command << "--verbose" if debug
+    librarian_command << "--quiet" unless debug
+    warn librarian_command.join(" ") if debug
+    unless system *librarian_command
+        abort "Can't install Chef cookbooks with librarian-chef. Run using --debug if you need more information."
+    end
 end
 
 if update_cookbooks
