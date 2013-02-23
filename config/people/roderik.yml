@@ -74,6 +74,12 @@ recipes:
     - drivers::xerox550
     - dotfiles::projects
 attributes:
+    rvm:
+        user_installs:
+            -
+                user: roderik
+                upgrade: head
+                default_ruby: 1.9.3-p385
     git:
         name: Roderik van der Veer
         email: roderik@vanderveer.be

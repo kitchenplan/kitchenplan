@@ -14,7 +14,7 @@ recipes:
     - homebrew::dnsmasq
     - homebrew::xmlstarlet
     - homebrew::gcc42
-    - rvm::system
+    - rvm::user
     - applications::google-chrome
     - applications::firefox
     - applications::sequelpro
@@ -31,9 +31,6 @@ recipes:
     - dotfiles::workspace
     - osxdefaults::set_terminal_profile
 attributes:
-    rvm:
-        upgrade: latest
-        default_ruby: 1.9.3-p385
     drivers:
         xerox: 172.18.19.67
     osxdefaults:
