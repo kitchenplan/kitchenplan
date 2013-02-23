@@ -81,30 +81,10 @@ attributes:
     dotfiles:
         projects:
             kitchenplan:
-                - chef-homebrew: git@github.com:kitchenplan/chef-homebrew.git
-                - chef-applications: git@github.com:kitchenplan/chef-applications.git
                 - our-kitchenplan: git@github.com:kitchenplan/our-kitchenplan.git
-                - chef-osxdefaults: git@github.com:kitchenplan/chef-osxdefaults.git
-                - chef-drivers: git@github.com:kitchenplan/chef-drivers.git
-                - chef-dotfiles: git@github.com:kitchenplan/chef-dotfiles.git
-                - kitchenplan-web: git@github.com:kitchenplan/kitchenplan-web.git
                 - kunstmaan-kitchenplan: git@github.com:Kunstmaan/kitchenplan.git
             bundles:
                 - KunstmaanSentryBundle: git@github.com:Kunstmaan/KunstmaanSentryBundle.git
-                - KunstmaanAdminListBundle: git@github.com:Kunstmaan/KunstmaanAdminListBundle.git
-                - KunstmaanAdminBundle: git@github.com:Kunstmaan/KunstmaanAdminBundle.git
-                - KunstmaanMediaPagePartBundle: git@github.com:Kunstmaan/KunstmaanMediaPagePartBundle.git
-                - KunstmaanGeneratorBundle: git@github.com:Kunstmaan/KunstmaanGeneratorBundle.git
-                - KunstmaanPagePartBundle: git@github.com:Kunstmaan/KunstmaanPagePartBundle.git
-                - KunstmaanNodeBundle: git@github.com:Kunstmaan/KunstmaanNodeBundle.git
-                - KunstmaanMediaBundle: git@github.com:Kunstmaan/KunstmaanMediaBundle.git
-                - KunstmaanVotingBundle: git@github.com:Kunstmaan/KunstmaanVotingBundle.git
-                - KunstmaanSearchBundle: git@github.com:Kunstmaan/KunstmaanSearchBundle.git
-                - KunstmaanSeoBundle: git@github.com:Kunstmaan/KunstmaanSeoBundle.git
-                - KunstmaanNewRelicBundle: git@github.com:Kunstmaan/KunstmaanNewRelicBundle.git
-                - KunstmaanFormBundle: git@github.com:Kunstmaan/KunstmaanFormBundle.git
-                - KunstmaanUtilitiesBundle: git@github.com:Kunstmaan/KunstmaanUtilitiesBundle.git
-                - KunstmaanTemplateBundle: git@github.com:Kunstmaan/KunstmaanTemplateBundle.git
             devops:
                 - kms: git@github.com:Kunstmaan/kms.git
                 - kstrano: git@github.com:Kunstmaan/kStrano.git
