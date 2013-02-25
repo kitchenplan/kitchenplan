@@ -14,6 +14,7 @@ recipes:
     - applications::superduper
     - applications::alfred
     - applications::github_for_mac
+    - applications::totalfinder
     - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
     - osxdefaults::automatically_illuminate_built-in_macbook_keyboard_in_low_light
     - osxdefaults::automatically_quit_printer_app_once_the_print_jobs_complete
