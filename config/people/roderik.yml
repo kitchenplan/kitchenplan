@@ -97,3 +97,5 @@ attributes:
             devops:
                 - kms: git@github.com:Kunstmaan/kms.git
                 - kstrano: git@github.com:Kunstmaan/kStrano.git
+        kdeploy:
+            hostname: thor.dev
