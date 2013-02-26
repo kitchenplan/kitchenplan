@@ -1,6 +1,0 @@
-- pivotal_workstation::mysql
-- pivotal_workstation::postgres
-- pivotal_workstation::psycopg2
-- pivotal_workstation::mysql-python
-- pivotal_workstation::php54
-- pivotal_workstation::mod-jk
