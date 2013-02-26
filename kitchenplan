@@ -24,17 +24,53 @@ at_exit { myself.flock File::LOCK_UN }
 Dir.chdir Pathname.new(__FILE__).realpath + ".."
 
 # Flags
-help = ARGV.include?("--help")
-debug = ARGV.include?("--debug")
-update_gems = ARGV.include?("--update-gems")
-update_cookbooks = ARGV.include?("--update-cookbooks")
-no_soloist = ARGV.include?("--no-soloist")
-no_update = ARGV.include?("--no-pull")
+require 'optparse'
+
+options = {}
+OptionParser.new do |opts|
+    opts.banner = "Usage: kitchenplan [options]"
+
+    opts.on("-d", "--debug", "Show debug information") do |debug|
+        options[:debug] = debug
+    end
+
+    opts.on("-g", "--update-gems", "Update the RubyGems") do |update_gems|
+        options[:update_gems] = update_gems
+    end
+
+    opts.on("-c", "--update-cookbooks", "Update the Chef cookbooks") do |update_cookbooks|
+        options[:update_cookbooks] = update_cookbooks
+    end
+
+    options[:soloist] = true
+    opts.on("--[no-]soloist", "Run soloist (defaults to yes)") do |soloist|
+        options[:soloist] = soloist
+    end
+
+    options[:update] = true
+    opts.on("--[no-]update", "Run the kitchenplan update (defaults to yes)") do |update|
+        options[:update] = update
+    end
+
+    opts.separator ""
+    opts.separator "Common options:"
+
+    opts.on_tail("-h", "--help", "Show this message") do
+        puts opts
+        exit
+    end
+
+    opts.on_tail("--version", "Show version") do
+        puts "1.0.1"
+        exit
+    end
+
+end.parse!
 
 # Auto-update code. This is done as early as possible so that changes
 # to kitchenplan support code or dependencies can be grabbed.
 
-unless no_update
+unless options[:update]
     if system("which git > /dev/null") && File.directory?(".git")
         clean  = `git status --porcelain`.empty?
         current_branch = `git symbolic-ref HEAD`.chomp
@@ -60,20 +96,6 @@ unless no_update
     end
 end
 
-# Help
-
-if help
-    puts "Usage: kitchenplan [options]"
-    puts
-    puts "        --debug                      Be really verbose."
-    puts "        --help                       Show help."
-    puts "        --update-gems                Update the lockfile and gems in the vendor folder."
-    puts "        --update-cookbooks           Update the lockfile and cookbooks in the vendor folder."
-    puts "        --no-soloist                 Don't run soloist"
-    puts "        --no-pull                    Don't update the kitchenplan source"
-    exit 0
-end
-
 # Bootstrapping dependencies
 
 unless system("(gem spec bundler -v '~> 1.2.0' > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri")
@@ -81,11 +103,11 @@ unless system("(gem spec bundler -v '~> 1.2.0' > /dev/null 2>&1) || sudo gem ins
 end
 
 bundle_command = ["bundle"]
-bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--path", ".bundle"] unless update_gems
-bundle_command = bundle_command + [ "install", "--no-deployment"] if update_gems
-bundle_command << "--verbose" if debug
-bundle_command << "--quiet" unless debug
-warn bundle_command.join(" ") if debug
+bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--path", ".bundle"] unless options[:update_gems]
+bundle_command = bundle_command + [ "install", "--no-deployment"] if options[:update_gems]
+bundle_command << "--verbose" if options[:debug]
+bundle_command << "--quiet" unless options[:debug]
+warn bundle_command.join(" ") if options[:debug]
 unless system *bundle_command
     abort "There was a problem bootstrapping. Run using --debug for more information"
 end
@@ -99,17 +121,17 @@ require "bundler/setup"
 
 unless File.exists?("vendor/cookbooks")
     librarian_command = ["bin/librarian-chef", "install", "--path=vendor/cookbooks", "--clean" ]
-    librarian_command << "--verbose" if debug
-    librarian_command << "--quiet" unless debug
-    warn librarian_command.join(" ") if debug
+    librarian_command << "--verbose" if options[:debug]
+    librarian_command << "--quiet" unless options[:debug]
+    warn librarian_command.join(" ") if options[:debug]
     unless system *librarian_command
         abort "Can't install Chef cookbooks with librarian-chef. Run using --debug if you need more information."
     end
 end
 
-if update_cookbooks
+if options[:update_cookbooks]
     librarian_command = ["bin/librarian-chef", "update", "--verbose" ]
-    warn librarian_command.join(" ") if debug
+    warn librarian_command.join(" ") if options[:debug]
     unless system *librarian_command
         abort "Can't update Chef cookbooks with librarian-chef. Run using --debug if you need more information."
     end
@@ -140,12 +162,12 @@ end
 
 # Run soloist
 
-exit 0 if no_soloist
+exit 0 unless options[:soloist]
 
 soloist_command = ["bin/soloist"]
 ENV["LOG_LEVEL"] = "error"
-ENV["LOG_LEVEL"] = "debug" if debug
-warn soloist_command.join(" ") if debug
+ENV["LOG_LEVEL"] = "debug" if options[:debug]
+warn soloist_command.join(" ") if options[:debug]
 unless system *soloist_command
     abort "There was a problem running solist. Run using --debug for more information"
 end
