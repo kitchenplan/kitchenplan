@@ -14,6 +14,8 @@ recipes:
     - homebrew::dnsmasq
     - homebrew::xmlstarlet
     - homebrew::gcc42
+    - homebrew::rsync
+    - homebrew::pv
     - rvm::user
     - applications::google-chrome
     - applications::firefox
