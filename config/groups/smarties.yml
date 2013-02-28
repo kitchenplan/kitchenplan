@@ -1,0 +1,48 @@
+recipes:
+    - homebrew::bash4
+    - homebrew::bash-completion
+    - homebrew::coreutils
+    - homebrew::findutils
+    - homebrew::git
+    - homebrew::hub
+    - homebrew::gnu-tar
+    - homebrew::siege
+    - homebrew::watch
+    - homebrew::wget
+    - homebrew::pwgen
+    - homebrew::dnsmasq
+    - homebrew::xmlstarlet
+    - homebrew::gcc42
+    - homebrew::rsync
+    - homebrew::pv
+    - homebrew::heroku
+    - rvm::user
+    - applications::sequelpro
+    - applications::virtualbox
+    - applications::xquartz
+    - applications::sublime_text
+    - applications::vagrant
+    - applications::composer
+    - applications::github_for_mac
+    - dotfiles::bash_it
+    - dotfiles::inputrc
+    - dotfiles::gitconfig
+    - dotfiles::kms
+    - dotfiles::workspace
+    - osxdefaults::set_terminal_profile
+    ## kDeploy installation
+    - dotfiles::kdeploy
+    - homebrew::postgresql
+    - homebrew::psycopg2
+    - homebrew::mysql
+    - homebrew::mysql_python
+    - homebrew::apache
+    - homebrew::php54
+    - osxdefaults::finder_unhide_home
+    ## end kDeploy installation
+    - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
+    - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
+    - osxdefaults::enable_safari_debug_menu
+    - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
+attributes:
+    mysql_root_password: "password"

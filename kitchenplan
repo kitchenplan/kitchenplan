@@ -150,6 +150,16 @@ if File.exist?(peopleconfig)
     user = YAML.load_file(peopleconfig)
     recipes = recipes + user["recipes"]
     attributes = attributes.merge!(user["attributes"])
+    unless user["groups"].nil?
+        user["groups"].each do |group|
+            groupconfig = "config/groups/#{group}.yml"
+            if File.exist?(groupconfig)
+                group = YAML.load_file(groupconfig)
+                recipes = recipes + group["recipes"]
+                attributes = attributes.merge!(group["attributes"])
+            end
+        end
+    end
 end
 
 soloistrc = Hash.new

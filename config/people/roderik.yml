@@ -1,5 +1,6 @@
+groups:
+    - smarties
 recipes:
-    - homebrew::heroku
     - applications::1password
     - applications::bartender
     - applications::dropbox
@@ -13,41 +14,20 @@ recipes:
     - applications::vlc
     - applications::superduper
     - applications::alfred
-    - applications::github_for_mac
     - applications::totalfinder
     - applications::omniplan
-    - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
-    - osxdefaults::automatically_illuminate_built-in_macbook_keyboard_in_low_light
-    - osxdefaults::automatically_quit_printer_app_once_the_print_jobs_complete
-    - osxdefaults::avoid_creating_ds_store_files_on_network_volumes
-    - osxdefaults::check_for_software_updates_daily
-    - osxdefaults::disable_auto-correct
     - osxdefaults::disable_disk_image_verification
     - osxdefaults::disable_front_row
     - osxdefaults::disable_gatekeeper
-    - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
-    - osxdefaults::disable_resume_system-wide
     - osxdefaults::do_not_group_windows_by_application_in_mission_control
     - osxdefaults::do_not_show_dashboard_as_a_space
     - osxdefaults::enable_assistive_devices
     - osxdefaults::enable_full_keyboard_access_for_all_controls
-    - osxdefaults::enable_safari_debug_menu
-    - osxdefaults::enable_subpixel_font_rendering_on_non-apple_lcds
-    - osxdefaults::expand_print_panel_by_default
-    - osxdefaults::expand_save_panel_by_default
-    - osxdefaults::increase_sound_quality_for_bluetooth_headphones
     - osxdefaults::increase_window_resize_speed_for_cocoa_applications
     - osxdefaults::make_safari_search_banners_default_to_contains_instead_of_starts_with
     - osxdefaults::prevent_time_machine_from_prompting_to_use_new_hard_drives_as_backup_volume
-    - osxdefaults::restart_automatically_if_the_computer_freezes
-    - osxdefaults::save_screenshots_in_png_format
-    - osxdefaults::save_screenshots_to_the_desktop
-    - osxdefaults::save_to_disk_not_to_iCloud_by_default
-    - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
     - osxdefaults::speed_up_mission_control_animations
-    - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
     - osxdefaults::set_computer_name
-    - osxdefaults::add_note_to_loginscreen
     - osxdefaults::tap_to_click
     - osxdefaults::mail_check_for_new_messages
     - osxdefaults::mail_when_searching_do_not_include_trash
@@ -73,8 +53,6 @@ recipes:
     - osxdefaults::finder_disable_the_warning_before_emptying_the_trash
     - osxdefaults::finder_disable_the_warning_when_changing_a_file_extension
     - osxdefaults::finder_search_the_current_folder_by_default
-    - osxdefaults::finder_small_sidebar_icon_size
-    - drivers::xerox550
     - dotfiles::projects
 attributes:
     rvm:

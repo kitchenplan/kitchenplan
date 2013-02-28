@@ -1,50 +1,28 @@
 recipes:
     - applications::create_var_chef_cache
-    - homebrew::bash4
-    - homebrew::bash-completion
-    - homebrew::coreutils
-    - homebrew::findutils
-    - homebrew::git
-    - homebrew::hub
-    - homebrew::gnu-tar
-    - homebrew::siege
-    - homebrew::watch
-    - homebrew::wget
-    - homebrew::pwgen
-    - homebrew::dnsmasq
-    - homebrew::xmlstarlet
-    - homebrew::gcc42
-    - homebrew::rsync
-    - homebrew::pv
-    - rvm::user
     - applications::google-chrome
     - applications::firefox
-    - applications::sequelpro
-    - applications::virtualbox
-    - applications::xquartz
-    - applications::sublime_text
-    - applications::vagrant
     - applications::java
-    - applications::composer
-    - dotfiles::bash_it
-    - dotfiles::inputrc
-    - dotfiles::gitconfig
-    - dotfiles::kms
-    - dotfiles::workspace
-    - osxdefaults::set_terminal_profile
-    ## kDeploy installation
-    - dotfiles::kdeploy
-    - homebrew::postgresql
-    - homebrew::psycopg2
-    - homebrew::mysql
-    - homebrew::mysql_python
-    - homebrew::apache
-    - homebrew::php54
-    - osxdefaults::finder_unhide_home
-    ## end kDeploy installation
+    - osxdefaults::add_note_to_loginscreen
+    - osxdefaults::check_for_software_updates_daily
+    - osxdefaults::disable_auto-correct
+    - osxdefaults::enable_subpixel_font_rendering_on_non-apple_lcds
+    - osxdefaults::expand_print_panel_by_default
+    - osxdefaults::expand_save_panel_by_default
+    - osxdefaults::increase_sound_quality_for_bluetooth_headphones
+    - osxdefaults::restart_automatically_if_the_computer_freezes
+    - osxdefaults::save_to_disk_not_to_iCloud_by_default
+    - osxdefaults::finder_small_sidebar_icon_size
+    - osxdefaults::automatically_illuminate_built-in_macbook_keyboard_in_low_light
+    - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
+    - osxdefaults::automatically_quit_printer_app_once_the_print_jobs_complete
+    - osxdefaults::avoid_creating_ds_store_files_on_network_volumes
+    - osxdefaults::disable_resume_system-wide
+    - osxdefaults::save_screenshots_in_png_format
+    - osxdefaults::save_screenshots_to_the_desktop
+    - drivers::xerox550
 attributes:
     drivers:
         xerox: 172.18.19.67
     osxdefaults:
         loginmessage: Property of Kunstmaan NV - 016 300 780 - hello@kunstmaan.be
-    mysql_root_password: "password"
