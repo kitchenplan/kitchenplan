@@ -40,6 +40,8 @@ recipes:
     - homebrew::php54
     - osxdefaults::finder_unhide_home
     ## end kDeploy installation
+    - osxdefaults::check_for_software_updates_daily
+    - osxdefaults::restart_automatically_if_the_computer_freezes
     - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
     - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
     - osxdefaults::enable_safari_debug_menu
