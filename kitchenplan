@@ -34,10 +34,6 @@ OptionParser.new do |opts|
         options[:debug] = debug
     end
 
-    opts.on("-g", "--update-gems", "Update the RubyGems") do |update_gems|
-        options[:update_gems] = update_gems
-    end
-
     opts.on("-c", "--update-cookbooks", "Update the Chef cookbooks") do |update_cookbooks|
         options[:update_cookbooks] = update_cookbooks
     end
@@ -112,8 +108,7 @@ unless system("(gem spec bundler -v '~> 1.2.0' > /dev/null 2>&1) || sudo gem ins
 end
 
 bundle_command = ["bundle"]
-bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--path", ".bundle"] unless options[:update_gems]
-bundle_command = bundle_command + [ "install", "--no-deployment"] if options[:update_gems]
+bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--path", ".bundle", "--no-cache"]
 bundle_command << "--verbose" if options[:debug]
 bundle_command << "--quiet" unless options[:debug]
 warn bundle_command.join(" ") if options[:debug]
