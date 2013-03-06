@@ -16,6 +16,7 @@ recipes:
     - homebrew::rsync
     - homebrew::pv
     - homebrew::heroku
+    - homebrew::htop
     - rvm::user
     - applications::sequelpro
     - applications::virtualbox
