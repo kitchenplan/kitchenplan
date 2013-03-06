@@ -5,6 +5,8 @@ recipes:
     - applications::java
     - applications::cyberduck
     - applications::vlc
+    - applications::flash
+    - applications::adobe_reader
     - osxdefaults::add_note_to_loginscreen
     - osxdefaults::disable_auto-correct
     - osxdefaults::enable_subpixel_font_rendering_on_non-apple_lcds
