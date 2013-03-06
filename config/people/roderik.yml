@@ -16,6 +16,7 @@ recipes:
     - applications::alfred
     - applications::totalfinder
     - applications::omniplan
+    - applications::cord
     - osxdefaults::disable_disk_image_verification
     - osxdefaults::disable_front_row
     - osxdefaults::disable_gatekeeper
