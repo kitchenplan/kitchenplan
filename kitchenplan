@@ -160,7 +160,9 @@ if File.exist?(peopleconfig)
             if File.exist?(groupconfig)
                 group = YAML.load_file(groupconfig)
                 recipes = recipes + group["recipes"]
-                attributes = attributes.merge!(group["attributes"])
+                unless group["attributes"].nil?
+                   attributes = attributes.merge!(group["attributes"])
+                end
             end
         end
     end
