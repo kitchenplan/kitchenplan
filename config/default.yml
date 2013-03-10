@@ -1,30 +1,33 @@
 recipes:
-    - applications::create_var_chef_cache
-    - applications::google-chrome
-    - applications::firefox
-    - applications::java
-    - applications::cyberduck
-    - applications::vlc
-    - applications::flash
-    - applications::adobe_reader
-    - osxdefaults::add_note_to_loginscreen
-    - osxdefaults::disable_auto-correct
-    - osxdefaults::enable_subpixel_font_rendering_on_non-apple_lcds
-    - osxdefaults::expand_print_panel_by_default
-    - osxdefaults::expand_save_panel_by_default
-    - osxdefaults::increase_sound_quality_for_bluetooth_headphones
-    - osxdefaults::save_to_disk_not_to_iCloud_by_default
-    - osxdefaults::finder_small_sidebar_icon_size
-    - osxdefaults::automatically_illuminate_built-in_macbook_keyboard_in_low_light
-    - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
-    - osxdefaults::automatically_quit_printer_app_once_the_print_jobs_complete
-    - osxdefaults::avoid_creating_ds_store_files_on_network_volumes
-    - osxdefaults::disable_resume_system-wide
-    - osxdefaults::save_screenshots_in_png_format
-    - osxdefaults::save_screenshots_to_the_desktop
-    - drivers::xerox550
+    global:
+        - applications::create_var_chef_cache
+    mac_os_x:
+        - applications::google-chrome
+        - applications::firefox
+        - applications::java
+        - applications::cyberduck
+        - applications::vlc
+        - applications::flash
+        - applications::adobe_reader
+        - osxdefaults::add_note_to_loginscreen
+        - osxdefaults::disable_auto-correct
+        - osxdefaults::enable_subpixel_font_rendering_on_non-apple_lcds
+        - osxdefaults::expand_print_panel_by_default
+        - osxdefaults::expand_save_panel_by_default
+        - osxdefaults::increase_sound_quality_for_bluetooth_headphones
+        - osxdefaults::save_to_disk_not_to_iCloud_by_default
+        - osxdefaults::finder_small_sidebar_icon_size
+        - osxdefaults::automatically_illuminate_built-in_macbook_keyboard_in_low_light
+        - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
+        - osxdefaults::automatically_quit_printer_app_once_the_print_jobs_complete
+        - osxdefaults::avoid_creating_ds_store_files_on_network_volumes
+        - osxdefaults::disable_resume_system-wide
+        - osxdefaults::save_screenshots_in_png_format
+        - osxdefaults::save_screenshots_to_the_desktop
+        - drivers::xerox550
 attributes:
     drivers:
         xerox: 172.18.19.67
     osxdefaults:
         loginmessage: Property of Kunstmaan NV - 016 300 780 - hello@kunstmaan.be
+

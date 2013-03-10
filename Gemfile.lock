@@ -32,7 +32,7 @@ GEM
     mixlib-config (1.1.2)
     mixlib-log (1.4.1)
     mixlib-shellout (1.1.0)
-    net-ssh (2.6.5)
+    net-ssh (2.6.6)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     net-ssh-multi (1.1)
@@ -59,4 +59,5 @@ PLATFORMS
 
 DEPENDENCIES
   librarian (~> 0.0.26)
+  ohai (~> 6.16.0)
   soloist (~> 0.9.7)
