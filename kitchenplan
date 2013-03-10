@@ -63,44 +63,6 @@ OptionParser.new do |opts|
 
 end.parse!
 
-# Auto-update code. This is done as early as possible so that changes
-# to kitchenplan support code or dependencies can be grabbed.
-
-if options[:update]
-  quietly = "> /dev/null 2>&1"
-
-  if system("which git > /dev/null") && File.directory?(".git") && fetch = system("git fetch -q origin")
-
-    clean  = `git status --porcelain`.empty?
-    current_branch = `git symbolic-ref HEAD`.chomp
-    master = current_branch == "refs/heads/master"
-
-    upstream_changes = `git rev-list --count master..origin/master`.chomp != '0'
-    fast_forwardable = `git rev-list --count origin/master..master`.chomp == '0'
-
-    short_branch = current_branch.split('/')[2..-1].join('/')
-
-    if !master
-      warn "Kitchenplan on a non-master branch '#{short_branch}', won't auto-update!"
-    elsif !fast_forwardable
-      warn "Kitchenplan's master branch is out of sync, won't auto-update!"
-    elsif !clean
-      warn "Kitchenplan has a dirty tree, won't auto-update!"
-    elsif !upstream_changes
-      warn "Kitchenplan is up-to-date."
-    end
-
-    if clean && master && fast_forwardable && upstream_changes
-      reset   = "(git reset --hard origin/master #{quietly})"
-      reclean = "(git clean -qdf)"
-
-      unless system "#{reset} && #{reclean}"
-	warn "Auto-update of Kitchenplan FAILED, continuing."
-      end
-    end
-  end
-end
-
 # Bootstrapping dependencies
 
 unless system("(gem spec bundler -v '~> 1.2.0' > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri")
