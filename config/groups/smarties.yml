@@ -1,4 +1,6 @@
 recipes:
+    debian:
+        - homebrew::bash4
     mac_os_x:
         - homebrew::bash4
         - homebrew::bash-completion
