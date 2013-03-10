@@ -2,7 +2,7 @@
 /bin
 /soloistrc
 /tmp
-/vendor/
-!/vendor/cache
+/vendor/cookbooks
+/vendor/bundle
 /Cheffile.lock
 .idea
