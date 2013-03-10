@@ -13,6 +13,7 @@ recipes:
         - homebrew::pv
         - homebrew::htop
         - rvm::system
+        - dotfiles::bash_it
     mac_os_x:
         - homebrew::heroku
         - homebrew::watch
@@ -27,7 +28,6 @@ recipes:
         - applications::vagrant
         - applications::composer
         - applications::github_for_mac
-        - dotfiles::bash_it
         - dotfiles::inputrc
         - dotfiles::gitconfig
         - dotfiles::kms
