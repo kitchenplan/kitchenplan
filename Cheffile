@@ -2,7 +2,6 @@ site "http://community.opscode.com/api/v1"
 
 cookbook "dmg"
 cookbook "apt"
-cookbook "homebrew",        :github => "kitchenplan/chef-homebrew"
 cookbook "rvm",             :github => "fnichol/chef-rvm"
 cookbook "applications",    :github => "kitchenplan/chef-applications"
 cookbook "osxdefaults",     :github => "kitchenplan/chef-osxdefaults"
