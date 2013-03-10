@@ -7,14 +7,14 @@ attributes:
     rvm:
         user_installs:
             -
-                user: vagrant
+                user: travis
                 upgrade: head
                 default_ruby: 1.9.3-p385
     git:
-        name: Vagrant
-        email: roderik+vagrant@vanderveer.be
+        name: Travis
+        email: roderik+travis@vanderveer.be
     osxdefaults:
-        computername: VagrantQuantal64
+        computername: TravisWorker
     dotfiles:
         kdeploy:
-            hostname: quantal64.dev
+            hostname: travisworker.dev
