@@ -14,6 +14,10 @@ recipes:
         - homebrew::htop
         - rvm::system
         - dotfiles::bash_it
+        - dotfiles::inputrc
+        - dotfiles::gitconfig
+        - dotfiles::kms
+        - dotfiles::workspace
     mac_os_x:
         - homebrew::heroku
         - homebrew::watch
@@ -28,10 +32,6 @@ recipes:
         - applications::vagrant
         - applications::composer
         - applications::github_for_mac
-        - dotfiles::inputrc
-        - dotfiles::gitconfig
-        - dotfiles::kms
-        - dotfiles::workspace
         - osxdefaults::set_terminal_profile
         ## kDeploy installation
         - dotfiles::kdeploy
