@@ -121,18 +121,6 @@ end
 require "rubygems"
 require "bundler/setup"
 
-# Possibly updating the cookbooks
-
-unless File.exists?("vendor/cookbooks")
-    librarian_command = ["bin/librarian-chef", "install", "--path=vendor/cookbooks", "--clean" ]
-    librarian_command << "--verbose" if options[:debug]
-    librarian_command << "--quiet" unless options[:debug]
-    warn librarian_command.join(" ") if options[:debug]
-    unless system *librarian_command
-        abort "Can't install Chef cookbooks with librarian-chef. Run using --debug if you need more information."
-    end
-end
-
 if options[:update_cookbooks]
     librarian_command = ["bin/librarian-chef", "update", "--verbose" ]
     warn librarian_command.join(" ") if options[:debug]

@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     archive-tar-minitar (0.5.2)
+    awesome_print (1.1.0)
     chef (11.4.0)
       erubis
       highline (>= 1.6.9)
@@ -17,6 +18,7 @@ GEM
       rest-client (>= 1.0.4, < 1.7.0)
       yajl-ruby (~> 1.1)
     erubis (2.7.0)
+    hashie (2.0.2)
     highline (1.6.15)
     ipaddress (0.8.0)
     json (1.7.7)
@@ -48,8 +50,13 @@ GEM
       yajl-ruby
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    soloist (0.9.7)
+    soloist (1.0.0)
+      awesome_print
       chef
+      hashie
+      librarian
+      net-ssh
+      thor
     systemu (2.5.2)
     thor (0.17.0)
     yajl-ruby (1.1.0)
@@ -58,6 +65,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  librarian (~> 0.0.26)
-  ohai (~> 6.16.0)
-  soloist (~> 0.9.7)
+  ohai (>= 6.16.0)
+  soloist (>= 1.0.0)
