@@ -1,17 +1,17 @@
 recipes:
     global:
-        - homebrew::bash4
-        - homebrew::bash-completion
-        - homebrew::coreutils
-        - homebrew::findutils
-        - homebrew::git
-        - homebrew::siege
-        - homebrew::wget
-        - homebrew::pwgen
-        - homebrew::xmlstarlet
-        - homebrew::rsync
-        - homebrew::pv
-        - homebrew::htop
+        - applications::bash4
+        - applications::bash-completion
+        - applications::coreutils
+        - applications::findutils
+        - applications::git
+        - applications::siege
+        - applications::wget
+        - applications::pwgen
+        - applications::xmlstarlet
+        - applications::rsync
+        - applications::pv
+        - applications::htop
         - rvm::system
         - dotfiles::bash_it
         - dotfiles::inputrc
@@ -19,12 +19,12 @@ recipes:
         - dotfiles::kms
         - dotfiles::workspace
     mac_os_x:
-        - homebrew::heroku
-        - homebrew::watch
-        - homebrew::hub
-        - homebrew::gnu-tar
-        - homebrew::dnsmasq
-        - homebrew::gcc42
+        - applications::heroku
+        - applications::watch
+        - applications::hub
+        - applications::gnu-tar
+        - applications::dnsmasq
+        - applications::gcc42
         - applications::sequelpro
         - applications::virtualbox
         - applications::xquartz
@@ -35,12 +35,12 @@ recipes:
         - osxdefaults::set_terminal_profile
         ## kDeploy installation
         - dotfiles::kdeploy
-        - homebrew::postgresql
-        - homebrew::psycopg2
-        - homebrew::mysql
-        - homebrew::mysql_python
-        - homebrew::apache
-        - homebrew::php54
+        - applications::postgresql
+        - applications::psycopg2
+        - applications::mysql
+        - applications::mysql_python
+        - applications::apache
+        - applications::php54
         - osxdefaults::finder_unhide_home
         ## end kDeploy installation
         - osxdefaults::check_for_software_updates_daily
