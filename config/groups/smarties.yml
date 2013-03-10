@@ -1,21 +1,21 @@
 recipes:
     global:
-        - homebrew:bash4
+        - homebrew::bash4
         - homebrew::bash-completion
         - homebrew::coreutils
         - homebrew::findutils
         - homebrew::git
-        - homebrew::hub
         - homebrew::siege
-        - homebrew::watch
         - homebrew::wget
         - homebrew::pwgen
         - homebrew::xmlstarlet
         - homebrew::rsync
         - homebrew::pv
-        - homebrew::heroku
         - homebrew::htop
     mac_os_x:
+        - homebrew::heroku
+        - homebrew::watch
+        - homebrew::hub
         - homebrew::gnu-tar
         - homebrew::dnsmasq
         - homebrew::gcc42
