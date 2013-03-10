@@ -4,12 +4,6 @@ recipes:
     mac_os_x:
         - applications::1password
 attributes:
-    rvm:
-        user_installs:
-            -
-                user: vagrant
-                upgrade: head
-                default_ruby: 1.9.3-p385
     git:
         name: Vagrant
         email: roderik+vagrant@vanderveer.be
