@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # Run Kitchenplan.
 
-require "pathname"
+require 'pathname'
 
-if ENV["USER"] == "root"
+if ENV['USER'] == 'root'
   abort "Run this as a normal user, I'll sudo if I need to."
 end
 
@@ -28,7 +28,7 @@ require 'optparse'
 
 options = {}
 OptionParser.new do |opts|
-    opts.banner = "Usage: kitchenplan [options]"
+    opts.banner = 'Usage: kitchenplan [options]'
 
     opts.on("-d", "--debug", "Show debug information") do |debug|
         options[:debug] = debug
@@ -108,7 +108,7 @@ unless system("(gem spec bundler -v '~> 1.2.0' > /dev/null 2>&1) || sudo gem ins
 end
 
 bundle_command = ["bundle"]
-bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--path", ".bundle", "--no-cache"]
+bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--no-cache"]
 bundle_command << "--verbose" if options[:debug]
 bundle_command << "--quiet" unless options[:debug]
 warn bundle_command.join(" ") if options[:debug]
@@ -142,36 +142,13 @@ if options[:update_cookbooks]
 end
 
 # Generate the soloist config
-
-require 'yaml'
-require 'etc'
-default = YAML.load_file('config/default.yml')
-recipes = default["recipes"]
-attributes = default["attributes"]
-
-peopleconfig = "config/people/#{Etc.getlogin}.yml"
-if File.exist?(peopleconfig)
-    user = YAML.load_file(peopleconfig)
-    recipes = recipes + user["recipes"]
-    attributes = attributes.merge!(user["attributes"])
-    unless user["groups"].nil?
-        user["groups"].each do |group|
-            groupconfig = "config/groups/#{group}.yml"
-            if File.exist?(groupconfig)
-                group = YAML.load_file(groupconfig)
-                recipes = recipes + group["recipes"]
-                unless group["attributes"].nil?
-                   attributes = attributes.merge!(group["attributes"])
-                end
-            end
-        end
-    end
-end
-
-soloistrc = Hash.new
+$: << File.join(File.dirname(__FILE__), "/lib")
+require "kitchenplan/config"
+config = Kitchenplan::Config.new
+soloistrc = {}
 soloistrc["cookbook_paths"] = ["#{Dir.pwd}/vendor/cookbooks"]
-soloistrc["recipes"] = recipes
-soloistrc["node_attributes"] = attributes
+soloistrc["recipes"] = config.config['recipes']
+soloistrc["node_attributes"] = config.config['attributes']
 File.open("soloistrc", 'w') do |out|
     YAML.dump(soloistrc, out)
 end
