@@ -1,25 +1,24 @@
 recipes:
-    debian:
-        - homebrew::bash4
-    mac_os_x:
-        - homebrew::bash4
+    global:
+        - homebrew:bash4
         - homebrew::bash-completion
         - homebrew::coreutils
         - homebrew::findutils
         - homebrew::git
         - homebrew::hub
-        - homebrew::gnu-tar
         - homebrew::siege
         - homebrew::watch
         - homebrew::wget
         - homebrew::pwgen
-        - homebrew::dnsmasq
         - homebrew::xmlstarlet
-        - homebrew::gcc42
         - homebrew::rsync
         - homebrew::pv
         - homebrew::heroku
         - homebrew::htop
+    mac_os_x:
+        - homebrew::gnu-tar
+        - homebrew::dnsmasq
+        - homebrew::gcc42
         - rvm::user
         - applications::sequelpro
         - applications::virtualbox
