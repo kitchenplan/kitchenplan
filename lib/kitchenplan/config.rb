@@ -21,7 +21,7 @@ module Kitchenplan
     def detect_platform
         ohai = Ohai::System.new
         ohai.all_plugins
-        @platform = ohai[:platform]
+        @platform = ohai[:platform_family]
     end
 
     def parse_default_config
