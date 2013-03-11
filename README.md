@@ -32,7 +32,7 @@ Now, to get Kitchenplan on your computer, run the following commands:
 sudo mkdir -p /opt
 sudo chown -R $USER /opt
 cd /opt
-git clone git@github.com:kitchenplan/kitchenplan.git kitchenplan # or your version
+git clone https://github.com/kitchenplan/kitchenplan.git kitchenplan # or your version
 sudo ln -sf /opt/kitchenplan/kitchenplan /usr/bin/kitchenplan
 ```
 
