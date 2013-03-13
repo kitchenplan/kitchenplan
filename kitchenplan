@@ -104,7 +104,7 @@ if options[:update_cookbooks]
 end
 
 # Generate the soloist config
-$: << File.join(File.dirname(__FILE__), "/lib")
+$: << File.join(Pathname.new(__FILE__).realpath, "/..", "/lib")
 require "kitchenplan/config"
 config = Kitchenplan::Config.new
 soloistrc = {}
