@@ -83,7 +83,27 @@ end
 require "rubygems"
 require "bundler/setup"
 
+# Generate the soloist config
+$: << File.join(Pathname.new(__FILE__).realpath, "/..", "/lib")
+require "kitchenplan/config"
+config = Kitchenplan::Config.new
+soloistrc = {}
+soloistrc["cookbook_paths"] = ["#{Dir.pwd}/vendor/cookbooks"]
+soloistrc["recipes"] = config.config['recipes']
+soloistrc["node_attributes"] = config.config['attributes']
+File.open("soloistrc", 'w') do |out|
+    YAML.dump(soloistrc, out)
+end
+
 # Possibly updating the cookbooks
+
+if config.platform == "debian"
+    git_install_command = ["apt-get", "install", "git" ]
+    warn librarian_command.join(" ") if options[:debug]
+    unless system *git_install_command
+        abort "Can't install git. Run using --debug if you need more information."
+    end
+end
 
 unless File.exists?("vendor/cookbooks")
     librarian_command = ["bin/librarian-chef", "install", "--path=vendor/cookbooks", "--clean" ]
@@ -101,18 +121,6 @@ if options[:update_cookbooks]
     unless system *librarian_command
         abort "Can't update Chef cookbooks with librarian-chef. Run using --debug if you need more information."
     end
-end
-
-# Generate the soloist config
-$: << File.join(Pathname.new(__FILE__).realpath, "/..", "/lib")
-require "kitchenplan/config"
-config = Kitchenplan::Config.new
-soloistrc = {}
-soloistrc["cookbook_paths"] = ["#{Dir.pwd}/vendor/cookbooks"]
-soloistrc["recipes"] = config.config['recipes']
-soloistrc["node_attributes"] = config.config['attributes']
-File.open("soloistrc", 'w') do |out|
-    YAML.dump(soloistrc, out)
 end
 
 # Run soloist
