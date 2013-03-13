@@ -99,7 +99,7 @@ end
 
 if config.platform == "debian"
     git_install_command = ["apt-get", "install", "git" ]
-    warn librarian_command.join(" ") if options[:debug]
+    warn git_install_command.join(" ") if options[:debug]
     unless system *git_install_command
         abort "Can't install git. Run using --debug if you need more information."
     end
