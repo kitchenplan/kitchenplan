@@ -98,7 +98,7 @@ end
 # Possibly updating the cookbooks
 
 if config.platform == "debian"
-    git_install_command = ["sudo" ,"apt-get", "install", , "-y", "git" ]
+    git_install_command = ["sudo" ,"apt-get", "install", "-y", "git" ]
     warn git_install_command.join(" ") if options[:debug]
     unless system *git_install_command
         abort "Can't install git. Run using --debug if you need more information."
