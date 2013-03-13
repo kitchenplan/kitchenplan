@@ -12,7 +12,7 @@ recipes:
         - applications::rsync
         - applications::pv
         - applications::htop
-        - rvm::system
+        - applications::rvm
         - dotfiles::bash_it
         - dotfiles::inputrc
         - dotfiles::gitconfig
@@ -24,7 +24,6 @@ recipes:
         - applications::hub
         - applications::gnu-tar
         - applications::dnsmasq
-        - applications::gcc42
         - applications::sequelpro
         - applications::virtualbox
         - applications::xquartz
@@ -54,6 +53,6 @@ attributes:
     rvm:
         rubies:
             - 1.9.3-p385
-            - 2.0.0-p0
+#            - 2.0.0-p0
         upgrade: head
         default_ruby: 1.9.3-p385

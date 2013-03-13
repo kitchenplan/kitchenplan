@@ -62,16 +62,13 @@ attributes:
         name: Roderik van der Veer
         email: roderik@vanderveer.be
     osxdefaults:
-        computername: Thor
+        computername: Sinope
     dotfiles:
         projects:
-            kitchenplan:
-                - our-kitchenplan: git@github.com:kitchenplan/our-kitchenplan.git
-                - kunstmaan-kitchenplan: git@github.com:Kunstmaan/kitchenplan.git
             bundles:
                 - KunstmaanSentryBundle: git@github.com:Kunstmaan/KunstmaanSentryBundle.git
             devops:
                 - kms: git@github.com:Kunstmaan/kms.git
                 - kstrano: git@github.com:Kunstmaan/kStrano.git
         kdeploy:
-            hostname: thor.dev
+            hostname: sinope.dev
