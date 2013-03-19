@@ -84,7 +84,7 @@ require "rubygems"
 require "bundler/setup"
 
 # Generate the soloist config
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
+$: << File.join((File.expand_path("../", Pathname.new(__FILE__).realpath)), "/lib")
 require "kitchenplan/config"
 config = Kitchenplan::Config.new
 soloistrc = {}
