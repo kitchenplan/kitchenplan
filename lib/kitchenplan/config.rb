@@ -56,14 +56,17 @@ module Kitchenplan
             config['recipes'] |= group_config['recipes']['global'] || []
             config['recipes'] |= group_config['recipes'][@platform] || []
         end
-        config['recipes'] |= @people_config['recipes']['global'] || []
-        config['recipes'] |= @people_config['recipes'][@platform] || []
+        people_recipes = @people_config['recipes'] || {}
+        
+        config['recipes'] |= people_recipes['global'] || []
+        config['recipes'] |= people_recipes[@platform] || []
         config['attributes'] = {}
         config['attributes'].merge!(@default_config['attributes'])
         @group_configs.each do |group_name, group_config|
             config['attributes'].merge!(group_config['attributes'])
         end
-        config['attributes'].merge!(@people_config['attributes'])
+        people_attributes = @people_config['attributes'] || {}
+        config['attributes'].merge!(people_attributes)
         config
     end
 
