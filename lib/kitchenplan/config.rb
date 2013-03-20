@@ -57,7 +57,6 @@ module Kitchenplan
             config['recipes'] |= group_config['recipes'][@platform] || []
         end
         people_recipes = @people_config['recipes'] || {}
-        
         config['recipes'] |= people_recipes['global'] || []
         config['recipes'] |= people_recipes[@platform] || []
         config['attributes'] = {}
