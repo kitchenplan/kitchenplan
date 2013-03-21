@@ -1,23 +1,23 @@
 recipes:
     global:
         - applications::bash4
-        - applications::bash-completion
-        - applications::coreutils
-        - applications::findutils
-        - applications::git
-        - applications::siege
-        - applications::wget
-        - applications::pwgen
-        - applications::xmlstarlet
-        - applications::rsync
-        - applications::pv
-        - applications::htop
-        - applications::rvm
-        - dotfiles::bash_it
-        - dotfiles::inputrc
-        - dotfiles::gitconfig
-        - dotfiles::kms
-        - dotfiles::workspace
+        #- applications::bash-completion
+        #- applications::coreutils
+        #- applications::findutils
+        #- applications::git
+        #- applications::siege
+        #- applications::wget
+        #- applications::pwgen
+        #- applications::xmlstarlet
+        #- applications::rsync
+        #- applications::pv
+        #- applications::htop
+        #- applications::rvm
+        #- dotfiles::bash_it
+        #- dotfiles::inputrc
+        #- dotfiles::gitconfig
+        #- dotfiles::kms
+        #- dotfiles::workspace
     mac_os_x:
         - applications::heroku
         - applications::watch
@@ -49,14 +49,15 @@ recipes:
         - osxdefaults::enable_safari_debug_menu
         - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
     debian:
+        - applications::mysql
         ## kDeploy installation
-        - dotfiles::kdeploy
+        #- dotfiles::kdeploy
         ## end kDeplou installation
-        - applications::xvfb
-        - applications::nscd
-        - applications::pureftpd
-        - applications::ubuntu-desktop
-        - applications::pidgin
+        #- applications::xvfb
+        #- applications::nscd
+        #- applications::pureftpd
+        #- applications::ubuntu-desktop
+        #- applications::pidgin
 attributes:
     mysql_root_password: "password"
     rvm:
@@ -67,3 +68,6 @@ attributes:
         default_ruby: 1.9.3-p385
     postfix:
         domain: "kunstmaan.be"
+    percona:
+        server:
+            root_password: "password"
