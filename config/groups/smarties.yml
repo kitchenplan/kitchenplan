@@ -1,23 +1,23 @@
 recipes:
     global:
-        #- applications::bash4
-        #- applications::bash-completion
-        #- applications::coreutils
-        #- applications::findutils
-        #- applications::git
-        #- applications::siege
-        #- applications::wget
-        #- applications::pwgen
-        #- applications::xmlstarlet
-        #- applications::rsync
-        #- applications::pv
-        #- applications::htop
-        #- applications::rvm
-        #- dotfiles::bash_it
-        #- dotfiles::inputrc
-        #- dotfiles::gitconfig
-        #- dotfiles::kms
-        #- dotfiles::workspace
+        - applications::bash4
+        - applications::bash-completion
+        - applications::coreutils
+        - applications::findutils
+        - applications::git
+        - applications::siege
+        - applications::wget
+        - applications::pwgen
+        - applications::xmlstarlet
+        - applications::rsync
+        - applications::pv
+        - applications::htop
+        - applications::rvm
+        - dotfiles::bash_it
+        - dotfiles::inputrc
+        - dotfiles::gitconfig
+        - dotfiles::kms
+        - dotfiles::workspace
     mac_os_x:
         - applications::heroku
         - applications::watch
@@ -52,9 +52,11 @@ recipes:
         ## kDeploy installation
         - dotfiles::kdeploy
         ## end kDeplou installation
-        #- applications::xvfb
-        #- applications::ubuntu-desktop
-        #- applications::pidgin
+        - applications::xvfb
+        - applications::nscd
+        - applications::pureftpd
+        - applications::ubuntu-desktop
+        - applications::pidgin
 attributes:
     mysql_root_password: "password"
     rvm:
