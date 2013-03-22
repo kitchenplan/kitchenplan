@@ -42,6 +42,11 @@ recipes:
         - osxdefaults::enable_safari_debug_menu
         - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
     debian:
+        - applications::scheduler
+        - applications::nscd
+        - applciations::locales
+        - applciations::pureftpd
+        - applciations::xvfb
         - applications::ubuntu-desktop
         - applications::pidgin
         - applications::firefox
