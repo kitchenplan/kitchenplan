@@ -47,10 +47,10 @@ recipes:
         - applications::locales
         - applications::pureftpd
         - applications::xvfb
-        - applications::ubuntu-desktop
         - applications::pidgin
         - applications::firefox
         - applications::google-chrome
+        - applications::ubuntu-desktop
 attributes:
     mysql_root_password: "password"
     rvm:
