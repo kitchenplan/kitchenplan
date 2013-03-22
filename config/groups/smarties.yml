@@ -50,7 +50,7 @@ recipes:
         - applications::ubuntu-desktop
         - applications::pidgin
         - applications::firefox
-        - applications::google_chrome
+        - applications::google-chrome
 attributes:
     mysql_root_password: "password"
     rvm:
