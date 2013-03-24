@@ -17,7 +17,7 @@ GEM
       rest-client (>= 1.0.4, < 1.7.0)
       yajl-ruby (~> 1.1)
     erubis (2.7.0)
-    highline (1.6.15)
+    highline (1.6.16)
     ipaddress (0.8.0)
     json (1.7.7)
     librarian (0.0.26)
