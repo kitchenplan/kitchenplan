@@ -1,0 +1,60 @@
+recipes:
+    global:
+        - applications::bash4
+        - applications::bash-completion
+        - applications::coreutils
+        - applications::findutils
+        - applications::git
+        - applications::siege
+        - applications::wget
+        - applications::pwgen
+        - applications::xmlstarlet
+        - applications::rsync
+        - applications::pv
+        - applications::htop
+        - applications::rvm
+        - dotfiles::bash_it
+        - dotfiles::inputrc
+        - dotfiles::gitconfig
+        - dotfiles::kms
+        - dotfiles::workspace
+        - applications::composer
+        - applications::virtualbox
+        - applications::vagrant
+    mac_os_x:
+        - applications::heroku
+        - applications::watch
+        - applications::hub
+        - applications::gnu-tar
+        - applications::dnsmasq
+        - applications::sequelpro
+        - applications::xquartz
+        - applications::sublime_text
+        - applications::github_for_mac
+        - osxdefaults::set_terminal_profile
+        - osxdefaults::check_for_software_updates_daily
+        - osxdefaults::restart_automatically_if_the_computer_freezes
+        - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
+        - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
+        - osxdefaults::enable_safari_debug_menu
+        - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
+    debian:
+        - applications::performance_scheduler
+        - applications::nscd
+        - applications::locales
+        - applications::pureftpd
+        - applications::xvfb
+        - applications::pidgin
+        - applications::firefox
+        - applications::google-chrome
+        - applications::ubuntu-desktop
+attributes:
+    mysql_root_password: "password"
+    rvm:
+        rubies:
+            - 1.9.3-p385
+#            - 2.0.0-p0
+        upgrade: head
+        default_ruby: 1.9.3-p385
+    postfix:
+        domain: "kunstmaan.be"
