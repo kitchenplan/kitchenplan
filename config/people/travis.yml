@@ -17,7 +17,6 @@ recipes:
         - applications::iftop
         - applications::increase_shared_memory
         - applications::java
-        - applications::locales
         - applications::mysql
         - applications::mysql_python
         - applications::php54
@@ -38,6 +37,7 @@ recipes:
     debian:
         - applications::acl
         - applications::essentials
+        - applications::locales
         - applications::mysql_workbench
         - applications::newrelic
         - applications::nscd
