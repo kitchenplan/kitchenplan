@@ -34,6 +34,7 @@ recipes:
         - applications::xquartz
         - applications::sublime_text
         - applications::github_for_mac
+        - applications::mod_jk
         - osxdefaults::set_terminal_profile
         - osxdefaults::check_for_software_updates_daily
         - osxdefaults::restart_automatically_if_the_computer_freezes
