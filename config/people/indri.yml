@@ -2,23 +2,18 @@ groups:
     - smarties
 recipes:
     mac_os_x:
-        - applications::1password
-        - applications::bartender
         - applications::dropbox
-        - applications::evernote
-        - applications::istatmenus4
-        - applications::kaleidoscope
-        - applications::omnigraffle
-        - applications::things
-        - applications::tower
-        - applications::viscosity
         - applications::vlc
-        - applications::superduper
         - applications::alfred
-        - applications::totalfinder
-        - applications::omniplan
-        - applications::cord
-        - applications::rubymine
+        - applications::filezilla
+        - applications::codekit
+        - applications::nodejs
+        - applications::espresso
+        - applications::skype
+        - applications::imageoptim
+        - applications::imagealpha
+        - applications::hipchat
+        - applications::svgo
         - osxdefaults::disable_disk_image_verification
         - osxdefaults::disable_front_row
         - osxdefaults::disable_gatekeeper
@@ -59,10 +54,10 @@ recipes:
         - dotfiles::projects
 attributes:
     git:
-        name: Roderik van der Veer
-        email: roderik@vanderveer.be
+        name: Indri Kenens
+        email: indri.kenens@kunstmaan.be
     osxdefaults:
-        computername: Sinope
+        computername: echo
     dotfiles:
         projects:
             bundles:
@@ -71,4 +66,4 @@ attributes:
                 - kms: git@github.com:Kunstmaan/kms.git
                 - kstrano: git@github.com:Kunstmaan/kStrano.git
         kdeploy:
-            hostname: sinope.dev
+            hostname: echo.dev
