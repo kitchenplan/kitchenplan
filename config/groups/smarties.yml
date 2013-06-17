@@ -56,9 +56,9 @@ attributes:
     mysql_root_password: "password"
     rvm:
         rubies:
-            - 1.9.3-p385
-#            - 2.0.0-p0
+            - 1.9.3-p429
+            - 2.0.0-p195
         upgrade: head
-        default_ruby: 1.9.3-p385
+        default_ruby: 1.9.3-p429
     postfix:
         domain: "kunstmaan.be"
