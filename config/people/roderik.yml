@@ -56,6 +56,8 @@ recipes:
         - osxdefaults::finder_disable_the_warning_before_emptying_the_trash
         - osxdefaults::finder_disable_the_warning_when_changing_a_file_extension
         - osxdefaults::finder_search_the_current_folder_by_default
+        - osxdefaults::menu_add_battery_percentage
+        - osxdefaults::menu_show_clock_with_date
         - dotfiles::projects
 attributes:
     git:
