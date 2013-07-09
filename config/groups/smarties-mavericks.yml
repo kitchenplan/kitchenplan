@@ -18,7 +18,7 @@ recipes:
         - dotfiles::kms
         - dotfiles::workspace
         ## kDeploy installation
-        - dotfiles::kdeploy
+        - dotfiles::kdeploy-mavericks
         ## end kDeploy installation
         - applications::composer
         - applications::virtualbox
