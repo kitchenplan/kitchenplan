@@ -70,7 +70,7 @@ unless system("(gem spec bundler -v '~> 1.2.0' > /dev/null 2>&1) || sudo gem ins
 end
 
 bundle_command = ["bundle"]
-bundle_command = bundle_command + [ "install", "--deployment", "--local", "--binstubs=bin", "--no-cache"]
+bundle_command = bundle_command + [ "install", "--binstubs=bin"]
 bundle_command << "--verbose" if options[:debug]
 bundle_command << "--quiet" unless options[:debug]
 warn bundle_command.join(" ") if options[:debug]

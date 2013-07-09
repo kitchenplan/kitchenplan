@@ -1,8 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    archive-tar-minitar (0.5.2)
-    chef (11.4.0)
+    chef (11.6.0.rc.1)
       erubis
       highline (>= 1.6.9)
       json (>= 1.4.4, <= 1.7.7)
@@ -17,22 +16,20 @@ GEM
       rest-client (>= 1.0.4, < 1.7.0)
       yajl-ruby (~> 1.1)
     erubis (2.7.0)
-    highline (1.6.16)
+    highline (1.6.19)
     ipaddress (0.8.0)
     json (1.7.7)
-    librarian (0.0.26)
-      archive-tar-minitar (>= 0.5.2)
-      chef (>= 0.10)
+    librarian (0.1.0)
       highline
       thor (~> 0.15)
-    mime-types (1.21)
+    mime-types (1.23)
     mixlib-authentication (1.3.0)
       mixlib-log
     mixlib-cli (1.3.0)
     mixlib-config (1.1.2)
-    mixlib-log (1.4.1)
+    mixlib-log (1.6.0)
     mixlib-shellout (1.1.0)
-    net-ssh (2.6.6)
+    net-ssh (2.6.8)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     net-ssh-multi (1.1)
@@ -51,13 +48,14 @@ GEM
     soloist (0.9.7)
       chef
     systemu (2.5.2)
-    thor (0.17.0)
+    thor (0.18.1)
     yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  chef (~> 11.6.0.rc.1)
   librarian (>= 0.0.26)
   ohai (>= 6.16.0)
   soloist (~> 0.9.7)
