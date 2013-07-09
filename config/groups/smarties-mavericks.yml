@@ -1,0 +1,48 @@
+recipes:
+    global:
+        - applications::bash4
+        - applications::bash-completion
+        - applications::coreutils
+        - applications::findutils
+        - applications::git
+        - applications::siege
+        - applications::wget
+        - applications::pwgen
+        - applications::xmlstarlet
+        - applications::rsync
+        - applications::pv
+        - applications::htop
+        - dotfiles::bash_it
+        - dotfiles::inputrc
+        - dotfiles::gitconfig
+        - dotfiles::kms
+        - dotfiles::workspace
+        ## kDeploy installation
+        - dotfiles::kdeploy
+        ## end kDeploy installation
+        - applications::composer
+        - applications::virtualbox
+        - applications::vagrant
+    mac_os_x:
+        - applications::heroku
+        - applications::watch
+        - applications::hub
+        - applications::gnu-tar
+        - applications::dnsmasq
+        - applications::sequelpro
+        - applications::xquartz
+        - applications::sublime_text
+        - applications::github_for_mac
+        - applications::sourcetree
+        - applications::mod_jk
+        - osxdefaults::set_terminal_profile
+        - osxdefaults::check_for_software_updates_daily
+        - osxdefaults::restart_automatically_if_the_computer_freezes
+        - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
+        - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
+        - osxdefaults::enable_safari_debug_menu
+        - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
+attributes:
+    mysql_root_password: "password"
+    postfix:
+        domain: "kunstmaan.be"
