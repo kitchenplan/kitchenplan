@@ -62,7 +62,7 @@ module Kitchenplan
         config['attributes'] = {}
         config['attributes'].merge!(@default_config['attributes'])
         @group_configs.each do |group_name, group_config|
-            config['attributes'].merge!(group_config['attributes'])
+            config['attributes'].merge!(group_config['attributes']) unless group_config['attributes'].nil?
         end
         people_attributes = @people_config['attributes'] || {}
         config['attributes'].merge!(people_attributes)
