@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    archive-tar-minitar (0.5.2)
     chef (11.6.0.rc.1)
       erubis
       highline (>= 1.6.9)
@@ -22,6 +23,10 @@ GEM
     librarian (0.1.0)
       highline
       thor (~> 0.15)
+    librarian-chef (0.0.1)
+      archive-tar-minitar (>= 0.5.2)
+      chef (>= 0.10)
+      librarian (~> 0.1.0)
     mime-types (1.23)
     mixlib-authentication (1.3.0)
       mixlib-log
@@ -56,6 +61,6 @@ PLATFORMS
 
 DEPENDENCIES
   chef (~> 11.6.0.rc.1)
-  librarian (>= 0.0.26)
+  librarian-chef
   ohai (>= 6.16.0)
   soloist (~> 0.9.7)
