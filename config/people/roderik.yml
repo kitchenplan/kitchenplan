@@ -1,5 +1,3 @@
-groups:
-    - smarties-mavericks
 recipes:
     mac_os_x:
         - applications::1password
