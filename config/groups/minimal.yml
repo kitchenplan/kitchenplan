@@ -1,9 +1,6 @@
 recipes:
     global:
-        - applications::bash4
         - applications::bash-completion
-        - applications::coreutils
-        - applications::findutils
         - applications::git
         - applications::siege
         - applications::wget
@@ -17,9 +14,6 @@ recipes:
         - dotfiles::gitconfig
         - dotfiles::kms
         - dotfiles::workspace
-        ## kDeploy installation
-        - dotfiles::kdeploy-mavericks
-        ## end kDeploy installation
         - applications::composer
         - applications::virtualbox
         - applications::vagrant
@@ -27,14 +21,13 @@ recipes:
         - applications::heroku
         - applications::watch
         - applications::hub
+        - applications::git-flow
         - applications::gnu-tar
         - applications::dnsmasq
         - applications::sequelpro
         - applications::xquartz
-        - applications::sublime_text
         - applications::github_for_mac
         - applications::sourcetree
-        - applications::mod_jk
         - osxdefaults::set_terminal_profile
         - osxdefaults::check_for_software_updates_daily
         - osxdefaults::restart_automatically_if_the_computer_freezes

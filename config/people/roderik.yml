@@ -1,7 +1,8 @@
+groups:
+    - minimal
 recipes:
     mac_os_x:
         - applications::1password
-        - applications::bartender
         - applications::dropbox
         - applications::evernote
         - applications::istatmenus4
@@ -14,9 +15,13 @@ recipes:
         - applications::superduper
         - applications::alfred
         - applications::totalfinder
-        - applications::omniplan
         - applications::cord
         - applications::rubymine
+        - applications::gcc42
+        - applications::hipchat
+        - applications::nodejs
+        - applications::spotify
+        - applications::ssh_config
         - osxdefaults::disable_disk_image_verification
         - osxdefaults::disable_front_row
         - osxdefaults::disable_gatekeeper
