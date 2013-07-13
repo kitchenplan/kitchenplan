@@ -62,6 +62,7 @@ recipes:
         - osxdefaults::menu_add_battery_percentage
         - osxdefaults::menu_show_clock_with_date
         - dotfiles::projects
+        - dotfiles::vim
 attributes:
     git:
         name: Roderik van der Veer
@@ -77,3 +78,10 @@ attributes:
                 - kstrano: git@github.com:Kunstmaan/kStrano.git
         kdeploy:
             hostname: sinope.dev
+        vim:
+            bundle:
+                - sleuth: git://github.com/tpope/vim-sleuth.git
+                - sensible: git://github.com/tpope/vim-sensible.git
+                - gitgutter: git://github.com/airblade/vim-gitgutter.git
+                - airline: https://github.com/bling/vim-airline
+                - syntastic: git://github.com/scrooloose/syntastic.git
