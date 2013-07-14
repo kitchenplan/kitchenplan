@@ -64,6 +64,7 @@ recipes:
         - dotfiles::projects
         - dotfiles::vim
         - applications::homebrewcask
+        - applications::sublime_text_3
 attributes:
     git:
         name: Roderik van der Veer
