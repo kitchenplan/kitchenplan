@@ -61,3 +61,7 @@ More questions, ping me at [Twitter @r0derik](http://twitter.com/r0derik).
 ### Acknowledgements
 
 This project is inspired and built by using components and idea's from: Boxen, pivotal_workstation, Opscode cookbooks, and more. Please take any imitation as a the highest form of flattery. If you feel the source or acknowledgements are not sufficient, please let me know how you want it to be resolved.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kitchenplan/kitchenplan/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
