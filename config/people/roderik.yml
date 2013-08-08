@@ -1,5 +1,5 @@
 groups:
-    - minimal
+    - smarties
 recipes:
     mac_os_x:
         - applications::1password
@@ -16,7 +16,6 @@ recipes:
         - applications::alfred
         - applications::totalfinder
         - applications::cord
-        - applications::rubymine
         - applications::gcc42
         - applications::hipchat
         - applications::nodejs
@@ -87,4 +86,4 @@ attributes:
                 - gitgutter: git://github.com/airblade/vim-gitgutter.git
                 - airline: https://github.com/bling/vim-airline
                 - syntastic: git://github.com/scrooloose/syntastic.git
-                - nerdtree: https://github.com/scrooloose/nerdtree.git  
+                - nerdtree: https://github.com/scrooloose/nerdtree.git
