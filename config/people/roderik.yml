@@ -1,6 +1,9 @@
 groups:
     - smarties
 recipes:
+    global:
+        - dotfiles::projects
+        - dotfiles::vim
     mac_os_x:
         - applications::1password
         - applications::dropbox
@@ -16,6 +19,7 @@ recipes:
         - applications::alfred
         - applications::totalfinder
         - applications::cord
+        - applications::transmit
         - applications::gcc42
         - applications::hipchat
         - applications::nodejs
@@ -60,8 +64,6 @@ recipes:
         - osxdefaults::finder_search_the_current_folder_by_default
         - osxdefaults::menu_add_battery_percentage
         - osxdefaults::menu_show_clock_with_date
-        - dotfiles::projects
-        - dotfiles::vim
         - applications::homebrewcask
         - applications::sublime_text_3
 attributes:
