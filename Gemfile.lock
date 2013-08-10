@@ -60,7 +60,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  chef (~> 11.6.0.rc.1)
+  chef
   librarian-chef
-  ohai (>= 6.16.0)
+  ohai
   soloist (~> 0.9.7)
