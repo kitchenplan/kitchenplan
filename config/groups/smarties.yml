@@ -18,21 +18,18 @@ recipes:
         - dotfiles::gitconfig
         - dotfiles::kms
         - dotfiles::workspace
-        ## kDeploy installation
         - dotfiles::kdeploy
-        ## end kDeploy installation
         - applications::composer
         - applications::virtualbox
         - applications::vagrant
+        - dotfiles::vim
     mac_os_x:
         - applications::heroku
         - applications::watch
         - applications::hub
         - applications::gnu-tar
-        - applications::dnsmasq
         - applications::sequelpro
         - applications::xquartz
-        - applications::sublime_text
         - applications::github_for_mac
         - applications::mod_jk
         - osxdefaults::set_terminal_profile
@@ -56,9 +53,9 @@ attributes:
     mysql_root_password: "password"
     rvm:
         rubies:
-            - 1.9.3-p429
-            - 2.0.0-p195
+            - 1.9.3-p448
+            - 2.0.0-p247
         upgrade: head
-        default_ruby: 1.9.3-p429
+        default_ruby: 1.9.3-p448
     postfix:
         domain: "kunstmaan.be"
