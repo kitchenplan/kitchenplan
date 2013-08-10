@@ -3,7 +3,6 @@ groups:
 recipes:
     global:
         - dotfiles::projects
-        - dotfiles::vim
     mac_os_x:
         - applications::1password
         - applications::dropbox
@@ -67,6 +66,8 @@ recipes:
         - applications::homebrewcask
         - applications::sublime_text_3
 attributes:
+    kdeploydeps:
+        php: php55
     git:
         name: Roderik van der Veer
         email: roderik@vanderveer.be
