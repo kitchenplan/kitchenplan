@@ -24,6 +24,7 @@ recipes:
         - applications::vagrant
         - applications::grunt-cli
         - applications::bower
+        - applications::kstrano
         - dotfiles::vim
     mac_os_x:
         - applications::heroku
