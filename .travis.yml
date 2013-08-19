@@ -1,2 +1,2 @@
-language: objective-c
+#language: objective-c
 script: "./kitchenplan"
