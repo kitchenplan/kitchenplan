@@ -22,6 +22,8 @@ recipes:
         - applications::composer
         - applications::virtualbox
         - applications::vagrant
+        - applications::grunt-cli
+        - applications::bower
         - dotfiles::vim
     mac_os_x:
         - applications::heroku
