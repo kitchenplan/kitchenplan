@@ -25,10 +25,5 @@ recipes:
         - osxdefaults::save_to_disk_not_to_iCloud_by_default
         - osxdefaults::tap_to_click
         - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
-        - drivers::xerox550
 attributes:
-    drivers:
-        xerox: 172.18.19.67
-    osxdefaults:
-        loginmessage: Property of Kunstmaan NV - 016 300 780 - hello@kunstmaan.be
-
+    
