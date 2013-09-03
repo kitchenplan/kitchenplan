@@ -2,12 +2,11 @@ recipes:
     global:
         - applications::create_var_chef_cache
     mac_os_x:
-        - applications::google-chrome
         - applications::firefox
-        - applications::java
-        - applications::vlc
         - applications::flash
-        - applications::adobe_reader
+        - applications::google-chrome-canary
+        - applications::java
+        - applications::vmware_fusion
         - osxdefaults::add_note_to_loginscreen
         - osxdefaults::disable_auto-correct
         - osxdefaults::enable_subpixel_font_rendering_on_non-apple_lcds
