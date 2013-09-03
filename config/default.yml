@@ -25,5 +25,7 @@ recipes:
         - osxdefaults::save_to_disk_not_to_iCloud_by_default
         - osxdefaults::tap_to_click
         - osxdefaults::turn_off_keyboard_illumination_when_computer_is_not_used_for_5_minutes
+        - osxdefaults::set_computer_name
 attributes:
-    
+    osxdefaults:
+        computername: mbpr
