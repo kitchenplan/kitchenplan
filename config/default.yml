@@ -28,4 +28,4 @@ recipes:
         - osxdefaults::set_computer_name
 attributes:
     osxdefaults:
-        computername: mbpr
+        computername: cloud

@@ -1,3 +1,4 @@
 recipes:
-	mac_os_x:
-		- applications::tower
+    mac_os_x:
+        - applications::tower
+        - applications::handbrake
