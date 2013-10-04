@@ -1,5 +1,7 @@
 recipes:
     global:
         - applications::create_var_chef_cache
+        - applications::google-chrome
+        - applications::firefox
     mac_os_x:
 attributes:
