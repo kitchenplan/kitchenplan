@@ -1,0 +1,3 @@
+recipes:
+    global:
+        - applications::oh-my-zsh

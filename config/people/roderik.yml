@@ -1,4 +1,6 @@
 groups:
+    - bash
+    - zsh
 recipes:
     global:
     mac_os_x:
