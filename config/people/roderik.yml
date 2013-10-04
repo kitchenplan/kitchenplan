@@ -1,6 +1,7 @@
 groups:
     - bash
     - zsh
+    - developer
 recipes:
     global:
     mac_os_x:
