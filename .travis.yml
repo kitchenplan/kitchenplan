@@ -1,4 +1,2 @@
 language: objective-c
-rvm:
-  - 2.0.0
 script: "./kitchenplan -d"
