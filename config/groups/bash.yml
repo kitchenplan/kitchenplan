@@ -3,3 +3,4 @@ recipes:
         - applications::bash4
         - applications::bash-completion
         - dotfiles::bash_it
+        - dotfiles::inputrc

@@ -1,6 +1,5 @@
 groups:
     - bash
-    - zsh
     - developer
 recipes:
     global:

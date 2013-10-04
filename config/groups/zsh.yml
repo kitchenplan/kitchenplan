@@ -1,3 +1,0 @@
-recipes:
-    global:
-        - dotfiles::oh-my-zsh
