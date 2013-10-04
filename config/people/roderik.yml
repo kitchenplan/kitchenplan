@@ -4,9 +4,7 @@ recipes:
     global:
         - dotfiles::projects
     mac_os_x:
-        - applications::1password
         - applications::dropbox
-        - applications::evernote
         - applications::istatmenus4
         - applications::kaleidoscope
         - applications::omnigraffle
@@ -14,11 +12,9 @@ recipes:
         - applications::tower
         - applications::viscosity
         - applications::vlc
-        - applications::superduper
         - applications::alfred
         - applications::totalfinder
         - applications::cord
-        - applications::transmit
         - applications::gcc42
         - applications::hipchat
         - applications::nodejs
@@ -66,7 +62,7 @@ recipes:
         - applications::sublime_text_3
 attributes:
     kdeploydeps:
-        php: php55
+        php: php54
     git:
         name: Roderik van der Veer
         email: roderik@vanderveer.be
