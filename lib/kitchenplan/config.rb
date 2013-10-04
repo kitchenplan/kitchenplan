@@ -60,7 +60,7 @@ module Kitchenplan
         config['recipes'] |= people_recipes['global'] || []
         config['recipes'] |= people_recipes[@platform] || []
         config['attributes'] = {}
-        config['attributes'].merge!(@default_config['attributes'])
+        config['attributes'].merge!(@default_config['attributes'] || {})
         @group_configs.each do |group_name, group_config|
             config['attributes'].merge!(group_config['attributes']) unless group_config['attributes'].nil?
         end
