@@ -1,10 +1,6 @@
 groups:
-    - bash
-    - developer
-    - smartie
 recipes:
     global:
-        - dotfiles::sshconfig
     mac_os_x:
         - applications::dropbox
         - applications::istatmenus4
@@ -58,10 +54,6 @@ recipes:
 attributes:
     kdeploydeps:
 	php: php54
-    git:
-        name: Roderik van der Veer
-        email: roderik@vanderveer.be
-    osxdefaults:
         computername: Sinope
     dotfiles:
         vimusers:
@@ -80,8 +72,6 @@ attributes:
     git:
         name: Roderik van der Veer
         email: roderik.van.der.veer@kunstmaan.be
-    osxdefaults:
-        computername: Mir
     authorization:
         sudo:
             users:
