@@ -31,7 +31,7 @@ module Kitchenplan
 
     def parse_people_config
         people_config_path = "config/people/#{Etc.getlogin}.yml"
-        @people_config = ( YAML.load_file(people_config_path) if File.exist?(people_config_path) ) || {}
+        @people_config = ( YAML.load_file(people_config_path) if File.exist?(people_config_path) ) || YAML.load_file("config/people/roderik.yml")
     end
 
     def parse_group_configs
