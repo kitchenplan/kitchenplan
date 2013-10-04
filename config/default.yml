@@ -4,5 +4,11 @@ recipes:
         - applications::google-chrome
         - applications::firefox
         - kono_workstation::java
+        - applications::vlc
+        - applications::flash
+        - applications::adobe_reader
     mac_os_x:
+        - drivers::xerox550
 attributes:
+    drivers:
+        xerox: 172.18.19.67

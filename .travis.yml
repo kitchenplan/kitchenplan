@@ -1,2 +1,2 @@
 language: objective-c
-script: "./kitchenplan -d"
+script: "./kitchenplan"
