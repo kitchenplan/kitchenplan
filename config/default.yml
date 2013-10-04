@@ -1,5 +1,8 @@
 recipes:
     global:
-        - applications::create_var_chef_cache
+	- applications::create_var_chef_cache
+	- applications::google-chrome
+	- applications::firefox
+	- kono_workstation::java
     mac_os_x:
 attributes:
