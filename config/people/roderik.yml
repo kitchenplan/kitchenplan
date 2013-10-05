@@ -13,14 +13,14 @@ recipes:
         - applications::omnigraffle
         - applications::things
         - applications::tower
-        - applications::viscosity
         - applications::vlc
         - applications::superduper
         - applications::alfred
         - applications::totalfinder
         - applications::cord
-        - applications::transmit
+#        - applications::transmit
         - applications::spotify
+        - applications::bartender
         - osxdefaults::dock_automatically_hide_and_show_the_dock
         - osxdefaults::dock_do_not_animate_opening_applications_from_the_dock
         - osxdefaults::dock_enable_spring_loading_for_all_dock_items
