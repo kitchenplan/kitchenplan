@@ -25,7 +25,7 @@ recipes:
         - applications::imagealpha
         - applications::svgo
         - applications::sublime_text_3
-        - applications::phpstormF
+        - applications::phpstorm
     mac_os_x:
         - osxdefaults::set_terminal_profile
         - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
