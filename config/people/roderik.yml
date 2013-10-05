@@ -40,3 +40,6 @@ attributes:
         email: roderik@vanderveer.be
     osxdefaults:
         computername: Sinope
+    dotfiles:
+        kdeploy:
+            hostname: sinope.dev

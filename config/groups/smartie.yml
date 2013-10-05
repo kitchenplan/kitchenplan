@@ -2,7 +2,13 @@ recipes:
     global:
         - dotfiles::kms
         - dotfiles::workspace
-#        - dotfiles::kdeploy
+        - applications::postgresql
+        - applications::psycopg2
+        - applications::mysql
+        - applications::mysql_python
+        - applications::apache
+        - applications::php54
+        - dotfiles::kdeploy
     mac_os_x:
         - applications::hipchat
         - osxdefaults::disable_disk_image_verification
@@ -28,6 +34,15 @@ recipes:
         - osxdefaults::finder_disable_the_warning_before_emptying_the_trash
         - osxdefaults::finder_disable_the_warning_when_changing_a_file_extension
         - osxdefaults::finder_search_the_current_folder_by_default
+        - osxdefaults::finder_unhide_home
+    debian:
+        - root_ssh_agent::env_keep
+        - root_ssh_agent::ppid
+        - applications::essentials
+        - applications::mysql_workbench
+        - applications::server_tuning
+        - applications::postfix
+        - applications::java
 attributes:
     mysql_root_password: "password"
     postfix:
