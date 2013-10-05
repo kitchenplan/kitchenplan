@@ -25,7 +25,7 @@ recipes:
         - applications::imagealpha
         - applications::svgo
         - applications::sublime_text_3
-        - applications::phpstorm
+        - applications::phpstormF
     mac_os_x:
         - osxdefaults::set_terminal_profile
         - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
@@ -40,13 +40,3 @@ recipes:
         - applications::xvfb
         - applications::pidgin
         - applications::ubuntu-desktop
-attributes:
-    dotfiles:
-        vim:
-            bundle:
-                - sleuth: git://github.com/tpope/vim-sleuth.git
-                - sensible: git://github.com/tpope/vim-sensible.git
-                - gitgutter: git://github.com/airblade/vim-gitgutter.git
-                - airline: https://github.com/bling/vim-airline
-                - syntastic: git://github.com/scrooloose/syntastic.git
-                - nerdtree: https://github.com/scrooloose/nerdtree.git
