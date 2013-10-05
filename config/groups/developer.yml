@@ -16,9 +16,37 @@ recipes:
         - applications::git-flow
         - applications::sass
         - applications::siege
+        - applications::nodejs
+        - applications::ssh_config
+        - dotfiles::vim
+        - applications::codekit
+        - applications::espresso
+        - applications::imageoptim
+        - applications::imagealpha
+        - applications::svgo
+        - applications::sublime_text_3
+        - applications::phpstorm
     mac_os_x:
         - osxdefaults::set_terminal_profile
         - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
         - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
         - osxdefaults::enable_safari_debug_menu
         - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
+    debian:
+        - applications::performance_scheduler
+        - applications::nscd
+        - applications::locales
+        - applications::pureftpd
+        - applications::xvfb
+        - applications::pidgin
+        - applications::ubuntu-desktop
+attributes:
+    dotfiles:
+        vim:
+            bundle:
+                - sleuth: git://github.com/tpope/vim-sleuth.git
+                - sensible: git://github.com/tpope/vim-sensible.git
+                - gitgutter: git://github.com/airblade/vim-gitgutter.git
+                - airline: https://github.com/bling/vim-airline
+                - syntastic: git://github.com/scrooloose/syntastic.git
+                - nerdtree: https://github.com/scrooloose/nerdtree.git
