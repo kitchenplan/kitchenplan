@@ -4,7 +4,6 @@ recipes:
         - applications::wget
         - applications::pwgen
         - applications::xmlstarlet
-        - applications::rsync
         - applications::pv
         - applications::htop
         - dotfiles::gitconfig
