@@ -7,7 +7,7 @@ recipes:
         - applications::mysql
         - applications::mysql_python
         - applications::apache
-        - applications::php54
+        - applications::php55
         - dotfiles::kdeploy
     mac_os_x:
         - applications::hipchat
