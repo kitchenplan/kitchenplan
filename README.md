@@ -12,9 +12,7 @@ I myself will use this version, so you can learn from my config files. But you b
 
 ### Getting started as a user
 
-To get started, open up the App Store application and install the latest XCode. After XCode is installed, go to the Preferences and install the Command Line Tools. At this point you have both a compiler and a GIT binary, so we can go to the next step.
-
-![Installing Command Line Tools](http://vanderveer.be/images/2012-04-21/Xcode-Downloads.png)
+To get started, install the latest XCode (5.0.1 at this point) and the latest CLT from Apple. This release is fully compatible with OSX 10.9 Mavericks.
 
 If the repo for your organisation is private, continue with setting up your SSH keys. Open up a Terminal window and run ```ssh-keygen```. After this command finishes, run ```cat ~/.ssh/id_rsa.pub``` and copy the output. Put this in your Github account or where you need your private key in your repo hosting of your choice.
 
@@ -28,7 +26,7 @@ git clone https://github.com/kitchenplan/kitchenplan.git kitchenplan # or your v
 cd kitchenplan
 ```
 
-Before you run the ```./kitchenplan``` command, first create a custom config file. The config system will always start of with ```default.yml```. This will contain the recipes for every person in your organisation. Next it it will look at the file ```yourusername.yml``` (with the username logged in on the computer as yourusername) for your custom settings. Ofcourse there will be a lot of shared config when your organisation has departments of different types of personel. So you can define group config files and assign one or more groups to a user. The ```roderik.yml``` ([found here](https://github.com/kitchenplan/kitchenplan/blob/master/config/people/roderik.yml)) is my personal config file, the ```travis.yml``` ([found here](https://github.com/kitchenplan/kitchenplan/blob/master/config/people/travis.yml)) is a full example, with both OSX and Ubuntu supported.
+Before you run the ```./kitchenplan``` command, first create a custom config file. The config system will always start of with ```default.yml```. This will contain the recipes for every person in your organisation. Next it it will look at the file ```yourusername.yml``` (with the username logged in on the computer as yourusername) for your custom settings. Ofcourse there will be a lot of shared config when your organisation has departments of different types of personel. So you can define group config files and assign one or more groups to a user. The ```roderik.yml``` ([found here](https://github.com/kitchenplan/kitchenplan/blob/master/config/people/roderik.yml)) is my personal config file and it will fall back to this config if you don't have a personal file.
 
 When you are done with that, run ```kitchenplan``` and wait for a while. After the command finishes, reboot your computer and you are good to go.
 
@@ -61,7 +59,3 @@ More questions, ping me at [Twitter @r0derik](http://twitter.com/r0derik).
 ### Acknowledgements
 
 This project is inspired and built by using components and idea's from: Boxen, pivotal_workstation, Opscode cookbooks, and more. Please take any imitation as a the highest form of flattery. If you feel the source or acknowledgements are not sufficient, please let me know how you want it to be resolved.
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kitchenplan/kitchenplan/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
