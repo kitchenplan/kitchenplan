@@ -9,25 +9,25 @@ recipes:
         - dotfiles::gitconfig
         - applications::grunt-cli
         - applications::bower
-        - applications::watch
-        - applications::gnu-tar
-        - applications::sequelpro
-        - applications::sourcetree
         - applications::git-flow
         - applications::sass
         - applications::siege
         - applications::nodejs
         - applications::ssh_config
         - dotfiles::vim
-        - applications::codekit
-        - applications::espresso
+        - applications::composer
+    mac_os_x:
         - applications::imageoptim
         - applications::imagealpha
         - applications::svgo
         - applications::sublime_text_3
         - applications::phpstorm
-        - applications::composer
-    mac_os_x:
+        - applications::codekit
+        - applications::espresso
+        - applications::watch
+        - applications::gnu-tar
+        - applications::sequelpro
+        - applications::sourcetree
         - osxdefaults::set_terminal_profile
         - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
         - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
