@@ -53,8 +53,17 @@ end.parse!
 
 # Bootstrapping dependencies
 
-unless system("(gem spec bundler -v > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri")
-    abort "Failed to install bundler"
+if File.exist? '/etc/redhat-release'
+    unless system("(gem spec -q bundler > /dev/null 2>&1) || sudo yum install -y rubygem-bundler")
+        abort "Failed to install bundler"
+    end
+    unless system("(rpm -qi ruby-devel > /dev/null 2>&1) || sudo yum install -y ruby-devel")
+        abort "Failed to install ruby-devel"
+    end
+else
+    unless system("(gem spec bundler -v > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri")
+        abort "Failed to install bundler"
+    end
 end
 
 bundle_command = ["sudo", "bundle"]
