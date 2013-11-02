@@ -130,6 +130,7 @@ exit 0 unless options[:chef]
 
 chef_command = ["bin/chef-solo"]
 chef_command << "--log_level debug" if options[:debug]
+chef_command << "-c 'solo.rb'"
 chef_command << "-j kitchenplan-attributes.json"
 chef_command << "-o #{config.config['recipes'].join(",")}"
 warn chef_command.join(" ") if options[:debug]
