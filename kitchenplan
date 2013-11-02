@@ -94,7 +94,7 @@ File.open("kitchenplan-attributes.json", 'w') do |out|
 end
 
 File.open("solo.rb", 'w') do |out|
-    out.write("cookbook_path #{Dir.pwd}/cookbooks")
+    out.write("cookbook_path      [ \"#{Dir.pwd}/cookbooks\" ]")
 end
 
 # Possibly updating the cookbooks
