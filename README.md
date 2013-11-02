@@ -12,7 +12,7 @@ I myself will use this version, so you can learn from my config files. But you b
 
 ### Getting started as a user
 
-To get started, install the latest XCode (5.0.1 at this point) and the latest CLT from Apple. This release is fully compatible with OSX 10.9 Mavericks.
+To get started, install the latest XCode (5.0.1 at this point) and the latest CLT from Apple. Take care, you neet BOTH! This release is fully compatible with OSX 10.9 Mavericks.
 
 If the repo for your organisation is private, continue with setting up your SSH keys. Open up a Terminal window and run ```ssh-keygen```. After this command finishes, run ```cat ~/.ssh/id_rsa.pub``` and copy the output. Put this in your Github account or where you need your private key in your repo hosting of your choice.
 
