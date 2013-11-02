@@ -8,3 +8,6 @@
 .idea
 .vagrant
 Gemfile.lock
+/cookbooks
+kitchenplan-attributes.json
+/nodes
