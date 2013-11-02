@@ -128,6 +128,6 @@ chef_command << "--log_level debug" if options[:debug]
 chef_command << "-j kitchenplan-attributes.json"
 chef_command << "-o #{config.config['recipes'].join(",")}"
 warn chef_command.join(" ") if options[:debug]
-unless system("sudo -E bash-c '#{chef_command.join(" ")}'")
+unless system("sudo -E bash -c '#{chef_command.join(" ")}'")
     abort "There was a problem running chef. Run using --debug for more information"
 end
