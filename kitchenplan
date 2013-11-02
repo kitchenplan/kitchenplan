@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # Run Kitchenplan.
 
+export RUBYOPT='-Ku'
+
 require 'pathname'
 
 if ENV['USER'] == 'root'
@@ -100,7 +102,7 @@ if config.platform == "debian"
     end
 end
 
-unless File.exists?("vendor/cookbooks")
+unless File.exists?("cookbooks")
     librarian_command = ["bin/librarian-chef", "install", "--clean" ]
     librarian_command << "--verbose" if options[:debug]
     librarian_command << "--quiet" unless options[:debug]
@@ -126,8 +128,6 @@ chef_command << "--log_level debug" if options[:debug]
 chef_command << "-j kitchenplan-attributes.json"
 chef_command << "-o"
 chef_command << config.config['recipes'].join(",")
-warn chef_command.join(" ") if options[:debug]
-
 warn chef_command.join(" ") if options[:debug]
 unless system *chef_command
     abort "There was a problem running chef. Run using --debug for more information"
