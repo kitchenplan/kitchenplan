@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Run Kitchenplan.
 
-export RUBYOPT='-Ku'
+system("export RUBYOPT='-Ku'")
 
 require 'pathname'
 
