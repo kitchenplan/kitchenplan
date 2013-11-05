@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # Run Kitchenplan.
 
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 require 'pathname'
 
 if ENV['USER'] == 'root'
@@ -26,9 +29,9 @@ OptionParser.new do |opts|
         options[:update_cookbooks] = update_cookbooks
     end
 
-    options[:soloist] = true
-    opts.on("--[no-]soloist", "Run soloist (defaults to yes)") do |soloist|
-        options[:soloist] = soloist
+    options[:chef] = true
+    opts.on("--[no-]chef", "Run chef (defaults to yes)") do |chef|
+        options[:chef] = chef
     end
 
     options[:update] = true
@@ -79,17 +82,19 @@ end
 
 require "rubygems"
 require "bundler/setup"
+require 'json'
 
-# Generate the soloist config
+# Generate the chef config
 $: << File.join((File.expand_path("../", Pathname.new(__FILE__).realpath)), "/lib")
 require "kitchenplan/config"
 config = Kitchenplan::Config.new
-soloistrc = {}
-soloistrc["cookbook_paths"] = ["#{Dir.pwd}/vendor/cookbooks"]
-soloistrc["recipes"] = config.config['recipes']
-soloistrc["node_attributes"] = config.config['attributes']
-File.open("soloistrc", 'w') do |out|
-    YAML.dump(soloistrc, out)
+
+File.open("kitchenplan-attributes.json", 'w') do |out|
+    out.write(JSON.pretty_generate(config.config['attributes']))
+end
+
+File.open("solo.rb", 'w') do |out|
+    out.write("cookbook_path      [ \"#{Dir.pwd}/cookbooks\" ]")
 end
 
 # Possibly updating the cookbooks
@@ -102,8 +107,8 @@ if config.platform == "debian"
     end
 end
 
-unless File.exists?("vendor/cookbooks")
-    librarian_command = ["bin/librarian-chef", "install", "--path=vendor/cookbooks", "--clean" ]
+unless File.exists?("cookbooks")
+    librarian_command = ["bin/librarian-chef", "install", "--clean" ]
     librarian_command << "--verbose" if options[:debug]
     librarian_command << "--quiet" unless options[:debug]
     warn librarian_command.join(" ") if options[:debug]
@@ -120,14 +125,15 @@ if options[:update_cookbooks]
     end
 end
 
-# Run soloist
+# Run Chef
+exit 0 unless options[:chef]
 
-exit 0 unless options[:soloist]
-
-soloist_command = ["bin/soloist"]
-ENV["LOG_LEVEL"] = "error"
-ENV["LOG_LEVEL"] = "debug" if options[:debug]
-warn soloist_command.join(" ") if options[:debug]
-unless system *soloist_command
-    abort "There was a problem running solist. Run using --debug for more information"
+chef_command = ["bin/chef-solo"]
+chef_command << "--log_level debug" if options[:debug]
+chef_command << "-c 'solo.rb'"
+chef_command << "-j kitchenplan-attributes.json"
+chef_command << "-o #{config.config['recipes'].join(",")}"
+warn chef_command.join(" ") if options[:debug]
+unless system("sudo -E bash -c '#{chef_command.join(" ")}'")
+    abort "There was a problem running chef. Run using --debug for more information"
 end
