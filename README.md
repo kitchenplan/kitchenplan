@@ -27,7 +27,7 @@ If the repo for your organisation is private, continue with setting up your SSH 
 The `KITCHENPLAN_REPO` environment variable can be set before installation to customize what git repository is used for kitchen plan.
 
 ```bash
-$ export KITCHENPLAN_REPO=https://github.com/mycompany/kitchenplan
+$ export KITCHENPLAN_REPO=https://github.com/mycompany/kitchenplan.git
 $ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
 ```
 
