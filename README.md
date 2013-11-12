@@ -22,17 +22,24 @@ apt-get install vim git ruby1.9.1-dev
 
 ### Getting started as a user
 
-If the repo for your organisation is private, continue with setting up your SSH keys. Open up a Terminal window and run ```ssh-keygen```. After this command finishes, run ```cat ~/.ssh/id_rsa.pub``` and copy the output. Put this in your Github account or where you need your private key in your repo hosting of your choice.
-
 Now, to get Kitchenplan on your computer, run the following commands:
 
 ```bash
-sudo mkdir -p /opt
-sudo chown -R $USER /opt
-cd /opt
-git clone https://github.com/kitchenplan/kitchenplan.git kitchenplan # or your version
-cd kitchenplan
+$ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
 ```
+
+### Custom Repository
+
+If the repo for your organisation is private, continue with setting up your SSH keys. Open up a Terminal window and run ```ssh-keygen```. After this command finishes, run ```cat ~/.ssh/id_rsa.pub``` and copy the output. Put this in your Github account or where you need your private key in your repo hosting of your choice.
+
+The `KITCHENPLAN_REPO` environment variable can be set before installation to customize what git repository is used for kitchen plan.
+
+```bash
+$ export KITCHENPLAN_REPO=https://github.com/mycompany/kitchenplan
+$ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
+```
+
+### Custom Recipes
 
 Before you run the ```./kitchenplan``` command, first create a custom config file. The config system will always start of with ```default.yml```. This will contain the recipes for every person in your organisation. Next it it will look at the file ```yourusername.yml``` (with the username logged in on the computer as yourusername) for your custom settings. Ofcourse there will be a lot of shared config when your organisation has departments of different types of personel. So you can define group config files and assign one or more groups to a user. The ```roderik.yml``` ([found here](https://github.com/kitchenplan/kitchenplan/blob/master/config/people/roderik.yml)) is my personal config file and it will fall back to this config if you don't have a personal file.
 
