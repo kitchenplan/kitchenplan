@@ -11,3 +11,4 @@ Gemfile.lock
 /cookbooks
 kitchenplan-attributes.json
 /nodes
+/solo.rb
