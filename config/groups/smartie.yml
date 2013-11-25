@@ -9,7 +9,6 @@ recipes:
         - applications::apache
         - applications::php55
         - dotfiles::kdeploy
-        - applications::kstrano
     mac_os_x:
         - applications::hipchat
         - osxdefaults::disable_disk_image_verification
