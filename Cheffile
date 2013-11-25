@@ -1,6 +1,6 @@
 site "http://community.opscode.com/api/v1"
 
-cookbook "dmg",                   :github => "thomasmeeus/dmg"
+cookbook "dmg",                   :github => "thomasmeeus/dmg",         :ref => "package"
 cookbook "apt"
 cookbook "apache2",               :github => "opscode-cookbooks/apache2"
 cookbook "percona",               :github => "thomasmeeus/chef-percona"
