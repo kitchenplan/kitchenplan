@@ -1,124 +1,139 @@
 #!/usr/bin/env ruby
 # Run Kitchenplan.
 
-require 'pathname'
-
-if ENV['USER'] == 'root'
-  abort "Run this as a normal user, I'll sudo if I need to."
+module Tty extend self
+  def blue; bold 34; end
+  def white; bold 39; end
+  def red; underline 31; end
+  def reset; escape 0; end
+  def bold n; escape "1;#{n}" end
+  def underline n; escape "4;#{n}" end
+  def escape n; "\033[#{n}m" if STDOUT.tty? end
 end
 
-# Put us where we belong, in the root dir of our kitchenplan repo.
+class Array
+  def shell_s
+    cp = dup
+    first = cp.shift
+    cp.map{ |arg| arg.gsub " ", "\\ " }.unshift(first) * " "
+  end
+end
 
+def ohai *args
+  puts "#{Tty.blue}==>#{Tty.white} #{args.shell_s}#{Tty.reset}"
+end
+
+def warn warning
+  puts "#{Tty.red}Warning#{Tty.reset}: #{warning.chomp}"
+end
+
+def system *args
+  abort "Failed during: #{args.shell_s}" unless Kernel.system *args
+end
+
+def warnandexit message
+  warn message
+  exit
+end
+
+def sudo *args
+  args = if args.length > 1
+    args.unshift "/usr/bin/sudo"
+  else
+    "/usr/bin/sudo #{args.first}"
+  end
+  ohai *args
+  system *args
+end
+
+def normaldo *args
+  ohai *args
+  system *args
+end
+
+def macos_version
+  @macos_version ||= `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
+end
+
+
+########################################
+
+abort "OSX too old, you need at least Mountain Lion" if macos_version < "10.8"
+abort "Don't run this as root!" if Process.uid == 0
+abort <<-EOABORT unless `groups`.split.include? "admin"
+This script requires the user #{ENV['USER']} to be an Administrator.
+EOABORT
+
+# Put us where we belong, in the root dir of our kitchenplan repo.
+require 'pathname'
 Dir.chdir Pathname.new(__FILE__).realpath + ".."
 
 # Flags
 require 'optparse'
-
 options = {}
 OptionParser.new do |opts|
     opts.banner = 'Usage: kitchenplan [options]'
-
     opts.on("-d", "--debug", "Show debug information") do |debug|
         options[:debug] = debug
     end
-
     opts.on("-c", "--update-cookbooks", "Update the Chef cookbooks") do |update_cookbooks|
         options[:update_cookbooks] = update_cookbooks
     end
-
-    options[:soloist] = true
-    opts.on("--[no-]soloist", "Run soloist (defaults to yes)") do |soloist|
-        options[:soloist] = soloist
+    options[:chef] = true
+    opts.on("--[no-]chef", "Run chef (defaults to yes)") do |chef|
+	options[:chef] = chef
     end
-
-    options[:update] = true
-    opts.on("--[no-]update", "Run the kitchenplan update (defaults to yes)") do |update|
-        options[:update] = update
-    end
-
     opts.separator ""
     opts.separator "Common options:"
-
     opts.on_tail("-h", "--help", "Show this message") do
         puts opts
         exit
     end
-
     opts.on_tail("--version", "Show version") do
         puts "1.0.1"
         exit
     end
-
 end.parse!
 
 # Bootstrapping dependencies
-
-unless system("(gem spec bundler -v > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri")
-    abort "Failed to install bundler"
+if File.exist? '/etc/redhat-release'
+    normaldo "(gem spec -q bundler > /dev/null 2>&1) || sudo yum install -y rubygem-bundler"
+    normaldo "(rpm -qi ruby-devel > /dev/null 2>&1) || sudo yum install -y ruby-devel"
+else
+    normaldo "(gem spec bundler -v > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri"
 end
-
-bundle_command = ["sudo", "bundle"]
-bundle_command = bundle_command + [ "install", "--binstubs=bin"]
-bundle_command << "--verbose" if options[:debug]
-bundle_command << "--quiet" unless options[:debug]
-warn bundle_command.join(" ") if options[:debug]
-unless system *bundle_command
-    abort "There was a problem bootstrapping. Run using --debug for more information"
-end
+sudo "bundle install --binstubs=bin #{(options[:debug] ? '--verbose' : '--quiet')}"
 
 # Add local deps to the load path.
-
 require "rubygems"
 require "bundler/setup"
+require 'json'
 
-# Generate the soloist config
+# Trying to get some metrics for usage, just comment out if you don't want it.
+ohai 'Sending a ping to Google Analytics to count usage'
+require 'Gabba'
+Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
+#Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", "User", ENV['USER'])
+
+
+# Generate the chef config
+ohai 'Generating the Chef configs'
 $: << File.join((File.expand_path("../", Pathname.new(__FILE__).realpath)), "/lib")
 require "kitchenplan/config"
 config = Kitchenplan::Config.new
-soloistrc = {}
-soloistrc["cookbook_paths"] = ["#{Dir.pwd}/vendor/cookbooks"]
-soloistrc["recipes"] = config.config['recipes']
-soloistrc["node_attributes"] = config.config['attributes']
-File.open("soloistrc", 'w') do |out|
-    YAML.dump(soloistrc, out)
+File.open("kitchenplan-attributes.json", 'w') do |out|
+    out.write(JSON.pretty_generate(config.config['attributes']))
+end
+File.open("solo.rb", 'w') do |out|
+    out.write("cookbook_path      [ \"#{Dir.pwd}/cookbooks\" ]")
 end
 
-# Possibly updating the cookbooks
+# Installing
+sudo "apt-get install -y git" if config.platform == "debian"
+normaldo "bin/librarian-chef install --clean #{(options[:debug] ? '--verbose' : '--quiet')}" unless File.exists?("cookbooks")
+normaldo "bin/librarian-chef update #{(options[:debug] ? '--verbose' : '--quiet')}" if options[:update_cookbooks]
 
-if config.platform == "debian"
-    git_install_command = ["sudo" ,"apt-get", "install", "-y", "git" ]
-    warn git_install_command.join(" ") if options[:debug]
-    unless system *git_install_command
-        abort "Can't install git. Run using --debug if you need more information."
-    end
-end
+# Run Chef
+sudo "bin/chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config.config['recipes'].join(",")}" if options[:chef]
 
-unless File.exists?("vendor/cookbooks")
-    librarian_command = ["bin/librarian-chef", "install", "--path=vendor/cookbooks", "--clean" ]
-    librarian_command << "--verbose" if options[:debug]
-    librarian_command << "--quiet" unless options[:debug]
-    warn librarian_command.join(" ") if options[:debug]
-    unless system *librarian_command
-        abort "Can't install Chef cookbooks with librarian-chef. Run using --debug if you need more information."
-    end
-end
-
-if options[:update_cookbooks]
-    librarian_command = ["bin/librarian-chef", "update", "--verbose" ]
-    warn librarian_command.join(" ") if options[:debug]
-    unless system *librarian_command
-        abort "Can't update Chef cookbooks with librarian-chef. Run using --debug if you need more information."
-    end
-end
-
-# Run soloist
-
-exit 0 unless options[:soloist]
-
-soloist_command = ["bin/soloist"]
-ENV["LOG_LEVEL"] = "error"
-ENV["LOG_LEVEL"] = "debug" if options[:debug]
-warn soloist_command.join(" ") if options[:debug]
-unless system *soloist_command
-    abort "There was a problem running solist. Run using --debug for more information"
-end
+ohai "Chef run complete, your computer should be installed. You can always rerun kitchenplan to adjust your settings."
