@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Kitchenplan by kitchenplan</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/kitchenplan/kitchenplan">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/kitchenplan/kitchenplan/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/kitchenplan/kitchenplan/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Kitchenplan</h1>
+          <p>Human readable, yet advanced configuration files and a wrapper script around installation and usage of chef-solo, librarian, chef and bundler to completely install OSX and Ubuntu computers. Heavily influenced by boxen and pivotal_workstation.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/kitchenplan">kitchenplan</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="kitchenplan" class="anchor" href="#kitchenplan"><span class="octicon octicon-link"></span></a>Kitchenplan</h1>
+
+<h2>
+<a name="why-kitchenplan" class="anchor" href="#why-kitchenplan"><span class="octicon octicon-link"></span></a>Why Kitchenplan?</h2>
+
+<p>Read about this project and it's values and goals in this blog post: <a href="http://vanderveer.be/blog/2013/04/14/presenting-kitchenplan/">http://vanderveer.be/blog/2013/04/14/presenting-kitchenplan/</a></p>
+
+<h2>
+<a name="using-kitchenplan" class="anchor" href="#using-kitchenplan"><span class="octicon octicon-link"></span></a>Using Kitchenplan</h2>
+
+<p>I myself will use this version, so you can learn from my config files. But you best start of by forking this repo. You will need it to store your configuration files. See the Custom Repository section for more info.</p>
+
+<p>On OSX 10.8 Mountain Lion you should install XCode and the Command Line Tools from within XCode before you start. For 10.9 Mavericks the script will prompt you to install the Command Line Tools automatically.</p>
+
+<p>Now, to get Kitchenplan on your computer, run the following commands:</p>
+
+<div class="highlight highlight-bash"><pre>ruby -e <span class="s2">"$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"</span>
+</pre></div>
+
+<h3>
+<a name="custom-repository" class="anchor" href="#custom-repository"><span class="octicon octicon-link"></span></a>Custom Repository</h3>
+
+<p>If the repo for your organisation is private, continue with setting up your SSH keys. Open up a Terminal window and run <code>ssh-keygen</code>. After this command finishes, run <code>cat ~/.ssh/id_rsa.pub</code> and copy the output. Put this in your Github account or where you need your private key in your repo hosting of your choice.</p>
+
+<p>The <code>KITCHENPLAN_REPO</code> environment variable can be set before installation to customize what git repository is used for kitchen plan.</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">KITCHENPLAN_REPO</span><span class="o">=</span>https://github.com/mycompany/kitchenplan.git
+<span class="nv">$ </span>ruby -e <span class="s2">"$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"</span>
+</pre></div>
+
+<h3>
+<a name="custom-recipes" class="anchor" href="#custom-recipes"><span class="octicon octicon-link"></span></a>Custom Recipes</h3>
+
+<p>Before you run the commadn above, or manually run the<code>./kitchenplan</code> command, you should first create a custom config file. The config system will always start off with <code>default.yml</code>. This will contain the recipes for every person in your organisation. Next it it will look at the file <code>yourusername.yml</code> (with the username logged in on the computer as yourusername) for your custom settings. Ofcourse there will be a lot of shared config when your organisation has departments of different types of personel. So you can define group config files and assign one or more groups to a user. The <code>roderik.yml</code> (<a href="https://github.com/kitchenplan/kitchenplan/blob/master/config/people/roderik.yml">found here</a>) is my personal config file and it will fall back to this config if you don't have a personal file.</p>
+
+<p>When you are done with that, run the go script or run <code>kitchenplan</code> manually and wait for a while. After the command finishes, reboot your computer and you are good to go.</p>
+
+<h3>
+<a name="command-line-tools" class="anchor" href="#command-line-tools"><span class="octicon octicon-link"></span></a>Command line tools</h3>
+
+<p>There are some useful command line options, run <code>kitchenplan -d</code> or look here:</p>
+
+<pre><code>Usage: kitchenplan [options]
+    -d, --debug                      Show debug information
+    -c, --update-cookbooks           Update the Chef cookbooks
+        --[no-]chef                  Run chef (defaults to yes)
+
+Common options:
+    -h, --help                       Show this message
+        --version                    Show version
+</code></pre>
+
+<h3>
+<a name="caveat" class="anchor" href="#caveat"><span class="octicon octicon-link"></span></a>Caveat</h3>
+
+<p>We are running this project in production for both OSX and Ubuntu development machines. So I'm pretty sure it all works just fine. But, in the gap between two new installs, all the applications we install, and all community cookbooks are in constant development and can potentially break the install. I always suggest to our people that they run it first in a virtual machine (You can easily install OSX in a VMware Fusion trial, or use Vagrant for Linux testing).</p>
+
+<h3>
+<a name="want-to-contribute" class="anchor" href="#want-to-contribute"><span class="octicon octicon-link"></span></a>Want to contribute?</h3>
+
+<p>Fork and send pull requests or just idea's and issues via the issue tracker. If you need a new recipe, fork the chef-* repo's and change the url in the Cheffile to make it fetch your version. Add it and send a pull request. For now we support OSX and the debian family (only tested on Ubuntu). Other operating systems are welcome!</p>
+
+<p>More questions, ping me at <a href="http://twitter.com/r0derik">Twitter @r0derik</a>.</p>
+
+<h3>
+<a name="acknowledgements" class="anchor" href="#acknowledgements"><span class="octicon octicon-link"></span></a>Acknowledgements</h3>
+
+<p>This project is inspired and built by using components and idea's from: Boxen, pivotal_workstation, Opscode cookbooks, and more. Please take any imitation as a the highest form of flattery. If you feel the source or acknowledgements are not sufficient, please let me know how you want it to be resolved.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-46288146-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
