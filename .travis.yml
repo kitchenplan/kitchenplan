@@ -1,2 +1,5 @@
 language: objective-c
-script: "./kitchenplan"
+cache: bundler
+rvm:
+  - system
+script: "./go --no-interaction"
