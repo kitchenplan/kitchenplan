@@ -162,4 +162,4 @@ else
 end
 
 Dir.chdir KITCHENPLAN_PATH if options[:interaction]
-normaldo "./kitchenplan"
+normaldo "./kitchenplan #{options[:interaction] ? '': '-d'}"
