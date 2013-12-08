@@ -42,7 +42,7 @@ attributes:
         computername: Sinope
     dotfiles:
         kdeploy:
-            hostname: sinope.dev
+            hostname: dev
         vim:
             bundle:
                 - sleuth: git://github.com/tpope/vim-sleuth.git
