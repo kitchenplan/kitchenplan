@@ -56,7 +56,7 @@ We are running this project in production for both OSX and Ubuntu development ma
 
 Fork and send pull requests or just idea's and issues via the issue tracker. If you need a new recipe, fork the chef-* repo's and change the url in the Cheffile to make it fetch your version. Add it and send a pull request. For now we support OSX and the debian family (only tested on Ubuntu). Other operating systems are welcome!
 
-More questions, ping me at [Twitter @r0derik](http://twitter.com/r0derik).
+More questions, ping me at [Twitter @r0derik](http://twitter.com/r0derik) or visit our [HipChat channel](https://www.hipchat.com/gTkMJo2Ag).
 
 ### Acknowledgements
 
