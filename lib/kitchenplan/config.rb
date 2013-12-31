@@ -1,8 +1,6 @@
 require 'yaml'
 require 'etc'
 require 'ohai'
-require 'erb'
-require 'deep_merge'
 
 module Kitchenplan
 
@@ -21,20 +19,19 @@ module Kitchenplan
     end
 
     def detect_platform
-        ohai = Ohai::System.new
-        ohai.require_plugin("os")
-        ohai.require_plugin("platform")
-        @platform = ohai[:platform_family]
+	ohai = Ohai::System.new
+	ohai.all_plugins
+	@platform = ohai[:platform_family]
     end
 
     def parse_default_config
         default_config_path = 'config/default.yml'
-        @default_config = ( YAML.load(ERB.new(File.read(default_config_path)).result) if File.exist?(default_config_path) ) || {}
+        @default_config = ( YAML.load_file(default_config_path) if File.exist?(default_config_path) ) || {}
     end
 
     def parse_people_config
         people_config_path = "config/people/#{Etc.getlogin}.yml"
-        @people_config = ( YAML.load(ERB.new(File.read(people_config_path)).result) if File.exist?(people_config_path) ) || YAML.load(ERB.new(File.read("config/people/roderik.yml")).result)
+	@people_config = ( YAML.load_file(people_config_path) if File.exist?(people_config_path) ) || YAML.load_file("config/people/roderik.yml")
     end
 
     def parse_group_configs
@@ -47,7 +44,7 @@ module Kitchenplan
 
     def parse_group_config(group)
         group_config_path = "config/groups/#{group}.yml"
-        @group_configs[group] = ( YAML.load(ERB.new(File.read(group_config_path)).result) if File.exist?(group_config_path) ) || {}
+        @group_configs[group] = ( YAML.load_file(group_config_path) if File.exist?(group_config_path) ) || {}
     end
 
     def config
@@ -63,12 +60,12 @@ module Kitchenplan
         config['recipes'] |= people_recipes['global'] || []
         config['recipes'] |= people_recipes[@platform] || []
         config['attributes'] = {}
-        config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
+	config['attributes'].merge!(@default_config['attributes'] || {})
         @group_configs.each do |group_name, group_config|
-            config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
+            config['attributes'].merge!(group_config['attributes']) unless group_config['attributes'].nil?
         end
         people_attributes = @people_config['attributes'] || {}
-        config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
+        config['attributes'].merge!(people_attributes)
         config
     end
 
