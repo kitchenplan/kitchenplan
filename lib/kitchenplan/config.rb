@@ -20,7 +20,8 @@ module Kitchenplan
 
     def detect_platform
         ohai = Ohai::System.new
-        ohai.all_plugins
+        ohai.require_plugin("os")
+        ohai.require_plugin("platform")
         @platform = ohai[:platform_family]
     end
 
