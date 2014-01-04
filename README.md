@@ -4,6 +4,8 @@
 
 Read about this project and it's values and goals in this blog post: [http://vanderveer.be/blog/2013/04/14/presenting-kitchenplan/](http://vanderveer.be/blog/2013/04/14/presenting-kitchenplan/)
 
+A recent usage guide is avalilable at [http://vanderveer.be/setting-up-my-perfect-dev-environment-on-osx-10-9-using-chef-kitchenplan/](http://vanderveer.be/setting-up-my-perfect-dev-environment-on-osx-10-9-using-chef-kitchenplan/)
+
 ## Using Kitchenplan
 
 I myself will use this version, so you can learn from my config files. But you best start of by forking this repo. You will need it to store your configuration files. See the Custom Repository section for more info.
