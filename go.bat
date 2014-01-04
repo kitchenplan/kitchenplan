@@ -231,6 +231,6 @@ cscript /nologo %KITCHENPLAN_DIRECTORY%\unzip.vbs /inFile:"%LOCAL_KITCHENPLAN_AR
 mv %KITCHENPLAN_DIRECTORY%\kitchenplan-master\* %KITCHENPLAN_DIRECTORY%\
 cd %KITCHENPLAN_DIRECTORY%
 
-@echo Executing kitchenplan for user %USER%, good luck!
+@echo Executing kitchenplan for user %USERNAME%, good luck!
 
 C:\opscode\chef\embedded\bin\ruby kitchenplan
