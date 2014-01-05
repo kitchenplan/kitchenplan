@@ -1,108 +1,38 @@
 #!/usr/bin/env ruby
 # Run Kitchenplan.
 
-module Tty extend self
-  def blue; bold 34; end
-  def white; bold 39; end
-  def red; underline 31; end
-  def reset; escape 0; end
-  def bold n; escape "1;#{n}" end
-  def underline n; escape "4;#{n}" end
-  def escape n; "\033[#{n}m" if STDOUT.tty? end
-end
+$:.unshift(File.join(File.dirname(__FILE__), ".", "lib"))
+require 'kitchenplan'
+include Kitchenplan::Mixin::Display
+include Kitchenplan::Mixin::Commands
+include Kitchenplan::Mixin::Optparse
+ohai "Kitchenplan starting up..."
 
-class Array
-  def shell_s
-    cp = dup
-    first = cp.shift
-    cp.map{ |arg| arg.gsub " ", "\\ " }.unshift(first) * " "
-  end
-end
+options = parse_commandline()
 
-def ohai *args
-  puts "#{Tty.blue}==>#{Tty.white} #{args.shell_s}#{Tty.reset}"
-end
-
-def warn warning
-  puts "#{Tty.red}Warning#{Tty.reset}: #{warning.chomp}"
-end
-
-def system *args
-  abort "Failed during: #{args.shell_s}" unless Kernel.system *args
-end
-
-def warnandexit message
-  warn message
-  exit
-end
-
-def sudo *args
-  args = if args.length > 1
-    args.unshift "/usr/bin/sudo"
-  else
-    "/usr/bin/sudo #{args.first}"
-  end
-  ohai *args
-  system *args
-end
-
-def normaldo *args
-  ohai *args
-  system *args
-end
-
-def macos_version
-  @macos_version ||= `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
-end
-
+platform = eval("Kitchenplan::Platform::#{Kitchenplan::Platform.constants.first.to_s}.new(debug=#{options[:debug].inspect})")
+ohai "Checking platform #{platform.name} version #{platform.version} prerequisites..."
+platform.prerequisites()
 
 ########################################
-
-abort "OSX too old, you need at least Mountain Lion" if macos_version < "10.8"
-abort "Don't run this as root!" if Process.uid == 0
-abort <<-EOABORT unless `groups`.split.include? "admin"
-This script requires the user #{ENV['USER']} to be an Administrator.
-EOABORT
 
 # Put us where we belong, in the root dir of our kitchenplan repo.
 require 'pathname'
 Dir.chdir Pathname.new(__FILE__).realpath + ".."
+# load config early as it tells us what platform we're on.
+$: << File.join((File.expand_path("../", Pathname.new(__FILE__).realpath)), "/lib")
+require "kitchenplan/config"
+config = Kitchenplan::Config.new
 
-# Flags
-require 'optparse'
-options = {}
-OptionParser.new do |opts|
-    opts.banner = 'Usage: kitchenplan [options]'
-    opts.on("-d", "--debug", "Show debug information") do |debug|
-        options[:debug] = debug
-    end
-    opts.on("-c", "--update-cookbooks", "Update the Chef cookbooks") do |update_cookbooks|
-        options[:update_cookbooks] = update_cookbooks
-    end
-    options[:chef] = true
-    opts.on("--[no-]chef", "Run chef (defaults to yes)") do |chef|
-	options[:chef] = chef
-    end
-    opts.separator ""
-    opts.separator "Common options:"
-    opts.on_tail("-h", "--help", "Show this message") do
-        puts opts
-        exit
-    end
-    opts.on_tail("--version", "Show version") do
-        puts "1.0.1"
-        exit
-    end
-end.parse!
+abort <<-EOABORT unless `groups`.split.include? "admin"
+This script requires the user #{ENV['USER']} to be an Administrator.
+EOABORT
 
 # Bootstrapping dependencies
 if File.exist? '/etc/redhat-release'
     normaldo "(gem spec -q bundler > /dev/null 2>&1) || sudo yum install -y rubygem-bundler"
     normaldo "(rpm -qi ruby-devel > /dev/null 2>&1) || sudo yum install -y ruby-devel"
-else
-    normaldo "(gem spec bundler -v > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri"
 end
-sudo "bundle install --binstubs=bin #{(options[:debug] ? '--verbose' : '--quiet')}"
 
 # Add local deps to the load path.
 require "rubygems"
@@ -112,7 +42,7 @@ require 'json'
 # Trying to get some metrics for usage, just comment out if you don't want it.
 ohai 'Sending a ping to Google Analytics to count usage'
 require 'Gabba'
-Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
+#Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
 #Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", "User", ENV['USER'])
 
 
