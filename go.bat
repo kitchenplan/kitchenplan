@@ -17,7 +17,8 @@
 @rem
 
 @set "KITCHENPLAN_ARCHIVE_URL=https://github.disney.com/stwagner/kitchenplan/archive/master.zip"
-@set "LOCAL_KITCHENPLAN_ARCHIVE=%TEMP%\kitchenplan.zip"
+@set "GIT_ARCHIVE_URL=https://msysgit.googlecode.com/files/Git-1.8.5.2-preview20131230.exe"
+@set "CHEF_MSI_BASE_URL=https://www.opscode.com/chef/download"
 @set KITCHENPLAN_DIRECTORY=C:\kitchenplan
 
 @rem Use delayed environment expansion so that ERRORLEVEL can be evaluated with the
@@ -143,7 +144,7 @@ goto install
 :install
 @rem Install Chef using chef-client MSI installer
 
-@set "REMOTE_SOURCE_MSI_URL=https://www.opscode.com/chef/download?p=windows&pv=%MACHINE_OS%&m=%MACHINE_ARCH%"
+@set "REMOTE_SOURCE_MSI_URL=%CHEF_MSI_BASE_URL%?p=windows&pv=%MACHINE_OS%&m=%MACHINE_ARCH%"
 @set "LOCAL_DESTINATION_MSI_PATH=%TEMP%\chef-client-latest.msi"
 @set "CHEF_CLIENT_MSI_LOG_PATH=%TEMP%\chef-client-msi%RANDOM%.log"
 @set "FALLBACK_QUERY_STRING=&DownloadContext=PowerShell"
@@ -203,6 +204,15 @@ msiexec /qn /log "%CHEF_CLIENT_MSI_LOG_PATH%" /i "%LOCAL_DESTINATION_MSI_PATH%"
 
 @endlocal
 
+
+@set "LOCAL_GIT_ARCHIVE=%TEMP%\git-installer.exe"
+@echo Attempting to download git-scm archive
+cscript /nologo C:\chef\wget.vbs /url:"%GIT_ARCHIVE_URL%" /path:"%LOCAL_GIT_ARCHIVE%"
+@echo Installing git-scm
+cmd /c %LOCAL_GIT_ARCHIVE% /verysilent /dir="%PROGRAMFILES%\git" /components="ext,ext\cheetah,assoc,assoc_sh"
+@echo Adding git-scm binary path to path in this shell.
+@set "PATH=%PATH%:%PROGRAMFILES%\git\bin"
+
 @echo Checking for existing kitchenplan directory "%KITCHENPLAN_DIRECTORY%"...
 @if NOT EXIST %KITCHENPLAN_DIRECTORY% (
     @echo Existing directory not found, creating.
@@ -221,7 +231,6 @@ echo.intOptions = 256
 echo.objTarget.CopyHere objSource, intOptions
 )
 
-@set "KITCHENPLAN_ARCHIVE_URL=https://github.disney.com/stwagner/kitchenplan/archive/master.zip"
 @set "LOCAL_KITCHENPLAN_ARCHIVE=%TEMP%\kitchenplan.zip"
 @echo Attempting to download kitchenplan archive
 cscript /nologo C:\chef\wget.vbs /url:"%KITCHENPLAN_ARCHIVE_URL%" /path:"%LOCAL_KITCHENPLAN_ARCHIVE%"
