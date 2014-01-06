@@ -16,7 +16,8 @@
 @rem limitations under the License.
 @rem
 
-@set "KITCHENPLAN_ARCHIVE_URL=https://github.disney.com/stwagner/kitchenplan/archive/master.zip"
+@set "KITCHENPLAN_BRANCH_NAME=master"
+@set "KITCHENPLAN_ARCHIVE_URL=https://github.disney.com/stwagner/kitchenplan/archive/%KITCHENPLAN_BRANCH_NAME%.zip"
 @set "GIT_ARCHIVE_URL=https://msysgit.googlecode.com/files/Git-1.8.5.2-preview20131230.exe"
 @set "CHEF_MSI_BASE_URL=https://www.opscode.com/chef/download"
 @set KITCHENPLAN_DIRECTORY=C:\kitchenplan
@@ -237,7 +238,7 @@ cscript /nologo C:\chef\wget.vbs /url:"%KITCHENPLAN_ARCHIVE_URL%" /path:"%LOCAL_
 @echo Decompressing kitchenplan archive into %KITCHENPLAN_DIRECTORY%
 cscript /nologo %KITCHENPLAN_DIRECTORY%\unzip.vbs /inFile:"%LOCAL_KITCHENPLAN_ARCHIVE%" /outFolder:"%KITCHENPLAN_DIRECTORY%"
 
-mv %KITCHENPLAN_DIRECTORY%\kitchenplan-master\* %KITCHENPLAN_DIRECTORY%\
+robocopy /move /e /log:%TEMP%\copy_kitchenplan.log %KITCHENPLAN_DIRECTORY%\kitchenplan-%KITCHENPLAN_BRANCH_NAME% %KITCHENPLAN_DIRECTORY%\
 cd %KITCHENPLAN_DIRECTORY%
 
 @echo Executing kitchenplan for user %USERNAME%, good luck!
