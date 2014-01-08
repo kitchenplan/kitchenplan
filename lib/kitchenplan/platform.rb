@@ -11,17 +11,17 @@ module Kitchenplan
       # debug is just an internal flag we use to track whether we should use debug output,
       # it gets passed from optparse.
       @debug = debug
-      alert "There was an error loading support for Kitchenplan on your platform."
+      Kitchenplan::Log.warn "There was an error loading support for Kitchenplan on your platform."
     end
     # runs through the platform prerequisites.  generally we want a few things on all platforms, so
     # you won't want to completely override this on your platform.  each component is separated out
     # into a check and an install command - you'll probably want to look there first.
     def prerequisites
-      alert "No prerequisites defined for platform '#{@platform}'"
+      Kitchenplan::Log.warn "No prerequisites defined for platform '#{@platform}'"
     end
-    # sudo, for when we want to run something as root.  we just format the command syntax here.
+    # run_privileged, for when we want to run something as root.  we just format the command syntax here.
     # execution happens elsewhere.
-    def sudo *args
+    def run_privileged *args
       args = if args.length > 1
 	       args.unshift "/usr/bin/sudo"
 	     else
