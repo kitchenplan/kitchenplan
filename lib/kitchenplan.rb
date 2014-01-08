@@ -1,11 +1,13 @@
+require 'json'
 require 'kitchenplan/mixins'
+require 'kitchenplan/log'
 require 'kitchenplan/config'
 # platform-specificity
 require 'kitchenplan/platform'
 begin
-require "kitchenplan/platform/#{Kitchenplan::Config.new().platform}"
+require "kitchenplan/platform/#{Kitchenplan::Config.new(parse_configs=false).platform}"
 rescue LoadError
-	raise "Unsupported platform or fatal error loading support for platform '#{Kitchenplan::Config.new().platform}' ..."
+	raise "Unsupported platform or fatal error loading support for platform '#{Kitchenplan::Config.new(parse_configs=false).platform}' ..."
 end
 class Kitchenplan
 	attr_accessor :platform
