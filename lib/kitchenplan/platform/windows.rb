@@ -33,7 +33,7 @@ class Kitchenplan
 	Kitchenplan::Log.debug "Git is installed by the go.bat bootstrap on Windows, skipping install_git()"
       end
       def user_is_admin?
-	`groups`.split.include? "admin"
+	`gpresult /r /scope user`.split.include? "Admin"
       end
       # TODO: Move up to base
       def prerequisites
