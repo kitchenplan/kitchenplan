@@ -53,9 +53,10 @@ class Kitchenplan
       end
     def run_privileged *args
       args = if args.length > 1
-	       args.unshift "runas /noprofile /user:Administrator cmd /c"
+	       args.unshift "runas /noprofile /user:Administrator cmd /c \""
+	       args << '"'
 	     else
-	       "runas /noprofile /user:Administrator cmd /c #{args.first}"
+	       "runas /noprofile /user:Administrator cmd /c \"#{args.first}\""
 	     end
     end
       private
