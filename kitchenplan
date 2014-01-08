@@ -1,69 +1,7 @@
 #!/usr/bin/env ruby
-# Run Kitchenplan.
-
-$:.unshift(File.join(File.dirname(__FILE__), ".", "lib"))
+require 'rubygems'
+$:.unshift(File.join(File.dirname(__FILE__), "lib"))
 require 'kitchenplan'
-include Kitchenplan::Mixin::Display
-include Kitchenplan::Mixin::Commands
-include Kitchenplan::Mixin::Optparse
-ohai "Kitchenplan starting up..."
+require 'kitchenplan/application'
 
-options = parse_commandline()
-
-platform = eval("Kitchenplan::Platform::#{Kitchenplan::Platform.constants.first.to_s}.new(debug=#{options[:debug].inspect})")
-ohai "Checking platform #{platform.name} version #{platform.version} prerequisites..."
-platform.prerequisites()
-
-########################################
-
-# Put us where we belong, in the root dir of our kitchenplan repo.
-require 'pathname'
-Dir.chdir Pathname.new(__FILE__).realpath + ".."
-# load config early as it tells us what platform we're on.
-$: << File.join((File.expand_path("../", Pathname.new(__FILE__).realpath)), "/lib")
-require "kitchenplan/config"
-config = Kitchenplan::Config.new
-
-abort <<-EOABORT unless `groups`.split.include? "admin"
-This script requires the user #{ENV['USER']} to be an Administrator.
-EOABORT
-
-# Bootstrapping dependencies
-if File.exist? '/etc/redhat-release'
-    normaldo "(gem spec -q bundler > /dev/null 2>&1) || sudo yum install -y rubygem-bundler"
-    normaldo "(rpm -qi ruby-devel > /dev/null 2>&1) || sudo yum install -y ruby-devel"
-end
-
-# Add local deps to the load path.
-require "rubygems"
-require "bundler/setup"
-require 'json'
-
-# Trying to get some metrics for usage, just comment out if you don't want it.
-ohai 'Sending a ping to Google Analytics to count usage'
-require 'Gabba'
-#Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
-#Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", "User", ENV['USER'])
-
-
-# Generate the chef config
-ohai 'Generating the Chef configs'
-$: << File.join((File.expand_path("../", Pathname.new(__FILE__).realpath)), "/lib")
-require "kitchenplan/config"
-config = Kitchenplan::Config.new
-File.open("kitchenplan-attributes.json", 'w') do |out|
-    out.write(JSON.pretty_generate(config.config['attributes']))
-end
-File.open("solo.rb", 'w') do |out|
-    out.write("cookbook_path      [ \"#{Dir.pwd}/cookbooks\" ]")
-end
-
-# Installing
-sudo "apt-get install -y git" if config.platform == "debian"
-normaldo "bin/librarian-chef install --clean #{(options[:debug] ? '--verbose' : '--quiet')}" unless File.exists?("cookbooks")
-normaldo "bin/librarian-chef update #{(options[:debug] ? '--verbose' : '--quiet')}" if options[:update_cookbooks]
-
-# Run Chef
-sudo "bin/chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config.config['recipes'].join(",")}" if options[:chef]
-
-ohai "Chef run complete, your computer should be installed. You can always rerun kitchenplan to adjust your settings."
+Kitchenplan::Application.new.run
