@@ -19,4 +19,4 @@ cookbook "apache2",               :github => "Kunstmaan/apache2",               
 cookbook "logrotate",             :github => "opscode-cookbooks/logrotate",     :ref => "1.2.2"
 cookbook "php",                   :github => "Kunstmaan/chef-php"
 cookbook "nodejs",                :github => "roderik/chef-nodejs"
-cookbook "homebrew",              :github => "opscode-cookbooks/homebrew"
+cookbook "homebrew",              :github => "kitchenplan/homebrew"
