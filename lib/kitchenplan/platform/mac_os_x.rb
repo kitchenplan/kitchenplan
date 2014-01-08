@@ -1,22 +1,20 @@
 module Kitchenplan
   class Platform
     class MacOSX < Kitchenplan::Platform
-#      include Kitchenplan::Mixin::Commands
-      def initialize(debug=false)
-	@debug = debug
+      def initialize
 	@lowest_version_supported = "10.8"
 	self.name = "mac_os_x"
 	self.version = `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
-	ohai "#{self.class} : Platform name: #{self.name}  Version: #{self.version}" if @debug
+	Kitchenplan::Log.info "#{self.class} : Platform name: #{self.name}  Version: #{self.version}" if @debug
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)
       def running_as_superuser?
-	ohai "#{self.class} : Running as superuser? UID = #{Process.uid} == 0?" if @debug
+	Kitchenplan::Log.info "#{self.class} : Running as superuser? UID = #{Process.uid} == 0?" if @debug
 	Process.uid == 0
       end
       # is this version of the platform supported by the kitchenplan codebase?
       def version_supported?
-	ohai "#{self.class} : Is platform version lower than #{@lowest_version_supported}?" if @debug
+	Kitchenplan::Log.info "#{self.class} : Is platform version lower than #{@lowest_version_supported}?" if @debug
 	return false if self.version.to_s <  @lowest_version_supported
 	true
       end
@@ -36,8 +34,8 @@ module Kitchenplan
       end
       # TODO: Move up to base
       def prerequisites
-	abort "Don't run this as root!" if running_as_superuser?
-	abort "Platform version too low.  Your version: #{self.version}" unless version_supported?
+	Kitchenplan::Application.fatal! "Don't run this as root!" if running_as_superuser?
+	Kitchenplan::Application.fatal! "Platform version too low.  Your version: #{self.version}" unless version_supported?
 	install_bundler
 	# needed for proper librarian usage
 	install_git
@@ -46,8 +44,12 @@ module Kitchenplan
       # elevates and runs bundle install for kitchenplan.
       # TODO: move up into base
       def kitchenplan_bundle_install
-	ohai "#{self.class} : Run kitchenplan bundle install" if @debug
-	sudo "bundle install --binstubs=bin #{(@debug ? '--verbose' : '--quiet')}"
+	Kitchenplan::Log.info "#{self.class} : Run kitchenplan bundle install"
+	sudo "bundle install --binstubs=bin --quiet"
+      end
+      private
+      def sudo *args
+	Kitchenplan::Application.new().sudo(*args)
       end
     end
   end
