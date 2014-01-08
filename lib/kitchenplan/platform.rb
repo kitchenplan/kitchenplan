@@ -28,5 +28,13 @@ module Kitchenplan
 	       "/usr/bin/sudo #{args.first}"
 	     end
     end
+    # the function in which Chef is actually executed.  This should be platform-independent,
+    # though we will care about whether we run via chef-solo or chef-zero.
+    # Boolean use_solo determines whether or not chef-solo or chef-zero (Chef 11.8 or newer) is used.
+    def run_chef(use_solo=true, log_level='info', recipes=[])
+      chef_bin = use_solo ? "chef-solo" : "chef-client -z"
+      sudo "bin/#{chef_bin} --log_level #{log_level} -c solo.rb -j kitchenplan-attributes.json -o #{recipes.join(",")}"
+    end
+
   end
 end

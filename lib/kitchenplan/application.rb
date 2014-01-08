@@ -15,13 +15,13 @@ class Kitchenplan
     end
     # Ensure that we can gracefully and quickly terminate.  People love that.
     def trap_signals
-    trap("TERM") do
-      self.fatal!("TERM received",1)
-    end
+      trap("TERM") do
+	self.fatal!("TERM received",1)
+      end
 
-    trap("INT") do
-      self.fatal!("Interrupt signal received.", 2)
-    end
+      trap("INT") do
+	self.fatal!("Interrupt signal received.", 2)
+      end
     end
     def detect_platform
       self.platform = eval("Kitchenplan::Platform::#{Kitchenplan::Platform.constants.first.to_s}.new()") unless defined?(self.platform) and self.platform.nil? == false
@@ -55,56 +55,49 @@ class Kitchenplan
 	Kitchenplan::Log.info "Telling Librarian to update cookbooks."
 	self.normaldo "bin/librarian-chef update #{(self.options[:debug] ? '--verbose' : '--quiet')}"
       end
-      end
-def ping_google_analytics()
- # Trying to get some metrics for usage, just comment out if you don't want it.
- Kitchenplan::Log.info 'Sending a ping to Google Analytics to count usage'
- require 'Gabba'
- Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
-end
-      def run
-	Kitchenplan::Log.info "Kitchenplan starting up."
-	# get options.  This function comes from {Kitchenplan::Mixin::Optparse}.
-	self.options = parse_commandline()
-	Kitchenplan::Log.debug "Started with options: #{options.inspect}"
-	Kitchenplan::Log.info "Gathering prerequisites..."
-	self.platform.prerequisites()
-	Kitchenplan::Log.info "Generating Chef configs..."
-	generate_chef_config()
-	Kitchenplan::Log.info "Verifying cookbook dependencies..."
-	ping_google_analytics() if 0 == 1
-	update_cookbooks_librarian()
-	run_chef(use_solo=true)
-	self.exit!("Chef run complete.  Exiting normally.")
-      end
-      # the function in which Chef is actually executed.  This should be platform-independent,
-      # though we will care about whether we run via chef-solo or chef-zero.
-      # Boolean use_solo determines whether or not chef-solo or chef-zero (Chef 11.8 or newer) is used.
-      def run_chef(use_solo=true)
-      chef_bin = use_solo ? "chef-solo" : "chef-client -z"
- self.sudo "bin/#{chef_bin} --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config['recipes'].join(",")}" if options[:chef]
-      end
-      # class method for executing a command as superuser.
-      def self.sudo *args
-	detect_platform
-	Kitchenplan::Log.info self.platform.run_privileged(*args)
-	system self.platform.run_privileged(*args)
-      end
-      # class method for executing a regular command.
-      def self.normaldo *args
-	detect_platform
-	Kitchenplan::Log.info *args
-	system *args
-      end
-      # In a Chef-like manner, log a fatal message to stderr/logger and exit with this error code.
-      def self.fatal!(msg, err = -1)
-	Kitchenplan::Log.fatal(msg)
-	Process.exit err
-      end
-      # In a Chef-like manner, log a debug message to the logger and exit with this error code.
-      def self.exit!(msg, err = -1)
-	Kitchenplan::Log.debug(msg)
-	Process.exit err
-      end
-      end
     end
+    def ping_google_analytics()
+      # Trying to get some metrics for usage, just comment out if you don't want it.
+      Kitchenplan::Log.info 'Sending a ping to Google Analytics to count usage'
+      require 'Gabba'
+      Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
+    end
+    def run
+      Kitchenplan::Log.info "Kitchenplan starting up."
+      # get options.  This function comes from {Kitchenplan::Mixin::Optparse}.
+      self.options = parse_commandline()
+      Kitchenplan::Log.debug "Started with options: #{options.inspect}"
+      Kitchenplan::Log.info "Gathering prerequisites..."
+      self.platform.prerequisites()
+      Kitchenplan::Log.info "Generating Chef configs..."
+      generate_chef_config()
+      Kitchenplan::Log.info "Verifying cookbook dependencies..."
+      ping_google_analytics() if 0 == 1
+      update_cookbooks_librarian()
+      self.platform.run_chef(use_solo=true,log_level="debug",recipes=self.config['recipes'])
+      self.exit!("Chef run complete.  Exiting normally.")
+    end
+    # class method for executing a command as superuser.
+    def self.sudo *args
+      detect_platform
+      Kitchenplan::Log.info self.platform.run_privileged(*args)
+      system self.platform.run_privileged(*args)
+    end
+    # class method for executing a regular command.
+    def self.normaldo *args
+      detect_platform
+      Kitchenplan::Log.info *args
+      system *args
+    end
+    # In a Chef-like manner, log a fatal message to stderr/logger and exit with this error code.
+    def self.fatal!(msg, err = -1)
+      Kitchenplan::Log.fatal(msg)
+      Process.exit err
+    end
+    # In a Chef-like manner, log a debug message to the logger and exit with this error code.
+    def self.exit!(msg, err = -1)
+      Kitchenplan::Log.debug(msg)
+      Process.exit err
+    end
+  end
+end
