@@ -2,12 +2,12 @@ module Kitchenplan
   module Mixin
     module Commands
       def sudo *args
-	ohai platform.sudo(*args)
-	system platform.sudo(*args)
+	Kitchenplan::Log.info self.platform.run_privileged(*args)
+	system self.platform.run_privileged(*args)
       end
 
       def normaldo *args
-	ohai *args
+	Kitchenplan::Log.info *args
 	system *args
       end
     end
