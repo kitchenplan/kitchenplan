@@ -144,4 +144,4 @@ else
   sudo "bin/chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config.config['recipes'].join(",")}" if options[:chef]
 end
 
-ohai "Chef run complete, your computer should be installed. You can always rerun kitchenplan to adjust your settings."
+ohai "Chef run complete, your computer should be installed. You can always rerun Kitchenplan to adjust your settings."
