@@ -1,6 +1,5 @@
 recipes:
     global:
-#        - applications::bash4 # does not work in mavericks
         - applications::bash-completion
         - dotfiles::bash_it
         - dotfiles::inputrc

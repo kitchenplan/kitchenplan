@@ -2,6 +2,7 @@ groups:
     - bash
     - developer
     - smartie
+    - td
 recipes:
     global:
     mac_os_x:
@@ -21,6 +22,7 @@ recipes:
 #        - applications::transmit
         - applications::spotify
         - applications::bartender
+        - applications::hhvm
         - osxdefaults::dock_automatically_hide_and_show_the_dock
         - osxdefaults::dock_do_not_animate_opening_applications_from_the_dock
         - osxdefaults::dock_enable_spring_loading_for_all_dock_items
@@ -34,20 +36,13 @@ recipes:
         - osxdefaults::dock_remove_the_auto-hiding_dock_delay
         - osxdefaults::menu_add_battery_percentage
         - osxdefaults::menu_show_clock_with_date
+        - osxdefaults::mail_when_searching_do_not_include_trash
+        - osxdefaults::mail_copy_email_addresses_instead_of_names_in_mail
+        - osxdefaults::set_computer_name
 attributes:
     git:
         name: Roderik van der Veer
         email: roderik@vanderveer.be
     osxdefaults:
         computername: Sinope
-    dotfiles:
-        kdeploy:
-            hostname: dev
-        vim:
-            bundle:
-                - sleuth: git://github.com/tpope/vim-sleuth.git
-                - sensible: git://github.com/tpope/vim-sensible.git
-                - gitgutter: git://github.com/airblade/vim-gitgutter.git
-                - airline: https://github.com/bling/vim-airline
-                - syntastic: git://github.com/scrooloose/syntastic.git
-                - nerdtree: https://github.com/scrooloose/nerdtree.git
+

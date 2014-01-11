@@ -16,6 +16,13 @@ recipes:
         - applications::ssh_config
         - dotfiles::vim
         - applications::composer
+        - applications::postgresql
+        - applications::psycopg2
+        - applications::mysql
+        - applications::mysql_python
+        - applications::apache
+        - applications::php55
+        - dotfiles::workspace
     mac_os_x:
         - applications::imageoptim
         - applications::imagealpha
@@ -33,6 +40,25 @@ recipes:
         - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
         - osxdefaults::enable_safari_debug_menu
         - osxdefaults::set_a_blazingly_fast_keyboard_repeat_rate
+        - osxdefaults::disable_disk_image_verification
+        - osxdefaults::disable_gatekeeper
+        - osxdefaults::disable_front_row
+        - osxdefaults::enable_assistive_devices
+        - osxdefaults::enable_full_keyboard_access_for_all_controls
+        - osxdefaults::increase_window_resize_speed_for_cocoa_applications
+        - osxdefaults::speed_up_mission_control_animations
+        - osxdefaults::tap_to_click
+        - osxdefaults::do_not_show_dashboard_as_a_space
+        - osxdefaults::prevent_time_machine_from_prompting_to_use_new_hard_drives_as_backup_volume
+        - osxdefaults::finder_allow_text_selection_in_quick_look
+        - osxdefaults::finder_display_full_path
+        - osxdefaults::finder_use_column_view_in_all_finder_windows_by_default
+        - osxdefaults::finder_new_finder_windows_shows_homefolder
+        - osxdefaults::finder_automatically_open_a_new_finder_window_when_a_volume_is_mounted
+        - osxdefaults::finder_disable_the_warning_before_emptying_the_trash
+        - osxdefaults::finder_disable_the_warning_when_changing_a_file_extension
+        - osxdefaults::finder_search_the_current_folder_by_default
+        - osxdefaults::finder_unhide_home
     debian:
         - applications::performance_scheduler
         - applications::nscd
@@ -41,3 +67,14 @@ recipes:
         - applications::xvfb
         - applications::pidgin
         - applications::ubuntu-desktop
+attributes:
+    mysql_root_password: "password"
+    dotfiles:
+        vim:
+            bundle:
+                - sleuth: git://github.com/tpope/vim-sleuth.git
+                - sensible: git://github.com/tpope/vim-sensible.git
+                - gitgutter: git://github.com/airblade/vim-gitgutter.git
+                - airline: https://github.com/bling/vim-airline
+                - syntastic: git://github.com/scrooloose/syntastic.git
+                - nerdtree: https://github.com/scrooloose/nerdtree.git
