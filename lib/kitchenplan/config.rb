@@ -1,6 +1,7 @@
 require 'yaml'
 require 'etc'
 require 'ohai'
+require 'erb'
 
 module Kitchenplan
 
@@ -27,12 +28,12 @@ module Kitchenplan
 
     def parse_default_config
         default_config_path = 'config/default.yml'
-        @default_config = ( YAML.load_file(default_config_path) if File.exist?(default_config_path) ) || {}
+        @default_config = ( YAML.load(ERB.new(File.read(default_config_path)).result) if File.exist?(default_config_path) ) || {}
     end
 
     def parse_people_config
         people_config_path = "config/people/#{Etc.getlogin}.yml"
-        @people_config = ( YAML.load_file(people_config_path) if File.exist?(people_config_path) ) || YAML.load_file("config/people/roderik.yml")
+        @people_config = ( YAML.load(ERB.new(File.read(people_config_path)).result) if File.exist?(people_config_path) ) || YAML.load(ERB.new(File.read("config/people/roderik.yml")).result)
     end
 
     def parse_group_configs
@@ -45,7 +46,7 @@ module Kitchenplan
 
     def parse_group_config(group)
         group_config_path = "config/groups/#{group}.yml"
-        @group_configs[group] = ( YAML.load_file(group_config_path) if File.exist?(group_config_path) ) || {}
+        @group_configs[group] = ( YAML.load(ERB.new(File.read(group_config_path)).result) if File.exist?(group_config_path) ) || {}
     end
 
     def config
