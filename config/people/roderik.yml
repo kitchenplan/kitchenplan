@@ -12,8 +12,6 @@ recipes:
         - applications::istatmenus4
         - applications::kaleidoscope
         - applications::omnigraffle
-        - applications::things
-        - applications::tower
         - applications::vlc
         - applications::superduper
         - applications::alfred
@@ -21,7 +19,10 @@ recipes:
         - applications::cord
         - applications::spotify
         - applications::bartender
-#        - applications::hhvm (do this in a second run, it takes forever!)
+        - applications::hhvm
+        - applications::skylab
+        - applications::vmware_fusion
+        - applications::vagrant
         - osxdefaults::dock_automatically_hide_and_show_the_dock
         - osxdefaults::dock_do_not_animate_opening_applications_from_the_dock
         - osxdefaults::dock_enable_spring_loading_for_all_dock_items

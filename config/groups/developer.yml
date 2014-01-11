@@ -17,9 +17,7 @@ recipes:
         - dotfiles::vim
         - applications::composer
         - applications::postgresql
-        - applications::psycopg2
         - applications::mysql
-        - applications::mysql_python
         - applications::apache
         - applications::php55
         - dotfiles::workspace
@@ -29,8 +27,6 @@ recipes:
         - applications::svgo
         - applications::sublime_text_3
         - applications::phpstorm
-        - applications::codekit
-        - applications::espresso
         - applications::watch
         - applications::gnu-tar
         - applications::sequelpro

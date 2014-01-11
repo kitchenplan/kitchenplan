@@ -6,7 +6,6 @@ recipes:
         - applications::java
         - applications::vlc
     mac_os_x:
-        - applications::adobe_reader
         - drivers::xerox550
         - osxdefaults::add_note_to_loginscreen
         - osxdefaults::disable_auto-correct
@@ -18,7 +17,6 @@ recipes:
         - osxdefaults::disable_resume_system-wide
         - osxdefaults::save_screenshots_in_png_format
         - osxdefaults::save_screenshots_to_the_desktop
-        - applications::bash
 attributes:
     drivers:
         xerox: 172.18.19.67
