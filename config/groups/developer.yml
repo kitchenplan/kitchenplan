@@ -70,6 +70,8 @@ recipes:
 attributes:
     mysql_root_password: "password"
     dotfiles:
+        kdeploy:
+            hostname: dev
         vim:
             bundle:
                 - sleuth: git://github.com/tpope/vim-sleuth.git

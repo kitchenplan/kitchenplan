@@ -15,6 +15,3 @@ recipes:
 attributes:
     postfix:
         domain: "kunstmaan.be"
-    dotfiles:
-        kdeploy:
-            hostname: dev
