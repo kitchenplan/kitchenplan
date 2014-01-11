@@ -2,10 +2,10 @@ groups:
     - bash
     - developer
     - smartie
-    - td
 recipes:
     global:
     mac_os_x:
+        - applications::clipmenu
         - applications::1password
         - applications::dropbox
         - applications::evernote
@@ -19,10 +19,9 @@ recipes:
         - applications::alfred
         - applications::totalfinder
         - applications::cord
-#        - applications::transmit
         - applications::spotify
         - applications::bartender
-        - applications::hhvm
+#        - applications::hhvm (do this in a second run, it takes forever!)
         - osxdefaults::dock_automatically_hide_and_show_the_dock
         - osxdefaults::dock_do_not_animate_opening_applications_from_the_dock
         - osxdefaults::dock_enable_spring_loading_for_all_dock_items
