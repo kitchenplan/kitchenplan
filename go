@@ -156,8 +156,8 @@ if File.directory?(KITCHENPLAN_PATH)
   normaldo "git pull"
 else
   ohai "Setting up the Kitchenplan installation..."
-  sudo "mkdir -p /opt"
-  sudo "chown -R #{ENV["USER"]} /opt"
+  sudo "mkdir -p #{KITCHENPLAN_PATH}"
+  sudo "chown -R #{ENV["USER"]} #{KITCHENPLAN_PATH}"
   normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH}"
 end
 
