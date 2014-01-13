@@ -21,7 +21,7 @@ recipes:
         - applications::spotify
         - applications::bartender
         - applications::hhvm
-        - applications::skylab
+        - skylab::default
         - applications::vmware_fusion
         - applications::vagrant
         - osxdefaults::dock_automatically_hide_and_show_the_dock
