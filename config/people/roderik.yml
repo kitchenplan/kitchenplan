@@ -4,6 +4,7 @@ groups:
     - smartie
 recipes:
     global:
+        - dotfiles::sshconfig
     mac_os_x:
         - applications::clipmenu
         - applications::1password
