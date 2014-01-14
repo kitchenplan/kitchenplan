@@ -22,6 +22,7 @@ recipes:
         - applications::bartender
         - applications::hhvm
         - skylab::default
+        - sudo::default
         - applications::vmware_fusion
         - applications::vagrant
         - osxdefaults::dock_automatically_hide_and_show_the_dock
@@ -46,4 +47,9 @@ attributes:
         email: roderik@vanderveer.be
     osxdefaults:
         computername: Sinope
-
+    authorization:
+        sudo:
+            users:
+                - roderik
+            passwordless: true
+            include_sudoers_d: true
