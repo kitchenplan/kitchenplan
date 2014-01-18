@@ -1,6 +1,6 @@
 recipes:
     global:
-        - dotfiles::kms
+        - applications::kms
     mac_os_x:
         - applications::hipchat
     debian:
