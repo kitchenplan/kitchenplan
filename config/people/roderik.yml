@@ -37,6 +37,8 @@ recipes:
         - osxdefaults::mail_copy_email_addresses_instead_of_names_in_mail
         - osxdefaults::set_computer_name
 attributes:
+    mysql_autostart: FALSE
+    postgresql_autostart: FALSE
     git:
         name: Roderik van der Veer
         email: roderik.van.der.veer@kunstmaan.be
