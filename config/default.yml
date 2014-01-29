@@ -4,7 +4,6 @@ recipes:
         - applications::google-chrome
         - applications::firefox
         - applications::java
-        - applications::vlc
     mac_os_x:
         - drivers::xerox550
         - osxdefaults::add_note_to_loginscreen
