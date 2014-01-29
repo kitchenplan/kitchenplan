@@ -39,6 +39,20 @@ recipes:
 attributes:
     mysql_autostart: FALSE
     postgresql_autostart: FALSE
+    dotfiles:
+        vimusers:
+            - root
+            - roderik
+        kdeploy:
+            hostname: dev
+        vim:
+            bundle:
+                - sleuth: git://github.com/tpope/vim-sleuth.git
+                - sensible: git://github.com/tpope/vim-sensible.git
+                - gitgutter: git://github.com/airblade/vim-gitgutter.git
+                - airline: https://github.com/bling/vim-airline
+                - syntastic: git://github.com/scrooloose/syntastic.git
+                - nerdtree: https://github.com/scrooloose/nerdtree.git
     git:
         name: Roderik van der Veer
         email: roderik.van.der.veer@kunstmaan.be
