@@ -6,24 +6,19 @@ recipes:
     global:
         - dotfiles::sshconfig
     mac_os_x:
-        - applications::clipmenu
         - applications::1password
         - applications::dropbox
         - applications::evernote
         - applications::istatmenus4
         - applications::kaleidoscope
         - applications::omnigraffle
-        - applications::vlc
-        - applications::superduper
         - applications::alfred
         - applications::totalfinder
-        - applications::cord
         - applications::spotify
         - applications::bartender
-        - applications::hhvm
+#        - applications::hhvm
         - skylab::default
         - sudo::default
-        - applications::vmware_fusion
         - applications::vagrant
         - osxdefaults::dock_automatically_hide_and_show_the_dock
         - osxdefaults::dock_do_not_animate_opening_applications_from_the_dock
@@ -44,9 +39,9 @@ recipes:
 attributes:
     git:
         name: Roderik van der Veer
-        email: roderik@vanderveer.be
+        email: roderik.van.der.veer@kunstmaan.be
     osxdefaults:
-        computername: Sinope
+        computername: Mir
     authorization:
         sudo:
             users:
