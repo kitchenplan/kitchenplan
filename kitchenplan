@@ -100,13 +100,8 @@ OptionParser.new do |opts|
 end.parse!
 
 # Bootstrapping dependencies
-if File.exist? '/etc/redhat-release'
-    normaldo "(gem spec -q bundler > /dev/null 2>&1) || sudo yum install -y rubygem-bundler"
-    normaldo "(rpm -qi ruby-devel > /dev/null 2>&1) || sudo yum install -y ruby-devel"
-else
-    normaldo "(gem spec bundler -v > /dev/null 2>&1) || sudo gem install bundler --no-rdoc --no-ri"
-end
-sudo "bundle install --binstubs=bin #{(options[:debug] ? '--verbose' : '--quiet')}"
+sudo "gem install vendor/bundler-1.5.3.gem --no-rdoc --no-ri" unless Kernel.system "gem query --name-matches '^bundler$' --installed > /dev/null 2>&1"
+sudo "bundle install --deployment --binstubs=bin #{(options[:debug] ? '--verbose' : '--quiet')}"
 
 # Add local deps to the load path.
 require "rubygems"
