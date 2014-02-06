@@ -100,7 +100,8 @@ OptionParser.new do |opts|
 end.parse!
 
 # Bootstrapping dependencies
-sudo "gem install vendor/bundler-1.5.3.gem --no-rdoc --no-ri" unless Kernel.system "gem query --name-matches '^bundler$' --installed > /dev/null 2>&1"
+sudo "sudo gem install vendor/cache/archive-tar-minitar-0.5.2.gem --no-rdoc --no-ri" unless Kernel.system "gem query --name-matches '^archive-tar-minitar$' --installed > /dev/null 2>&1"
+sudo "sudo gem install vendor/bundler-1.5.3.gem --no-rdoc --no-ri" unless Kernel.system "gem query --name-matches '^bundler$' --installed > /dev/null 2>&1"
 sudo "bundle install --deployment --binstubs=bin #{(options[:debug] ? '--verbose' : '--quiet')}"
 
 # Add local deps to the load path.
