@@ -1,5 +1,7 @@
 language: objective-c
-cache: bundler
+
 rvm:
   - system
+  - 2.0.0
+
 script: "./go --no-interaction"

@@ -6,20 +6,9 @@ recipes:
     global:
         - dotfiles::sshconfig
     mac_os_x:
-        - applications::1password
-        - applications::dropbox
-        - applications::evernote
-        - applications::istatmenus4
-        - applications::kaleidoscope
         - applications::omnigraffle
-        - applications::alfred
-        - applications::totalfinder
-        - applications::spotify
-        - applications::bartender
-#        - applications::hhvm
-        - skylab::default
-        - sudo::default
-        - applications::vagrant
+        - applications::launchrocket
+        - sudoalt::default
         - osxdefaults::dock_automatically_hide_and_show_the_dock
         - osxdefaults::dock_do_not_animate_opening_applications_from_the_dock
         - osxdefaults::dock_enable_spring_loading_for_all_dock_items
@@ -62,3 +51,18 @@ attributes:
                 - roderik
             passwordless: true
             include_sudoers_d: true
+    homebrewalt:
+        cask_apps:
+            - onepassword
+            - dropbox
+            - evernote
+            - istat-menus
+            - kaleidoscope
+            - alfred
+            - totalfinder
+            - spotify
+            - bartender
+            - vmware-fusion
+            - virtualbox
+            - vagrant
+            - hazel
