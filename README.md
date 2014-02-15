@@ -37,7 +37,7 @@ When you are done with that, run the ```go``` script or run ```kitchenplan``` ma
 
 ### Command line tools
 
-There are some useful command line options, run ```kitchenplan -d``` or look here:
+There are some useful command line options, run ```kitchenplan -h``` or look here:
 
 ```
 Usage: kitchenplan [options]
@@ -52,7 +52,7 @@ Common options:
 
 ### Caveat
 
-We are running this project in production for both OSX and Ubuntu development machines. So I'm pretty sure it all works just fine. But, in the gap between two new installs, all the applications we install, and all community cookbooks are in constant development and can potentially break the install. I always suggest to our people that they run it first in a virtual machine (You can easily install OSX in a VMware Fusion trial, or use Vagrant for Linux testing).
+We are running this project in production for OSX development machines. So I'm pretty sure it all works just fine. But, in the gap between two new installs, all the applications we install, and all community cookbooks are in constant development and can potentially break the install. I always suggest to our people that they run it first in a virtual machine (You can easily install OSX in a VMware Fusion trial).
 
 ### Want to contribute?
 
