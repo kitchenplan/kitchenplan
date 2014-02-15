@@ -33,7 +33,7 @@ $ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go
 
 Before you run the commadn above, or manually run the```./kitchenplan``` command, you should first create a custom config file. The config system will always start off with ```default.yml```. This will contain the recipes for every person in your organisation. Next it it will look at the file ```yourusername.yml``` (with the username logged in on the computer as yourusername) for your custom settings. Ofcourse there will be a lot of shared config when your organisation has departments of different types of personel. So you can define group config files and assign one or more groups to a user. The ```roderik.yml``` ([found here](https://github.com/kitchenplan/kitchenplan/blob/master/config/people/roderik.yml)) is my personal config file and it will fall back to this config if you don't have a personal file.
 
-When you are done with that, run the go script or run ```kitchenplan``` manually and wait for a while. After the command finishes, reboot your computer and you are good to go.
+When you are done with that, run the ```go``` script or run ```kitchenplan``` manually and wait for a while. After the command finishes, reboot your computer and you are good to go.
 
 ### Command line tools
 
@@ -58,11 +58,10 @@ We are running this project in production for both OSX and Ubuntu development ma
 
 Fork and send pull requests or just idea's and issues via the issue tracker. If you need a new recipe, fork the chef-* repo's and change the url in the Cheffile to make it fetch your version. Add it and send a pull request. For now we support OSX and the debian family (only tested on Ubuntu). Other operating systems are welcome!
 
-More questions, ping me at [Twitter @r0derik](http://twitter.com/r0derik) or visit our [HipChat channel](https://www.hipchat.com/gTkMJo2Ag).
+More questions, ping me at [Twitter @r0derik](http://twitter.com/r0derik) or visit the [HipChat channel](https://www.hipchat.com/gTkMJo2Ag).
 
 ### Acknowledgements
 
 This project is inspired and built by using components and idea's from: Boxen, pivotal_workstation, Opscode cookbooks, and more. Please take any imitation as a the highest form of flattery. If you feel the source or acknowledgements are not sufficient, please let me know how you want it to be resolved.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-46288146-2/kitchenplan/kitchenplan)](https://github.com/igrigorik/ga-beacon)
-

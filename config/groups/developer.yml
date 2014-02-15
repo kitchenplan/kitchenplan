@@ -1,36 +1,19 @@
 recipes:
     global:
-        - applications::git
-        - applications::wget
-        - applications::pwgen
-        - applications::xmlstarlet
-        - applications::pv
-        - applications::htop
         - dotfiles::gitconfig
-        - applications::grunt-cli
-        - applications::bower
-        - applications::git-flow
         - applications::sass
-        - applications::siege
-        - applications::nodejs
         - applications::ssh_config
+        - applications::macvim
         - dotfiles::vim
         - applications::composer
         - applications::postgresql
         - applications::mysql
-        - applications::apache
         - applications::php55
         - dotfiles::workspace
     mac_os_x:
-        - applications::imageoptim
-        - applications::imagealpha
         - applications::svgo
         - applications::sublime_text_3
-        - applications::phpstorm
-        - applications::watch
         - applications::gnu-tar
-        - applications::sequelpro
-        - applications::sourcetree
         - osxdefaults::set_terminal_profile
         - osxdefaults::add_a_context_menu_item_for_showing_the_web_inspector_in_web_views
         - osxdefaults::disable_press-and-hold_for_keys_in_favor_of_key_repeat
@@ -55,13 +38,29 @@ recipes:
         - osxdefaults::finder_disable_the_warning_when_changing_a_file_extension
         - osxdefaults::finder_search_the_current_folder_by_default
         - osxdefaults::finder_unhide_home
-    debian:
-        - applications::performance_scheduler
-        - applications::nscd
-        - applications::locales
-        - applications::pureftpd
-        - applications::xvfb
-        - applications::pidgin
-        - applications::ubuntu-desktop
 attributes:
     mysql_root_password: "password"
+    homebrewalt:
+        apps:
+            - git
+            - git-extras
+            - wget
+            - pwgen
+            - xmlstarlet
+            - pv
+            - htop-osx
+            - git-flow
+            - siege
+            - watch
+        cask_apps:
+            - imageoptim
+            - imagealpha
+            - phpstorm
+            - sequel-pro
+            - sourcetree
+    nodejs:
+        apps:
+            - phonegap
+            - bower
+            - grunt
+            - grunt-cli

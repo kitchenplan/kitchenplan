@@ -1,16 +1,9 @@
 recipes:
     global:
         - applications::kms
-    mac_os_x:
-        - applications::hipchat
-    debian:
-        - root_ssh_agent::env_keep
-        - root_ssh_agent::ppid
-        - applications::essentials
-        - applications::mysql_workbench
-        - applications::server_tuning
-        - applications::postfix
-        - applications::java
 attributes:
     postfix:
         domain: "kunstmaan.be"
+    homebrewalt:
+        cask_apps:
+            - hipchat

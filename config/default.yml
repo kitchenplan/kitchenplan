@@ -1,10 +1,9 @@
 recipes:
     global:
         - applications::create_var_chef_cache
-        - applications::google-chrome
-        - applications::firefox
-        - applications::java
     mac_os_x:
+        - homebrewalt::default
+        - nodejs::default
         - drivers::xerox550
         - osxdefaults::add_note_to_loginscreen
         - osxdefaults::disable_auto-correct
@@ -21,3 +20,8 @@ attributes:
         xerox: 172.18.19.67
     osxdefaults:
         loginmessage: Property of Kunstmaan NV - 016 300 780 - hello@kunstmaan.be
+    homebrewalt:
+        cask_apps:
+            - google-chrome
+            - firefox
+            - java

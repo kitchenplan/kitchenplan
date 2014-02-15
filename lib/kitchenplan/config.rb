@@ -2,6 +2,7 @@ require 'yaml'
 require 'etc'
 require 'ohai'
 require 'erb'
+require 'deep_merge'
 
 module Kitchenplan
 
@@ -62,12 +63,12 @@ module Kitchenplan
         config['recipes'] |= people_recipes['global'] || []
         config['recipes'] |= people_recipes[@platform] || []
         config['attributes'] = {}
-        config['attributes'].merge!(@default_config['attributes'] || {})
+        config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
         @group_configs.each do |group_name, group_config|
-            config['attributes'].merge!(group_config['attributes']) unless group_config['attributes'].nil?
+            config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
         end
         people_attributes = @people_config['attributes'] || {}
-        config['attributes'].merge!(people_attributes)
+        config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
         config
     end
 
