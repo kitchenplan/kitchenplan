@@ -3,7 +3,7 @@ recipes:
         - dotfiles::gitconfig
         - applications::sass
         - applications::ssh_config
-        - applications::macvim
+#        - applications::macvim          # install xcode before trying to compile macvim
         - dotfiles::vim
         - applications::composer
         - applications::postgresql
