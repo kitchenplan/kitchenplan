@@ -1,4 +1,6 @@
 class Kitchenplan
+  # abstract resolver.  which subclasses platform because i don't remember why.
+  # TODO: remember why resolver subclasses platform.
   class Resolver < Platform
     include Kitchenplan::Mixin::Commands
     # load up whatever information is necessary to use this dependency resolver.
@@ -15,12 +17,13 @@ class Kitchenplan
     def present?
       Kitchenplan::Log.warn "No detection method defined for resolver."
     end
-    # actually run the resolver and download the cookbooks we need.
-    def fetch_dependencies()
+    # actually run the resolver and download the cookbooks we need, updating them where necessary.
+    def update_dependencies()
       Kitchenplan::Log.warn "Kitchenplan can't fetch cookbooks because no dependency solver has been loaded.  This run won't be very useful."
     end
 
-    def resolve_dependencies()
+    # run resolver, determine dependencies and download the cookbooks we need if they don't already exist.
+    def fetch_dependencies()
 
       Kitchenplan::Log.warn "Kitchenplan can't resolve cookbook dependencies because no dependency solver has been loaded.  This run won't be very useful."
     end

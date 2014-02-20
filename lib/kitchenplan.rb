@@ -10,17 +10,22 @@ rescue LoadError
     raise "Unsupported platform or fatal error loading support for platform '#{Kitchenplan::Config.new(parse_configs=false).platform}' ..."
 end
 
+# Top-level class for all Kitchenplan-y operations.
 class Kitchenplan
     attr_accessor :platform
     attr_accessor :resolver
+    # all Kitchenplans care about what platform they're on and what resolver they use to get their cookbooks.
     def initialize
 	detect_platform()
 	detect_resolver()
     end
+    # invoke platform detection code - attempt to load the first descendant of {Kitchenplan::Platform} that loaded completely (without raising an exception).
     def detect_platform
 	self.platform = eval("Kitchenplan::Platform::#{Kitchenplan::Platform.constants.first.to_s}.new()") unless defined?(self.platform) and self.platform.nil? == false
     end
 
+    # invoke resolver detection code.  start with library resolvers and auto-load them.  then walk {Kitchenplan::Resolver} subclasses and take the first one that works.
+    # TODO: may want to allow the user to specify a resolver preference.
     def detect_resolver
 	if defined?(self.resolver) and self.resolver.nil? == false
 	    return self.resolver
@@ -52,13 +57,15 @@ class Kitchenplan
 	end
     end
 
-    # class method for executing a command as superuser.
+    # class method for executing a command as superuser.  because this is platform-specific, it's pulled all the way up to the
+    # root class.
     def sudo *args
 	detect_platform
 	Kitchenplan::Log.info self.platform.run_privileged(*args)
 	system self.platform.run_privileged(*args)
     end
-    # class method for executing a regular command.
+    # class method for executing a regular command.  because this is platform-specific, it's pulled all the way up to the
+    # root class.
     def normaldo *args
 	detect_platform
 	Kitchenplan::Log.info *args

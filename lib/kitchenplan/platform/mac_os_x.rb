@@ -1,34 +1,42 @@
 module Kitchenplan
   class Platform
+    # OS X support.  This is probably the primary development platform for Kitchenplan today and
+    # this code should therefore work real good.
     class MacOSX < Kitchenplan::Platform
       def initialize
+	# haven't tested on Lion yet, unfortunately.  if you have and this works, let me know. -sw
 	@lowest_version_supported = "10.8"
 	self.name = "mac_os_x"
 	self.version = `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
-	Kitchenplan::Log.info "#{self.class} : Platform name: #{self.name}  Version: #{self.version}" if @debug
+	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)
       def running_as_superuser?
-	Kitchenplan::Log.info "#{self.class} : Running as superuser? UID = #{Process.uid} == 0?" if @debug
+	Kitchenplan::Log.debug "#{self.class} : Running as superuser? UID = #{Process.uid} == 0?"
 	Process.uid == 0
       end
       # is this version of the platform supported by the kitchenplan codebase?
       def version_supported?
-	Kitchenplan::Log.info "#{self.class} : Is platform version lower than #{@lowest_version_supported}?" if @debug
+	Kitchenplan::Log.debug "#{self.class} : Is platform version lower than #{@lowest_version_supported}?"
 	return false if self.version.to_s <  @lowest_version_supported
 	true
       end
+      # test to see if the Bundler gem is installed.
       def bundler_installed?
 	`(gem spec bundler -v > /dev/null 2>&1)`
       end
+      # install bundler if needed.
       def install_bundler
 	# What we really need to do is check the result of the normaldo and then do a wrapped sudo.
 	# That should be good on different platforms as long as Ruby's present.
 	sudo "gem install bundler --no-rdoc --no-ri" unless bundler_installed?
       end
+      # test to see if Git is installed and available.
       def git_installed?
 	`git config > /dev/null 2>&1`
       end
+      # install git using Homebrew.
+      # TODO: Homebrew?  Is that a dependency we're tracking in the go script?  How do we know it's installed?
       def install_git
 	sudo "brew install git" unless git_installed?
       end
@@ -48,6 +56,8 @@ module Kitchenplan
 	sudo "bundle install --binstubs=bin --quiet"
       end
       private
+      # run commands as sudo.
+      # TODO:  This may not need to be here anymore.
       def sudo *args
 	Kitchenplan::Application.new().sudo(*args)
       end

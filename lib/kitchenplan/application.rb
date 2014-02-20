@@ -1,6 +1,8 @@
 require 'kitchenplan'
 
 class Kitchenplan
+  # application class is the class invoked by bin/kitchenplan.  this is where almost all of the
+  # heavy lifting for the app happens.
   class Application < Kitchenplan
     attr_accessor :options, :config
     include Kitchenplan::Mixin::Display
@@ -30,6 +32,7 @@ class Kitchenplan
       Kitchenplan::Log.init(Logger.new(STDOUT))
       Kitchenplan::Log.level = loglevel
     end
+    # load our application config and make it available elsewhere.
     def load_config()
       self.config = Kitchenplan::Config.new().config
     end
@@ -44,6 +47,7 @@ class Kitchenplan
 	out.write("cookbook_path      [ \"#{Dir.pwd}/cookbooks\" ]")
       end
     end
+    # using our chosen resolver, ensure that our cookbooks/ directory is up-to-date before we run Chef.
     def update_cookbooks()
       self.resolver.debug = self.options[:debug]
       unless File.exists?("cookbooks")
@@ -57,12 +61,14 @@ class Kitchenplan
 	#self.normaldo "bin/librarian-chef update #{(self.options[:debug] ? '--verbose' : '--quiet')}"
       end
     end
+    # let us know who's running Kitchenplan.
     def ping_google_analytics()
       # Trying to get some metrics for usage, just comment out if you don't want it.
       Kitchenplan::Log.info 'Sending a ping to Google Analytics to count usage'
       require 'Gabba'
       Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
     end
+    # main point of entry for the class.
     def run
       Kitchenplan::Log.info "Kitchenplan starting up."
       # get options.  This function comes from {Kitchenplan::Mixin::Optparse}.

@@ -1,4 +1,5 @@
-module Kitchenplan
+class Kitchenplan
+  # abstract platform class.
   class Platform
     # :name is based on the ohai name of the platform.  by convention this is also the class name
     # and file name of the source

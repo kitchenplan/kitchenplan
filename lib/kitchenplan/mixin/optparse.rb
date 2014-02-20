@@ -1,7 +1,12 @@
 require 'optparse'
-module Kitchenplan
+class Kitchenplan
+  # mixins!  we love them.
   module Mixin
+    # option parsing utility class for command line applications.
+    # note that this one is tuned exclusively for {Kitchenplan::Application}, which will
+    # need to change if we ever add more apps.
     module Optparse
+      # parse the command line with OptionParser and return the resulting config.
       def parse_commandline
 	options = {}
 	OptionParser.new do |opts|
