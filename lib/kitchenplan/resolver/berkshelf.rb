@@ -31,11 +31,11 @@ class Kitchenplan
       end
       # actually run the resolver and download the cookbooks we need.
       def fetch_dependencies()
-	"berks install --path cookbooks #{(@debug ? '-v' : '-q')}"
+	"berks vendor cookbooks #{(@debug ? '-v' : '-q')}"
       end
       # update dependencies after the initial install
       def update_dependencies()
-	"berks update --path cookbooks #{(@debug ? '-d' : '-q')}"
+	"berks vendor cookbooks #{(@debug ? '-d' : '-q')}"
       end
     end
   end
