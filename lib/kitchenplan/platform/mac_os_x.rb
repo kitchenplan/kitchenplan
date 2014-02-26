@@ -43,7 +43,7 @@ module Kitchenplan
       # TODO: Move up to base
       def prerequisites
 	Kitchenplan::Application.fatal! "Don't run this as root!" if running_as_superuser?
-	Kitchenplan::Application.fatal! "Platform version too low.  Your version: #{self.version}" unless version_supported?
+	Kitchenplan::Log.warn "Platform version too low.  Your version: #{self.version}" unless version_supported?
 	install_bundler
 	# needed for proper librarian usage
 	install_git
