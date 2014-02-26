@@ -100,13 +100,9 @@ OptionParser.new do |opts|
 end.parse!
 
 # Bootstrapping dependencies
-sudo "sudo gem install bundler --no-rdoc --no-ri" unless Kernel.system "gem query --name-matches '^bundler$' --installed > /dev/null 2>&1"
-sudo "bundle install --binstubs=bin #{(options[:debug] ? '--verbose' : '--quiet')}"
-
-# Add local deps to the load path.
-require "rubygems"
-require "bundler/setup"
-require 'json'
+sudo "gem install librarian-chef -v 0.0.2 --no-rdoc --no-ri"
+sudo "gem install gabba -v 1.0.1 --no-rdoc --no-ri"
+sudo "gem install deep_merge -v 1.0.1 --no-rdoc --no-ri"
 
 # Trying to get some metrics for usage, just comment out if you don't want it.
 ohai 'Sending a ping to Google Analytics to count usage'
@@ -116,6 +112,7 @@ Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV[
 # Generate the chef config
 ohai 'Generating the Chef configs'
 $: << File.join((File.expand_path("../", Pathname.new(__FILE__).realpath)), "/lib")
+require 'json'
 require "kitchenplan/config"
 config = Kitchenplan::Config.new
 File.open("kitchenplan-attributes.json", 'w') do |out|
@@ -126,15 +123,14 @@ File.open("solo.rb", 'w') do |out|
 end
 
 # Installing
-sudo "apt-get install -y git" if config.platform == "debian"
-normaldo "bin/librarian-chef install --clean #{(options[:debug] ? '--verbose' : '--quiet')}" unless File.exists?("cookbooks")
-normaldo "bin/librarian-chef update #{(options[:debug] ? '--verbose' : '--quiet')}" if options[:update_cookbooks]
+normaldo "librarian-chef install --clean #{(options[:debug] ? '--verbose' : '--quiet')}" unless File.exists?("cookbooks")
+normaldo "librarian-chef update #{(options[:debug] ? '--verbose' : '--quiet')}" if options[:update_cookbooks]
 
 # Run Chef
 if options[:recipes]
-  sudo "bin/chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{options[:recipes].join(",")}" if options[:chef]
+  sudo "chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{options[:recipes].join(",")}" if options[:chef]
 else
-  sudo "bin/chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config.config['recipes'].join(",")}" if options[:chef]
+  sudo "chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config.config['recipes'].join(",")}" if options[:chef]
 end
 
 ohai "Chef run complete, your computer should be installed. You can always rerun Kitchenplan to adjust your settings."
