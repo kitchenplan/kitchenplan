@@ -100,7 +100,6 @@ OptionParser.new do |opts|
 end.parse!
 
 # Bootstrapping dependencies
-normaldo "curl -L https://www.opscode.com/chef/install.sh | sudo bash"
 sudo "gem install librarian-chef -v 0.0.2 --no-rdoc --no-ri"
 sudo "gem install gabba -v 1.0.1 --no-rdoc --no-ri"
 sudo "gem install deep_merge -v 1.0.1 --no-rdoc --no-ri"
