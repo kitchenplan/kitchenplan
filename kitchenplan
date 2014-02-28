@@ -99,9 +99,9 @@ OptionParser.new do |opts|
 end.parse!
 
 # Bootstrapping dependencies
-sudo "gem install librarian-chef -v 0.0.2 --no-rdoc --no-ri"
-sudo "gem install gabba -v 1.0.1 --no-rdoc --no-ri"
-sudo "gem install deep_merge -v 1.0.1 --no-rdoc --no-ri"
+sudo "gem install librarian-chef -v 0.0.2 --no-rdoc --no-ri --conservative"
+sudo "gem install gabba -v 1.0.1 --no-rdoc --no-ri --conservative"
+sudo "gem install deep_merge -v 1.0.1 --no-rdoc --no-ri --conservative"
 
 # Trying to get some metrics for usage, just comment out if you don't want it.
 ohai 'Sending a ping to Google Analytics to count usage'
