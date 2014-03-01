@@ -58,9 +58,12 @@ attributes:
             - phpstorm
             - sequel-pro
             - sourcetree
+            - recordit
     nodejs:
         apps:
             - phonegap
+            - cordova
+            - ionic
             - bower
             - grunt
             - grunt-cli
