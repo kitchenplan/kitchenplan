@@ -1,5 +1,7 @@
 language: objective-c
 
+install: true
+
 rvm:
   - system
   - 2.0.0
