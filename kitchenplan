@@ -99,9 +99,13 @@ OptionParser.new do |opts|
 end.parse!
 
 # Bootstrapping dependencies
-sudo "gem install librarian-chef -v 0.0.2 --no-rdoc --no-ri --conservative"
-sudo "gem install gabba -v 1.0.1 --no-rdoc --no-ri --conservative"
-sudo "gem install deep_merge -v 1.0.1 --no-rdoc --no-ri --conservative"
+sudo "sudo gem install bundler --no-rdoc --no-ri" unless Kernel.system "gem query --name-matches '^bundler$' --installed > /dev/null 2>&1"
+normaldo "rm -rf .bundle/config"
+normaldo "bundle install --binstubs bin --path .bundle --deployment --local --no-cache #{(options[:debug] ? '--verbose' : '--quiet')}"
+
+# Add local deps to the load path.
+require "rubygems"
+require "bundler/setup"
 
 # Trying to get some metrics for usage, just comment out if you don't want it.
 ohai 'Sending a ping to Google Analytics to count usage'
