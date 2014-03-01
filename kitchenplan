@@ -126,14 +126,14 @@ File.open("solo.rb", 'w') do |out|
 end
 
 # Installing
-normaldo "librarian-chef install --clean #{(options[:debug] ? '--verbose' : '--quiet')}" unless File.exists?("cookbooks")
-normaldo "librarian-chef update #{(options[:debug] ? '--verbose' : '--quiet')}" if options[:update_cookbooks]
+normaldo "bin/librarian-chef install --clean #{(options[:debug] ? '--verbose' : '--quiet')}" unless File.exists?("cookbooks")
+normaldo "bin/librarian-chef update #{(options[:debug] ? '--verbose' : '--quiet')}" if options[:update_cookbooks]
 
 # Run Chef
 if options[:recipes]
-  sudo "chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{options[:recipes].join(",")}" if options[:chef]
+  sudo "bin/chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{options[:recipes].join(",")}" if options[:chef]
 else
-  sudo "chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config.config['recipes'].join(",")}" if options[:chef]
+  sudo "bin/chef-solo --log_level #{(options[:debug] ? 'debug' : 'error')} -c solo.rb -j kitchenplan-attributes.json -o #{config.config['recipes'].join(",")}" if options[:chef]
 end
 
 ohai "Chef run complete, your computer should be installed. You can always rerun Kitchenplan to adjust your settings."
