@@ -37,17 +37,23 @@ module Kitchenplan
         @people_config = ( YAML.load(ERB.new(File.read(people_config_path)).result) if File.exist?(people_config_path) ) || YAML.load(ERB.new(File.read("config/people/roderik.yml")).result)
     end
 
-    def parse_group_configs
+    def parse_group_configs(group = @people_config['groups'])
         @group_configs = {}
-        defined_groups = @people_config['groups'] || []
+        defined_groups = group || []
         defined_groups.each do |group|
             self.parse_group_config(group)
         end
     end
 
     def parse_group_config(group)
-        group_config_path = "config/groups/#{group}.yml"
-        @group_configs[group] = ( YAML.load(ERB.new(File.read(group_config_path)).result) if File.exist?(group_config_path) ) || {}
+        unless @group_configs[group]
+            group_config_path = "config/groups/#{group}.yml"
+            @group_configs[group] = ( YAML.load(ERB.new(File.read(group_config_path)).result) if File.exist?(group_config_path) ) || {}
+            defined_groups = @group_configs[group]['groups']
+            if defined_groups
+                self.parse_group_configs(defined_groups)
+            end
+        end
     end
 
     def config
