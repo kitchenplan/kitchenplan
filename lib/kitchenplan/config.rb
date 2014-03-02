@@ -42,9 +42,9 @@ class Kitchenplan
     end
 
     # find and parse each group named in a person's config file.
-    def parse_group_configs
+    def parse_group_configs(group = @people_config['groups'])
       @group_configs = {}
-      defined_groups = @people_config['groups'] || []
+      defined_groups = group || []
       defined_groups.each do |group|
 	self.parse_group_config(group)
       end
@@ -52,8 +52,14 @@ class Kitchenplan
 
     # parse configuration for a named group file.
     def parse_group_config(group)
-      group_config_path = "config/groups/#{group}.yml"
-      @group_configs[group] = ( YAML.load_file(group_config_path) if File.exist?(group_config_path) ) || {}
+        unless @group_configs[group]
+            group_config_path = "config/groups/#{group}.yml"
+            @group_configs[group] = ( YAML.load(ERB.new(File.read(group_config_path)).result) if File.exist?(group_config_path) ) || {}
+            defined_groups = @group_configs[group]['groups']
+            if defined_groups
+                self.parse_group_configs(defined_groups)
+            end
+        end
     end
 
     # for the current user and relevant groups and current platform,
