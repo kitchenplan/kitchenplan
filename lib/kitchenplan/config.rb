@@ -59,11 +59,11 @@ module Kitchenplan
     def config
         config = {}
         config['recipes'] = []
-        config['recipes'] |= @default_config['recipes']['global'] || []
-        config['recipes'] |= @default_config['recipes'][@platform] || []
+        config['recipes'] |= hash_path(@default_config, 'recipes', 'global') || []
+        config['recipes'] |= hash_path(@default_config, 'recipes', @platform) || []
         @group_configs.each do |group_name, group_config|
-            config['recipes'] |= group_config['recipes']['global'] || []
-            config['recipes'] |= group_config['recipes'][@platform] || []
+            config['recipes'] |= hash_path(group_config, 'recipes', 'global') || []
+            config['recipes'] |= hash_path(group_config, 'recipes', @platform) || []
         end
         people_recipes = @people_config['recipes'] || {}
         config['recipes'] |= people_recipes['global'] || []
@@ -76,6 +76,13 @@ module Kitchenplan
         people_attributes = @people_config['attributes'] || {}
         config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
         config
+    end
+
+    private
+
+    # Fetches the value at a path in a nested hash or nil if the path is not present.
+    def hash_path(hash, *path)
+        path.inject(hash) { |hash, key| hash[key] if hash }
     end
 
   end
