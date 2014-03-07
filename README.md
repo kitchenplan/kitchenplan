@@ -15,7 +15,7 @@ On OSX 10.8 Mountain Lion you should install XCode and the Command Line Tools fr
 Now, to get Kitchenplan on your computer, run the following commands:
 
 ```bash
-ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
+ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/version2/go)"
 ```
 
 ### Custom Repository
@@ -26,7 +26,7 @@ The `KITCHENPLAN_REPO` environment variable can be set before installation to cu
 
 ```bash
 $ export KITCHENPLAN_REPO=https://github.com/mycompany/kitchenplan.git
-$ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
+$ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/version2/go)"
 ```
 
 ### Custom Recipes
