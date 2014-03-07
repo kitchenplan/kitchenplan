@@ -1,0 +1,7 @@
+language: objective-c
+
+rvm:
+  - system
+  - 2.0.0
+
+script: "rake test"
