@@ -2,6 +2,10 @@
 
 Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all the hard parts.
 
+## Important
+
+I'm currently working on a brand new way of running Kitchenplan. If you are using Kitchenplan, please use [version2](https://github.com/kitchenplan/kitchenplan/blob/version2/README.md) for now.
+
 ## To Do
 
 * debug options
