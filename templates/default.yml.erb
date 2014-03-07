@@ -1,0 +1,15 @@
+recipes:                                       # Configs are parsed and every list is appended to each other, chef handles order and de-duplication
+    global:                                    # Recipes mentioned under "global" are installed for all operating systems (we used to support linux, and may do so in the future)
+        - applications::create_var_chef_cache
+    mac_os_x:                                  # Recipes mentioned under "mac_os_x" are installed on OSX and OSX Server
+        - homebrewalt::default                 # Installs homebrew and homebrew cask and installs all apps mentioned in the homebrewalt:apps and homebrewalt:cask_apps attributes
+        - nodejs::default                      # Installs nodejs and installs all nodejs packages mentioned in the nodejs:apps attribute
+attributes:
+    homebrewalt:
+        apps:
+            - git
+        cask_apps:
+            - google-chrome
+    nodejs:
+        apps:
+            - bower

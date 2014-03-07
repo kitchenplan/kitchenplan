@@ -1,9 +1,0 @@
-language: objective-c
-
-install: true
-
-rvm:
-  - system
-  - 2.0.0
-
-script: "./go --no-interaction"

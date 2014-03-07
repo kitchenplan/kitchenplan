@@ -1,9 +1,0 @@
-recipes:
-    global:
-        - dotfiles::bash_it
-        - dotfiles::inputrc
-        - applications::bash
-attributes:
-    homebrewalt:
-        apps:
-            - bash-completion
