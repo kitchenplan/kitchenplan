@@ -137,9 +137,6 @@ end
 ohai "This script will install:"
 puts "  - Command Line Tools if they are not installed"
 puts "  - Chef"
-puts "  - All applications configured in <yourusername>.yml or if not available roderik.yml"
-puts ""
-warn "Unless by chance your user is also named Roderik, and you want exactly the same applications as I, use the KITCHENPLAN_REPO env to point to a fork with a config file named for your username."
 puts ""
 
 wait_for_user if options[:interaction]
@@ -164,5 +161,16 @@ else
   normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH}"
 end
 
+
+unless File.exist?("#{KITCHENPLAN_PATH}/config/people/#{ENV['USER']}.yml")
+    puts ""
+    puts "This script will configure all applications configured in <yourusername>.yml or if not available roderik.yml"
+    puts "Unless by chance your user is also named Roderik, and you want exactly the same applications as I, use the KITCHENPLAN_REPO env to point to a fork with a config file named for your username."
+    puts ""
+    warn "Please create a <yourusername>.yml file and press a key to continue"
+    getc
+end
+
 Dir.chdir KITCHENPLAN_PATH if options[:interaction]
 normaldo "./kitchenplan #{options[:interaction] ? '': '-d'}"
+
