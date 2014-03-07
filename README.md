@@ -1,8 +1,6 @@
 # Kitchenplan
 
-Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for
-that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all
-the hard parts.
+Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all the hard parts.
 
 ## To Do
 
@@ -15,8 +13,7 @@ the hard parts.
 
 ### Installation
 
-First of all, you need to install the kitchenplan gem. It only depends on [thor](http://whatisthor.com) so it won't
-dirty up your brand new and clean install.
+First of all, you need to install the kitchenplan gem. It only depends on [thor](http://whatisthor.com), [gabba](https://github.com/hybridgroup/gabba) and [deep_merge](https://github.com/danielsdeleo/deep_merge) so it won't dirty up your brand new and clean install.
 
 ```
 gem install kitchenplan
@@ -36,12 +33,16 @@ Next up we can start the setup of Kitchenplan. Just run `kitchenplan setup` and 
                                  | |
                                  |_|
 
-Do you have a config repository? [y,n]
+-> Installing XCode CLT
+         run  sw_vers -productVersion | awk -F "." '{print $2}' from "."
+         run  touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress from "."
+         run  softwareupdate -l | grep -B 1 "Developer" | head -n 1 | awk -F"*" '{print $2}' from "."
+         run  softwareupdate -i  -v from "."
+
+Do you have a config repository? [y,n] n
 ```
 
-If this is you first install using v2.1 of Kitchenplan, your aswer will be no. By doing so Kitchenplan will setup '/opt',
-create the kitchenplan folder structure, setup a bare configuration and put it all in a local git repository. Put this
-repository on Github (or any git server) and get to working on the configuration files.
+If this is you first install using v2.1 of Kitchenplan, your aswer will be no. By doing so Kitchenplan will setup '/opt', create the kitchenplan folder structure, setup a bare configuration and put it all in a local git repository. Put this repository on Github (or any git server) and get to working on the configuration files.
 
 ```
 -> Making sure /opt exists and I can write to it
@@ -68,8 +69,7 @@ repository on Github (or any git server) and get to working on the configuration
 => Now start editing the config files in /opt/kitchenplan/config, push them to a git server and run 'kitchenplan provision'
 ```
 
-Now, if you have a config repository, you don't want to start with a bare config but use your version. Answer yes and
-enter your git repo in the next prompt. It will then fetch your configs.
+Now, if you have a config repository, you don't want to start with a bare config but use your version. Answer yes and enter your git repo in the next prompt. It will then fetch your configs.
 
 ```
 Do you have a config repository? [y,n] y
@@ -81,9 +81,45 @@ Please enter the clone URL of your git config repository: https://github.com/rod
          run  git clone -q https://github.com/roderik/kitchenplan-config.git kitchenplan from "/opt"
 ```
 
-### Editing the config files
+### Editing the config files in /opt/kitchenplan/config
+
+The most important file is named after your user in config/people/. In my case a roderik.yml file since my username on my Mac is roderik. When running `kitchenplan setup` will create a YAML file in this folder with your username. You can use your config repository for everyone in your organisation by adding a file per username in the people folder.
+
+The final config that will be compiled, will be default.yml + username.yml + the group YAML files defined in username.yml + the group YAML files defined in those groups + the group YAML files defined in default.yml. Everything that is a "list" is appended to each other, single value's are overridden.
+
+Now, how you organise your config files is entirely up to you, but this is how I do it. default.yml are the apps that everyone in my company needs. Then I have a group file per department in our company, and sometimes for a specific subset of people in that department.
+
+If you want to see [a fully implemented example, please see my config repository](https://github.com/roderik/kitchenplan-config)
 
 ### Running the install procedure
+
+Running Kitchenplan is as easy as running `kitchenplan provision`
+
+```
+  _  ___ _       _                      _
+ | |/ (_) |     | |                    | |
+ | ' / _| |_ ___| |__   ___ _ __  _ __ | | __ _ _ __
+ |  < | | __/ __| '_ \ / _ \ '_ \| '_ \| |/ _` | '_ \
+ | . \| | || (__| | | |  __/ | | | |_) | | (_| | | | |
+ |_|\_\_|\__\___|_| |_|\___|_| |_| .__/|_|\__,_|_| |_|
+                                 | |
+                                 |_|
+
+-> Setting up bundler
+      create  /opt/kitchenplan/Gemfile
+         run  mkdir -p vendor/cache from "/opt/kitchenplan"
+         run  rm -rf vendor/bundle/config from "/opt/kitchenplan"
+         run  bundle install --quiet --binstubs vendor/bin --path vendor/bundle from "/opt/kitchenplan"
+-> Sending a ping to Google Analytics
+-> Compiling configurations
+         run  mkdir -p tmp from "/opt/kitchenplan"
+-> Fetch the chef cookbooks
+         run  vendor/bin/librarian-chef install --clean --quiet --path=vendor/cookbooks from "/opt/kitchenplan"
+         run  sudo vendor/bin/chef-solo -c tmp/solo.rb -j tmp/kitchenplan-attributes.json -o applications::create_var_chef_cache,homebrewalt::default,nodejs::default,... from "/opt/kitchenplan"
+```
+
+At this point Chef will start installing everything you configured. Depending on your install list, this might take a while.
+
 
 ## Some blogposts about Kitchenplan
 
@@ -106,6 +142,4 @@ Copyright (c) 2014 Roderik van der Veer. See LICENSE.txt for further details.
 
 ## Acknowledgements
 
-This project is inspired and built by using components and idea's from: Boxen, pivotal_workstation, Opscode cookbooks,
-and more. Please take any imitation as a the highest form of flattery. If you feel the source or acknowledgements are
-not sufficient, please let me know how you want it to be resolved.
+This project is inspired and built by using components and idea's from: Boxen, pivotal_workstation, Opscode cookbooks, and more. Please take any imitation as a the highest form of flattery. If you feel the source or acknowledgements are not sufficient, please let me know how you want it to be resolved.
