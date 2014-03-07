@@ -10,11 +10,15 @@
 #   $ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
 #
 # execution can be customized by the following environmental variables:
-# KITCHENPLAN_PATH - kitchenplan installation path (defaults to /opt/kitchenplan)
-# KITCHENPLAN_REPO - repository to use for recipes/cookbooks (defaults to https://github.com/kitchenplan/kitchenplan.git)
+# KITCHENPLAN_PATH        - kitchenplan installation path (defaults to /opt/kitchenplan)
+# KITCHENPLAN_REPO        - repository to use for recipes/cookbooks (defaults to https://github.com/kitchenplan/kitchenplan.git)
+# KITCHENPLAN_REPO_CONFIG - repository to use for config/recipes/cookbooks (defaults to local checkout)
 
 KITCHENPLAN_PATH = ENV.fetch("KITCHENPLAN_PATH", "/opt/kitchenplan")
+KITCHENPLAN_PATH_CONFIG = "#{KITCHENPLAN_PATH}/.remote"
+
 KITCHENPLAN_REPO = ENV.fetch("KITCHENPLAN_REPO", "https://github.com/kitchenplan/kitchenplan.git")
+KITCHENPLAN_REPO_CONFIG = ENV.fetch("KITCHENPLAN_REPO_CONFIG", nil)
 
 require 'optparse'
 options = {}
@@ -162,6 +166,17 @@ else
   sudo "mkdir -p #{KITCHENPLAN_PATH}"
   sudo "chown -R #{ENV["USER"]} #{KITCHENPLAN_PATH}"
   normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH}"
+end
+
+if KITCHENPLAN_REPO_CONFIG
+  if File.directory?(KITCHENPLAN_PATH_CONFIG)
+    ohai "Updating existing kitchenplan config..."
+    Dir.chdir KITCHENPLAN_PATH_CONFIG
+    normaldo "git pull"
+  else
+    ohai "Setting up the Kitchenplan config..."
+    normaldo "git clone -q #{KITCHENPLAN_REPO_CONFIG} #{KITCHENPLAN_PATH_CONFIG}"
+  end
 end
 
 Dir.chdir KITCHENPLAN_PATH if options[:interaction]

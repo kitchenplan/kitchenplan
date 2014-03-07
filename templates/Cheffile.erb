@@ -1,0 +1,5 @@
+site "<%= site %>"
+
+<% cookbooks.each do |cookbook| -%>
+cookbook "<%= cookbook[:name] %>", <%= cookbook[:options].inspect.gsub(/\{(.*?)\}/) { $1 } %>
+<% end -%>

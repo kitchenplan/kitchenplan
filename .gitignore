@@ -4,9 +4,11 @@
 /tmp
 /vendor/cookbooks
 /vendor/bundle
+/Cheffile
 /Cheffile.lock
 .idea
 .vagrant
+.remote
 /cookbooks
 kitchenplan-attributes.json
 /nodes

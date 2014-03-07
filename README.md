@@ -18,9 +18,11 @@ Now, to get Kitchenplan on your computer, run the following commands:
 ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
 ```
 
-### Custom Repository
+### Custom Repositories
 
 If the repo for your organisation is private, continue with setting up your SSH keys. Open up a Terminal window and run ```ssh-keygen```. After this command finishes, run ```cat ~/.ssh/id_rsa.pub``` and copy the output. Put this in your Github account or where you need your private key in your repo hosting of your choice.
+
+#### kitchen plan
 
 The `KITCHENPLAN_REPO` environment variable can be set before installation to customize what git repository is used for kitchen plan.
 
@@ -28,6 +30,24 @@ The `KITCHENPLAN_REPO` environment variable can be set before installation to cu
 $ export KITCHENPLAN_REPO=https://github.com/mycompany/kitchenplan.git
 $ ruby -e "$(curl -fsSL https://raw.github.com/kitchenplan/kitchenplan/master/go)"
 ```
+
+#### Config
+
+The `KITCHENPLAN_REPO_CONFIG` environment variable can be set before installation to customize what git repository is used for kitchen plan configuration
+
+```
+config
+├── + groups
+├── + people
+├──── <username>.yaml 
+├── default.yaml
+Cheffile
+README.md
+```
+> Example config repo structure
+
+- Configuration files found within here will replace the defaults bundled with kitchenplan.
+- Cheffiles will be merged together allowing the default recipes to be overridden with your own or added to.
 
 ### Custom Recipes
 
