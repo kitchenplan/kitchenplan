@@ -1,19 +1,19 @@
-= Kitchenplan
+# Kitchenplan
 
 Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for
 that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all
 the hard parts.
 
-== To Do
+## To Do
 
 * debug options
 * installing a manual list of recipes
 * --no-chef
 * only update cookbooks if we run with -c
 
-== Using kitchenplan
+## Using kitchenplan
 
-=== Installation
+### Installation
 
 First of all, you need to install the kitchenplan gem. It only depends on [thor](http://whatisthor.com) so it won't
 dirty up your brand new and clean install.
@@ -22,7 +22,7 @@ dirty up your brand new and clean install.
 gem install kitchenplan
 ```
 
-=== Setting up
+### Setting up
 
 Next up we can start the setup of Kitchenplan. Just run `kitchenplan setup` and you will see the following prompt
 
@@ -81,18 +81,17 @@ Please enter the clone URL of your git config repository: https://github.com/rod
          run  git clone -q https://github.com/roderik/kitchenplan-config.git kitchenplan from "/opt"
 ```
 
-=== Editing the config files
+### Editing the config files
 
-=== Running the install procedure
+### Running the install procedure
 
-== Some blogposts about Kitchenplan
+## Some blogposts about Kitchenplan
 
 * [Setting up my perfect dev environment on OSX 10.9 using Chef / Kitchenplan](http://vanderveer.be/setting-up-my-perfect-dev-environment-on-osx-10-9-using-chef-kitchenplan/)
 * [Presenting Kitchenplan @ vanderveer.be](http://vanderveer.be/blog/2013/04/14/presenting-kitchenplan/)
 
+## Contributing to kitchenplan
 
-== Contributing to kitchenplan
- 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
@@ -101,11 +100,11 @@ Please enter the clone URL of your git config repository: https://github.com/rod
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-== Copyright
+## Copyright
 
 Copyright (c) 2014 Roderik van der Veer. See LICENSE.txt for further details.
 
-== Acknowledgements
+## Acknowledgements
 
 This project is inspired and built by using components and idea's from: Boxen, pivotal_workstation, Opscode cookbooks,
 and more. Please take any imitation as a the highest form of flattery. If you feel the source or acknowledgements are
