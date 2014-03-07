@@ -42,7 +42,7 @@ class Kitchenplan
     end
 
     # find and parse each group named in a person's config file.
-    def parse_group_configs(group = @default_config['groups'] || @people_config['groups'])
+    def parse_group_configs(group = (( @default_config['groups'] || [] ) | ( @people_config['groups'] || [] )))
         @group_configs = @group_configs || {}
         defined_groups = group || []
         defined_groups.each do |group|
