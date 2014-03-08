@@ -5,6 +5,7 @@ rvm:
   - 2.0.0
 
 before_install:
+    - bundle install
     - sudo rake install
 
 script:

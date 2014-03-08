@@ -164,7 +164,7 @@ module Kitchenplan
             print_failure('Install Xcode before continuing: https://developer.apple.com/xcode/') unless File.exists? '/usr/bin/cc'
           end
           dorun("curl \"#{dmg}\" -o \"clitools.dmg\"")
-          tmpmount = dorun('/usr/bin/mktemp -d /tmp/clitools.XXXX', true)
+          tmpmount = dorun('/usr/bin/mktemp -d /tmp/clitools.XXXX', true).chomp
           dorun("hdiutil attach \"clitools.dmg\" -mountpoint \"#{tmpmount}\"")
           dorun("installer -pkg \"$(find #{tmpmount} -name '*.mpkg')\" -target /")
           dorun("hdiutil detach \"#{tmpmount}\"")
