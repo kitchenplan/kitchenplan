@@ -1,6 +1,6 @@
 require 'yaml'
 require 'etc'
-require 'ohai'
+#require 'ohai'
 require 'erb'
 require 'deep_merge'
 
@@ -22,9 +22,10 @@ module Kitchenplan
 
     def detect_platform
       ohai = Ohai::System.new
-      ohai.require_plugin('os')
-      ohai.require_plugin('platform')
-      @platform = ohai[:platform_family]
+      #ohai.require_plugin('os')
+      #ohai.require_plugin('platform')
+      #@platform = ohai[:platform_family]
+      @platform = 'mac_os_x' # We only support osx at the moment, and it saves a large dependency
     end
 
     def parse_default_config
