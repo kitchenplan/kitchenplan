@@ -24,7 +24,7 @@ module Kitchenplan
     desc 'provision [<TARGET DIRECTORY>]', 'run Kitchenplan'
     def provision(targetdir='/opt')
       logo
-      prepare_folders
+      prepare_folders(targetdir)
       install_bundler(targetdir)
       send_ping
       recipes = parse_config(targetdir)
@@ -166,7 +166,7 @@ module Kitchenplan
           dorun("curl \"#{dmg}\" -o \"clitools.dmg\"")
           tmpmount = dorun('/usr/bin/mktemp -d /tmp/clitools.XXXX', true).chomp
           dorun("hdiutil attach \"clitools.dmg\" -mountpoint \"#{tmpmount}\"")
-          dorun("installer -pkg \"$(find #{tmpmount} -name '*.mpkg')\" -target /")
+          dorun("sudo installer -pkg \"$(find #{tmpmount} -name '*.mpkg')\" -target /")
           dorun("hdiutil detach \"#{tmpmount}\"")
           dorun("rm -rf \"#{tmpmount}\"")
           dorun("rm \"clitools.dmg\"")
