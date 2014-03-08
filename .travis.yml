@@ -4,4 +4,10 @@ rvm:
   - system
   - 2.0.0
 
-script: "rake test"
+before_install:
+    - sudo rake install
+
+script:
+    - kitchenplan setup https://github.com/kitchenplan/kitchenplan-config-test.git
+    - kitchenplan provision
+#    - sudo rake test

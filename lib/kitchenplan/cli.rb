@@ -24,6 +24,7 @@ module Kitchenplan
     desc 'provision [<TARGET DIRECTORY>]', 'run Kitchenplan'
     def provision(targetdir='/opt')
       logo
+      prepare_folders
       install_bundler(targetdir)
       send_ping
       recipes = parse_config(targetdir)
