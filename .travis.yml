@@ -1,12 +1,11 @@
 language: objective-c
 
 rvm:
-  - system
   - 2.0.0
 
 before_install:
     - bundle install
-    - sudo rake install
+    - bundle exec rake install
 
 script:
     - kitchenplan setup https://github.com/kitchenplan/kitchenplan-config-test.git
