@@ -96,11 +96,16 @@ module Kitchenplan
           print_step "#{targetdir}/kitchenplan already exists, updating from git."
           inside("#{targetdir}/kitchenplan") do
             dorun('git pull -q')
+            dorun('git submodule update')
           end
         else
           print_step "Fetching #{gitrepo} to #{targetdir}/kitchenplan."
           inside("#{targetdir}") do
             dorun("git clone -q #{gitrepo} kitchenplan")
+            inside("#{targetdir}/kitchenplan") do
+              dorun('git submodule init')
+              dorun('git submodule update')
+            end
           end
         end
       end
