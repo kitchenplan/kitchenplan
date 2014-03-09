@@ -2,16 +2,9 @@
 
 Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all the hard parts.
 
-## Important
+## History
 
-I'm currently working on a brand new way of running Kitchenplan. If you are using Kitchenplan, please use [version2](https://github.com/kitchenplan/kitchenplan/blob/version2/README.md) for now.
-
-## To Do
-
-* debug options
-* installing a manual list of recipes
-* --no-chef
-* only update cookbooks if we run with -c
+This is a brand new implementation of Kitchenplan. If you have issues with this new versions, please use [version2](https://github.com/kitchenplan/kitchenplan/blob/version2/README.md) for now.
 
 ## Using kitchenplan
 
@@ -122,8 +115,14 @@ Running Kitchenplan is as easy as running `kitchenplan provision`
          run  sudo vendor/bin/chef-solo -c tmp/solo.rb -j tmp/kitchenplan-attributes.json -o applications::create_var_chef_cache,homebrewalt::default,nodejs::default,... from "/opt/kitchenplan"
 ```
 
-At this point Chef will start installing everything you configured. Depending on your install list, this might take a while.
+At this point Chef will start installing everything you configured. Depending on your install list, this might take a while. It will hopefully go smooth and end with
 
+```
+-> Cleanup parsed configuration files
+         run  rm -f kitchenplan-attributes.json from "/opt/kitchenplan"
+         run  rm -f solo.rb from "/opt/kitchenplan"
+=> Installation complete!
+```
 
 ## Some blogposts about Kitchenplan
 

@@ -7,7 +7,7 @@ module Kitchenplan
     desc 'setup [<GITREPO>] [<TARGET DIRECTORY>]', 'setup Kitchenplan'
     def setup(gitrepo=nil, targetdir='/opt')
       logo
-      install_clt
+      install_clt unless File.exists?("/usr/bin/cc")
       if gitrepo
         fetch(gitrepo, targetdir)
       else
@@ -21,43 +21,49 @@ module Kitchenplan
       end
     end
 
-    desc 'provision [<TARGET DIRECTORY>]', 'run Kitchenplan'
+    option :debug, :type => :boolean
+    option :recipes, :type => :array
+    desc 'provision [<TARGET DIRECTORY>] [--debug] [--recipes=x y z]', 'run Kitchenplan, using debug will show more command output'
     def provision(targetdir='/opt')
       logo
       prepare_folders(targetdir)
       install_bundler(targetdir)
       send_ping
       recipes = parse_config(targetdir)
-      fetch_cookbooks(targetdir)
-      run_chef(targetdir, recipes)
-      cleanup(targetdir)
+      fetch_cookbooks(targetdir, options[:debug])
+      run_chef(targetdir, (options[:recipes] ? options[:recipes] : recipes), options[:debug])
+      cleanup(targetdir, options[:debug])
       print_notice('Installation complete!')
     end
 
     no_commands do
 
-      def run_chef(targetdir, recipes)
+      def run_chef(targetdir, recipes, debug=false)
         inside("#{targetdir}/kitchenplan") do
-          dorun "sudo vendor/bin/chef-solo -c tmp/solo.rb -j tmp/kitchenplan-attributes.json -o #{recipes.join(',')}"
+          dorun "sudo vendor/bin/chef-solo #{( debug ? ' --log_level debug' : ' ' )} -c tmp/solo.rb -j tmp/kitchenplan-attributes.json -o #{recipes.join(',')}"
         end
       end
 
-      def fetch_cookbooks(targetdir)
+      def fetch_cookbooks(targetdir,debug=false)
         print_step('Fetch the chef cookbooks')
         inside("#{targetdir}/kitchenplan") do
           if File.exists?('vendor/cookbooks')
-            dorun 'vendor/bin/librarian-chef update 2>&1 > /dev/null'
+            dorun "vendor/bin/librarian-chef update #{( debug ? ' ' : '2>&1 > /dev/null' )}"
           else
-            dorun 'vendor/bin/librarian-chef install --clean --quiet --path=vendor/cookbooks'
+            dorun "vendor/bin/librarian-chef install --clean #{( debug ? ' ' : '--quiet' )} --path=vendor/cookbooks"
           end
         end
       end
 
-      def cleanup(targetdir)
-        print_step('Cleanup parsed configuration files')
-        inside("#{targetdir}/kitchenplan") do
-          dorun('rm -f kitchenplan-attributes.json')
-          dorun('rm -f solo.rb')
+      def cleanup(targetdir,debug=false)
+        unless debug
+          print_step('Cleanup parsed configuration files')
+          inside("#{targetdir}/kitchenplan") do
+            dorun('rm -f kitchenplan-attributes.json')
+            dorun('rm -f solo.rb')
+          end
+        else
+            print_step('Skipping cleanup parsed configuration files')
         end
       end
 
