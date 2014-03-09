@@ -1,3 +1,4 @@
+
 require 'thor'
 
 module Kitchenplan
@@ -17,6 +18,12 @@ module Kitchenplan
           fetch(gitrepo, targetdir)
         else
           create(targetdir)
+        end
+      end
+      unless File.exists?("#{targetdir}/kitchenplan/config/people/#{ENV['USER']}.yml")
+        user_create = yes?("config/people/#{ENV['USER']}.yml does not exist. Do you wish to create it? [y,n]", :green)
+        if user_create
+          create_user(targetdir)
         end
       end
     end
@@ -145,6 +152,19 @@ module Kitchenplan
         end
 
         print_notice("Now start editing the config files in #{targetdir}/kitchenplan/config, push them to a git server and run 'kitchenplan provision'")
+      end
+
+      def create_user(targetdir)
+        print_step("Creating #{ENV['USER']}.yml config")
+
+        template('user.yml.erb', "#{targetdir}/kitchenplan/config/people/#{ENV['USER']}.yml")
+
+        inside("#{targetdir}/kitchenplan") do
+          dorun("git add -A config/people/#{ENV['USER']}.yml")
+          dorun("git commit -q -m 'Initial commit for user #{ENV['USER']}'")
+        end
+
+        print_notice("Now start editing #{ENV['USER']}.yml in #{targetdir}/kitchenplan/config/people, and push it to a git server and run 'kitchenplan provision'")
       end
 
       def install_bundler(targetdir)
