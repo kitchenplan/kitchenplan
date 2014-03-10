@@ -15,7 +15,7 @@ module Kitchenplan
     LONGDESC
     def setup(gitrepo=nil, targetdir='/opt')
       logo
-      install_clt unless File.exists?("/usr/bin/cc")
+      install_clt unless `xcode-select --print-path`
       if gitrepo
         fetch(gitrepo, targetdir)
       else
