@@ -5,7 +5,14 @@ module Kitchenplan
   class Cli < Thor
     include Thor::Actions
 
-    desc 'setup [<GITREPO>] [<TARGET DIRECTORY>]', 'setup Kitchenplan'
+    desc 'setup [<gitrepo>] [<target directory>]', 'Setup your workstation to run Kitchenplan and create an example configuration'
+    long_desc <<-LONGDESC
+    `kitchenplan setup` will install the dependencies of Kitchenplan and create a configuration in /opt/kitchenplan (or <target directory>
+    if you pass it along) to use with the `kitchenplan provision` command.
+
+    If you already have a configuration stored in git somewhere, it will ask you to pass the git repo url. If you want to bypass the
+    prompt, pass it along on the commandline. (see .travis.yml for an example)
+    LONGDESC
     def setup(gitrepo=nil, targetdir='/opt')
       logo
       install_clt unless File.exists?("/usr/bin/cc")
@@ -30,7 +37,15 @@ module Kitchenplan
 
     option :debug, :type => :boolean
     option :recipes, :type => :array
-    desc 'provision [<TARGET DIRECTORY>] [--debug] [--recipes=x y z]', 'run Kitchenplan, using debug will show more command output'
+    desc 'provision [<target directory>] [--debug] [--recipes=x y z]', 'Provision your workstation with Kitchenplan'
+    long_desc <<-LONGDESC
+    `kitchenplan provision` will use the configuration in /opt/kitchenplan (or <target directory>
+    if you pass it along) to provision your workstation using Chef.
+
+    You can optionally pass --debug to see more detail of what's happeling.
+
+    If you just want to install a few recipes pass them along with --recipes and it will override the run list (not the attributes!)
+    LONGDESC
     def provision(targetdir='/opt')
       logo
       prepare_folders(targetdir)
