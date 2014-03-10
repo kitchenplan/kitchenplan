@@ -5,10 +5,8 @@ cache: bundler
 rvm:
   - 2.0.0
 
-after_install:
-    - bundle exec rake install
-
 script:
+    - bundle exec rake install
     - kitchenplan setup https://github.com/kitchenplan/kitchenplan-config-test.git
     - kitchenplan provision
 #    - sudo rake test
