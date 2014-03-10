@@ -1,10 +1,12 @@
 language: objective-c
 
+cache: bundler
+
 rvm:
   - 2.0.0
 
 before_install:
-    - bundle install
+    - bundle install --deployment --local --no-cache
     - bundle exec rake install
 
 script:
