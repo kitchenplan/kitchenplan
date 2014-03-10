@@ -5,8 +5,7 @@ cache: bundler
 rvm:
   - 2.0.0
 
-before_install:
-    - bundle install --deployment --local --no-cache
+after_install:
     - bundle exec rake install
 
 script:
