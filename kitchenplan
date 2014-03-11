@@ -127,7 +127,7 @@ end
 
 # Installing
 normaldo "bin/librarian-chef install --clean #{(options[:debug] ? '--verbose' : '--quiet')}" unless File.exists?("cookbooks")
-normaldo "bin/librarian-chef update #{(options[:debug] ? '--verbose' : '--quiet')}" if options[:update_cookbooks]
+normaldo "bin/librarian-chef update #{(options[:debug] ? '--verbose' : '')}" if options[:update_cookbooks]
 
 # Run Chef
 if options[:recipes]
