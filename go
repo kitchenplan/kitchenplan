@@ -162,8 +162,8 @@ else
   sudo "mkdir -p #{KITCHENPLAN_PATH}"
   sudo "chown -R #{ENV["USER"]} #{KITCHENPLAN_PATH}"
   normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH}"
+  Dir.chdir KITCHENPLAN_PATH
   normaldo "git checkout version2"
 end
 
-Dir.chdir KITCHENPLAN_PATH if options[:interaction]
 normaldo "./kitchenplan #{options[:interaction] ? '': '-d'}"
