@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "kitchenplan"
-  s.version = "2.1.2"
+  s.version = "2.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roderik van der Veer"]
-  s.date = "2014-03-09"
+  s.date = "2014-03-19"
   s.description = "Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all the hard parts."
   s.email = "roderik@vanderveer.be"
   s.executables = ["kitchenplan"]
