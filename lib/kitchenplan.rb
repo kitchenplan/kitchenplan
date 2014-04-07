@@ -1,26 +1,34 @@
 require 'json'
+require 'ohai'
 require 'kitchenplan/mixins'
 require 'kitchenplan/log'
 require 'kitchenplan/config'
 # platform-specificity
 require 'kitchenplan/platform'
-begin
-    require "kitchenplan/platform/#{Kitchenplan::Config.new(parse_configs=false).platform}"
-rescue LoadError
-    raise "Unsupported platform or fatal error loading support for platform '#{Kitchenplan::Config.new(parse_configs=false).platform}' ..."
-end
 
 # Top-level class for all Kitchenplan-y operations.
 class Kitchenplan
     attr_accessor :platform
     attr_accessor :resolver
     # all Kitchenplans care about what platform they're on and what resolver they use to get their cookbooks.
-    def initialize
-	detect_platform()
+    def initialize(ohai=nil)
+	detect_platform(ohai)
 	detect_resolver()
     end
     # invoke platform detection code - attempt to load the first descendant of {Kitchenplan::Platform} that loaded completely (without raising an exception).
-    def detect_platform
+    def detect_platform(ohai=nil)
+	if ohai.nil?
+	    ohai = Ohai::System.new
+	    ohai.require_plugin("os")
+	    ohai.require_plugin("platform")
+	end
+	Kitchenplan::Log.info ohai["platform"]
+	platform = ohai["platform_family"]
+	begin
+	    require "kitchenplan/platform/#{platform}"
+	rescue LoadError
+	    raise "Unsupported platform or fatal error loading support for platform '#{platform}' ..."
+	end
 	self.platform = eval("Kitchenplan::Platform::#{Kitchenplan::Platform.constants.first.to_s}.new()") unless defined?(self.platform) and self.platform.nil? == false
     end
 
