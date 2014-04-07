@@ -1,31 +1,23 @@
 require 'yaml'
 require 'etc'
-require 'ohai'
+require 'deep_merge'
 
 class Kitchenplan
   # standalone class that parses YAML configs in root/configs ...
   # TODO: some of this could stand to be refactored.
-  class Config
+  class Config < ::Kitchenplan
 
-    attr_reader :platform
     attr_reader :default_config
     attr_reader :people_config
     attr_reader :group_configs
 
-    def initialize(parse_configs=true)
-      self.detect_platform
+    def initialize(parse_configs=true,ohai=nil)
+      self.detect_platform(ohai)
       if parse_configs
 	self.parse_default_config
 	self.parse_people_config
 	self.parse_group_configs
       end
-    end
-    # ohai-based platform detection.
-    def detect_platform
-      ohai = Ohai::System.new
-      ohai.require_plugin("os")
-      ohai.require_plugin("platform")
-      @platform = ohai[:platform_family]
     end
 
     # parse the default global config file.
@@ -70,14 +62,14 @@ class Kitchenplan
         config = {}
         config['recipes'] = []
         config['recipes'] |= hash_path(@default_config, 'recipes', 'global') || []
-        config['recipes'] |= hash_path(@default_config, 'recipes', @platform) || []
+        config['recipes'] |= hash_path(@default_config, 'recipes', self.platform) || []
         @group_configs.each do |group_name, group_config|
             config['recipes'] |= hash_path(group_config, 'recipes', 'global') || []
-            config['recipes'] |= hash_path(group_config, 'recipes', @platform) || []
+            config['recipes'] |= hash_path(group_config, 'recipes', self.platform) || []
         end
         people_recipes = @people_config['recipes'] || {}
         config['recipes'] |= people_recipes['global'] || []
-        config['recipes'] |= people_recipes[@platform] || []
+        config['recipes'] |= people_recipes[self.platform] || []
         config['attributes'] = {}
         config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
         @group_configs.each do |group_name, group_config|
