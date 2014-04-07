@@ -1,4 +1,4 @@
-module Kitchenplan
+class Kitchenplan
   module Mixin
     # Display module contains logging / color methods.  Mainly used in old kitchenplan.
     module Display

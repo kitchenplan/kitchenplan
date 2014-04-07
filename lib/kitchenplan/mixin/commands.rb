@@ -1,4 +1,4 @@
-module Kitchenplan
+class Kitchenplan
   module Mixin
     # mixin commands!  we use these in multiple places so this seems to make sense.
     # after adding them to the root class, though, this may not make sense anymore.

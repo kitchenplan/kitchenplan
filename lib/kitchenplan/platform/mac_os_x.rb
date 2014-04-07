@@ -1,4 +1,4 @@
-module Kitchenplan
+class Kitchenplan
   class Platform
     # OS X support.  This is probably the primary development platform for Kitchenplan today and
     # this code should therefore work real good.
