@@ -1,1 +1,5 @@
 require 'kitchenplan'
+
+require 'chefspec'
+
+
