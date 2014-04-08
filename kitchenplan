@@ -2,6 +2,7 @@
 require 'rubygems'
 $:.unshift(File.join(File.dirname(__FILE__), "lib"))
 require 'kitchenplan'
+require 'kitchenplan/version'
 require 'kitchenplan/application'
 
 Kitchenplan::Application.new.run

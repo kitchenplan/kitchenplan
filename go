@@ -13,6 +13,8 @@
 # KITCHENPLAN_PATH - kitchenplan installation path (defaults to /opt/kitchenplan)
 # KITCHENPLAN_REPO - repository to use for recipes/cookbooks (defaults to https://github.com/kitchenplan/kitchenplan)
 
+GO_SCRIPT_VERSION = '1.0.0'
+
 KITCHENPLAN_PATH = ENV.fetch("KITCHENPLAN_PATH", "/opt/kitchenplan")
 KITCHENPLAN_REPO = ENV.fetch("KITCHENPLAN_REPO", "https://github.com/kitchenplan/kitchenplan.git")
 
@@ -35,7 +37,7 @@ OptionParser.new do |opts|
     end
 
     opts.on_tail("--version", "Show version") do
-	puts "1.0.0"
+	puts GO_SCRIPT_VERSION
 	exit
     end
 
