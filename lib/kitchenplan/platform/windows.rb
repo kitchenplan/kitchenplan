@@ -4,10 +4,11 @@ class Kitchenplan
     # Omnibus Chef is only fully supported on Windows 2008 or newer.
     class Windows < Kitchenplan::Platform
       # set up some basic info about the platform.
-      def initialize
+      def initialize(ohai)
 	@lowest_version_supported = "00"
-	self.name = "windows"
-	self.version = "generic"
+	self.ohai = ohai.nil? ? Ohai::System.new : ohai
+	self.name = self.ohai["platform_family"]
+	self.version = self.ohai["platform_version"]
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)

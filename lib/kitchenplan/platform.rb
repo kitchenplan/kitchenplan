@@ -6,6 +6,9 @@ class Kitchenplan
     attr_accessor :name
     # :version is usually based on the ohai platform version.
     attr_accessor :version
+    # :ohai is a copy of the ohai data loaded by the platform detector, in case we need it for
+    # further operations.
+    attr_accessor :ohai
     # load up whatever information is necessary for the current platform version to determine state
     # (beyond just copying what we get out of ohai, that is)
     def initialize(debug=false)

@@ -15,21 +15,25 @@ class Kitchenplan
 	detect_platform(ohai)
 	detect_resolver()
     end
-    # invoke platform detection code - attempt to load the first descendant of {Kitchenplan::Platform} that loaded completely (without raising an exception).
+    # invoke platform detection code - attempt to load the class that corresponds to the ohai platform name.
+    # ohai platform name can be overridden by caller (i.e. for unit testing or by creative users)
+    # 
     def detect_platform(ohai=nil)
 	if ohai.nil?
 	    ohai = Ohai::System.new
 	    ohai.require_plugin("os")
 	    ohai.require_plugin("platform")
 	end
-	Kitchenplan::Log.info ohai["platform"]
 	platform = ohai["platform_family"]
+	klass = camelcase(platform)
 	begin
 	    require "kitchenplan/platform/#{platform}"
 	rescue LoadError
-	    raise "Unsupported platform or fatal error loading support for platform '#{platform}' ..."
+	    raise "Unsupported platform or fatal error loading support for platform '#{platform}' (#{klass}) ..."
 	end
-	self.platform = eval("Kitchenplan::Platform::#{Kitchenplan::Platform.constants.first.to_s}.new()") unless defined?(self.platform) and self.platform.nil? == false
+	#self.ohai = ohai unless defined?(self.ohai) and self.ohai.nil? == false
+	self.platform = eval("Kitchenplan::Platform::#{klass}.new(ohai=#{ohai})") unless defined?(self.platform) and self.platform.nil? == false
+	self.platform.ohai = ohai unless defined?(self.platform.ohai) and self.platform.ohai.nil? == false
     end
 
     # invoke resolver detection code.  start with library resolvers and auto-load them.  then walk {Kitchenplan::Resolver} subclasses and take the first one that works.
@@ -78,5 +82,10 @@ class Kitchenplan
 	detect_platform
 	Kitchenplan::Log.info *args
 	system *args
+    end
+    private
+    # "something_with_underscores" -> "SomethingWithUnderscores"
+    def camelcase(string)
+	string.downcase.split("_").each_with_index {|word, i| word.capitalize!}.join("")
     end
 end

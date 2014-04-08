@@ -14,8 +14,14 @@ class Kitchenplan
 	  opts.on("-d", "--debug", "Show debug information") do |debug|
 	    options[:debug] = debug
 	  end
-	  opts.on("-c", "--update-cookbooks", "Update the Chef cookbooks") do |update_cookbooks|
+	  opts.on("-c", "--config-dir", "Path to YAML config directory") do |config_dir|
+	    options[:config_dir] = config_dir
+	  end
+	  opts.on("-u", "--update-cookbooks", "Update the Chef cookbooks") do |update_cookbooks|
 	    options[:update_cookbooks] = update_cookbooks
+	  end
+	  opts.on("--recipes x,y,z", Array, "Run Kitchenplan with all attributes, but only the recipes passed along on the command line. Useful for testing or fast runs.") do |list|
+	            options[:recipes] = list
 	  end
 	  options[:chef] = true
 	  opts.on("--[no-]chef", "Run chef (defaults to yes)") do |chef|
@@ -28,7 +34,7 @@ class Kitchenplan
 	    exit
 	  end
 	  opts.on_tail("--version", "Show version") do
-	    puts "1.0.1"
+	    puts "2.0.1"
 	    exit
 	  end
 	end.parse!

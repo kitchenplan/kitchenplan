@@ -7,8 +7,8 @@ class Kitchenplan
       # instantiate class with a name and version.
       def initialize
 	@lowest_version_supported = "00"
-	self.name = "linux"
-	self.version = "generic"
+	self.name = self.ohai["platform_family"]
+	self.version = self.ohai["platform_version"]
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)

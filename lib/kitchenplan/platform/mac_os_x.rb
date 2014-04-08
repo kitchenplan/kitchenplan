@@ -2,12 +2,13 @@ class Kitchenplan
   class Platform
     # OS X support.  This is probably the primary development platform for Kitchenplan today and
     # this code should therefore work real good.
-    class MacOSX < Kitchenplan::Platform
-      def initialize
+    class MacOsX < Kitchenplan::Platform
+      def initialize(ohai)
 	# haven't tested on Lion yet, unfortunately.  if you have and this works, let me know. -sw
 	@lowest_version_supported = "10.8"
-	self.name = "mac_os_x"
-	self.version = `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
+	self.ohai = ohai.nil? ? Ohai::System.new : ohai
+	self.name = self.ohai["platform_family"]
+	self.version = self.ohai["platform_version"]
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)

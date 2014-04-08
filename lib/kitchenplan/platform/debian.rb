@@ -1,14 +1,16 @@
+require 'kitchenplan/platform/linux'
 class Kitchenplan
   class Platform
     # Hopefully we can support flavors of Linux by subclassing the generic Linux platform.
     # This class is here as a sort of proof-of-concept, since I haven't actually tried running
-    # kitchenplan on Debian yet.  Let me know how it goes!  -sw
+    # kitchenplan on Debian-family yet.  Let me know how it goes!  -sw
     class Debian < Kitchenplan::Platform::Linux
       # Set up information about this particular platform.
-      def initialize
+      def initialize(ohai)
 	@lowest_version_supported = "12.04"
-	self.name = "debian"
-	self.version = `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
+	self.ohai = ohai.nil? ? Ohai::System.new : ohai
+	self.name = self.ohai["platform_family"]
+	self.version = self.ohai["platform_version"]
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # installing git is done with apt on Debian.

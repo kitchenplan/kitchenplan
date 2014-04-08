@@ -3,33 +3,46 @@ require 'etc'
 require 'deep_merge'
 
 class Kitchenplan
-  # standalone class that parses YAML configs in root/configs ...
+  # standalone class that parses YAML configs in a supplied config directory (./config, by default) ...
   # TODO: some of this could stand to be refactored.
   class Config < ::Kitchenplan
 
+    # the path to the config directory
+    attr_accessor :config_path
+    # parsed contents of the default config file (usually /default.yml)
     attr_reader :default_config
+    # parsed contents of the config file for the logged-in user (usually /people/USERNAME.yml)
     attr_reader :people_config
+    # array of parsed contents of group config files associated with the logged-in user or the default config
+    # (drawn from /groups/GROUPNAME.yml)
     attr_reader :group_configs
 
     def initialize(parse_configs=true,ohai=nil)
       self.detect_platform(ohai)
       if parse_configs
-	self.parse_default_config
-	self.parse_people_config
-	self.parse_group_configs
+        self.do_parse_configs()
       end
     end
 
+    def do_parse_configs(path="config")
+      self.config_path = path
+      Kitchenplan::Log.debug "Now parsing configs in #{path}..."
+      self.parse_default_config
+      self.parse_people_config
+      self.parse_group_configs
+    end
+
+
     # parse the default global config file.
     def parse_default_config
-      default_config_path = 'config/default.yml'
+      default_config_path = "#{self.config_path}/default.yml"
       @default_config = ( YAML.load_file(default_config_path) if File.exist?(default_config_path) ) || {}
     end
 
     # parse the current user's config file.  if no such file exists, fall back to the default person account.
     # currently the default account is roderik's.
     def parse_people_config
-      people_config_path = "config/people/#{Etc.getlogin}.yml"
+      people_config_path = "#{self.config_path}/people/#{Etc.getlogin}.yml"
       @people_config = ( YAML.load_file(people_config_path) if File.exist?(people_config_path) ) || YAML.load_file("config/people/roderik.yml")
     end
 
@@ -45,7 +58,7 @@ class Kitchenplan
     # parse configuration for a named group file.
     def parse_group_config(group)
         unless @group_configs[group]
-            group_config_path = "config/groups/#{group}.yml"
+            group_config_path = "#{self.config_path}/groups/#{group}.yml"
             @group_configs[group] = ( YAML.load(ERB.new(File.read(group_config_path)).result) if File.exist?(group_config_path) ) || {}
             defined_groups = @group_configs[group]['groups']
             if defined_groups
