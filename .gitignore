@@ -16,3 +16,4 @@ kitchenplan-attributes.json
 /nodes
 /solo.rb
 /vendor/cache
+/coverage
