@@ -1,0 +1,11 @@
+recipes:
+    global:
+        - group2::default
+    mac_os_x:
+        - group2::mac_only
+attributes:
+    group2:
+        group2:
+            - 1
+            - 2
+            - 3
