@@ -22,13 +22,18 @@ describe Kitchenplan::Platform do
 					else
 						my_platform = platform
 					end
-					config.platform.name.should eq(my_platform)
+					expect(config.platform.name).to eq(my_platform)
 					# version is detected through non-ohai means.
 					# is that a feature?
 					# config.platform.version.should eq(version)
 				end
 			end
 		end
+	end
+
+	it 'should raise an exception on an unsupported platform' do
+		# sorry, FBSD'ers.  :D
+		expect { Kitchenplan::Config.new(parse_configs=false,ohai=Fauxhai.mock(platform:'freebsd', version:'9.1').data) }.to raise_error
 	end
 	describe 'sudo' do
 		# foo
