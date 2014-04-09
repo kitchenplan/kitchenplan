@@ -6,7 +6,7 @@ class Kitchenplan
       def initialize(ohai)
 	# haven't tested on Lion yet, unfortunately.  if you have and this works, let me know. -sw
 	@lowest_version_supported = "10.8"
-	self.ohai = ohai.nil? ? Ohai::System.new : ohai
+	self.ohai = ohai.nil? ? get_system_ohai() : ohai
 	self.name = self.ohai["platform_family"]
 	self.version = self.ohai["platform_version"]
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"

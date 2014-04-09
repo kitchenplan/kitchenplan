@@ -19,11 +19,7 @@ class Kitchenplan
     # ohai platform name can be overridden by caller (i.e. for unit testing or by creative users)
     # 
     def detect_platform(ohai=nil)
-	if ohai.nil?
-	    ohai = Ohai::System.new
-	    ohai.require_plugin("os")
-	    ohai.require_plugin("platform")
-	end
+	ohai = get_system_ohai() if ohai.nil?
 	platform = ohai["platform_family"]
 	klass = camelcase(platform)
 	begin
@@ -31,10 +27,17 @@ class Kitchenplan
 	rescue LoadError
 	    raise "Unsupported platform or fatal error loading support for platform '#{platform}' (#{klass}) ..."
 	end
-	#self.ohai = ohai unless defined?(self.ohai) and self.ohai.nil? == false
-	self.platform = eval("Kitchenplan::Platform::#{klass}.new(ohai=#{ohai})") unless defined?(self.platform) and self.platform.nil? == false
+	self.platform = eval("Kitchenplan::Platform::#{klass}.new(ohai=ohai)") unless defined?(self.platform) and self.platform.nil? == false
 	self.platform.ohai = ohai unless defined?(self.platform.ohai) and self.platform.ohai.nil? == false
     end
+
+    # return a usable Ohai object with only the plugins we need to get Kitchenplan going.
+    def get_system_ohai(plugins=["os","platform"])
+	o = Ohai::System.new
+	plugins.each { |n| o.require_plugin(n) }
+	o
+    end
+
 
     # invoke resolver detection code.  start with library resolvers and auto-load them.  then walk {Kitchenplan::Resolver} subclasses and take the first one that works.
     # TODO: may want to allow the user to specify a resolver preference.
