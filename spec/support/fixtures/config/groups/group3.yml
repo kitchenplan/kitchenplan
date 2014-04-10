@@ -1,0 +1,14 @@
+groups:
+    - group1
+    - group2
+recipes:
+    global:
+        - group3::default
+    rhel:
+        - group3::rhel_only
+attributes:
+    group3:
+        group3:
+            - 5
+            - 6
+            - 7
