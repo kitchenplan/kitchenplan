@@ -1,6 +1,7 @@
 require 'yaml'
 require 'etc'
 require 'deep_merge'
+require 'erubis'
 
 class Kitchenplan
   # standalone class that parses YAML configs in a supplied config directory (./config, by default) ...
@@ -19,6 +20,10 @@ class Kitchenplan
 
     def initialize(parse_configs=true,ohai=nil)
       self.detect_platform(ohai)
+      @group_configs = {}
+      @default_config = {}
+      @people_config = {}
+
       if parse_configs
         self.do_parse_configs()
       end
@@ -36,14 +41,19 @@ class Kitchenplan
     # parse the default global config file.
     def parse_default_config
       default_config_path = "#{self.config_path}/default.yml"
-      @default_config = ( YAML.load_file(default_config_path) if File.exist?(default_config_path) ) || {}
+      @default_config = parse_config(default_config_path)
     end
 
     # parse the current user's config file.  if no such file exists, fall back to the default person account.
     # currently the default account is roderik's.
     def parse_people_config
       people_config_path = "#{self.config_path}/people/#{Etc.getlogin}.yml"
-      @people_config = ( YAML.load_file(people_config_path) if File.exist?(people_config_path) ) || YAML.load_file("config/people/roderik.yml")
+      begin
+        @people_config = parse_config(people_config_path)
+      rescue LoadError
+        Kitchenplan::Log.warn "No personal config file found.  Defaulting to #{self.config_path}/people/roderik.yml"
+        @people_config = parse_config("#{self.config_path}/people/roderik.yml")
+      end
     end
 
     # find and parse each group named in a person's config file.
@@ -57,14 +67,26 @@ class Kitchenplan
 
     # parse configuration for a named group file.
     def parse_group_config(group)
-        unless @group_configs[group]
+        unless @group_configs.nil? == false and @group_configs.empty? == false and @group_configs[group]
             group_config_path = "#{self.config_path}/groups/#{group}.yml"
-            @group_configs[group] = ( YAML.load(ERB.new(File.read(group_config_path)).result) if File.exist?(group_config_path) ) || {}
+            @group_configs[group] = parse_config(group_config_path)
             defined_groups = @group_configs[group]['groups']
             if defined_groups
                 self.parse_group_configs(defined_groups)
             end
         end
+    end
+
+    # generic config file parser.  give it a file, it parses it, no muss, no fuss, raises valid exceptions.
+    # bonus feature: we pass in the ohai data as an object in the 'node' namespace, which should be familiar
+    # territory for anyone who's worked with chef...
+    def parse_config(filename)
+      begin
+            ( YAML.load(Erubis::Eruby.new(File.read(filename)).evaluate(:node => self.platform.ohai)) if File.exist?(filename) ) || {}
+      rescue Psych::SyntaxError => e
+        Kitchenplan::Log.error "There was an error parsing config file #{filename}: #{e.message}"
+        raise StandardError, "Error parsing #{filename}: #{e.message}"
+      end
     end
 
     # for the current user and relevant groups and current platform,
