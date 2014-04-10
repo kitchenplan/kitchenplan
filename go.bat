@@ -1,5 +1,6 @@
 @rem
 @rem Author:: Seth Chisamore (<schisamo@opscode.com>)
+@rem Author:: Steven Wagner (<steven.wagner@disney.com>)
 @rem Copyright:: Copyright (c) 2011 Opscode, Inc.
 @rem License:: Apache License, Version 2.0
 @rem
@@ -17,7 +18,9 @@
 @rem
 
 @set "KITCHENPLAN_BRANCH_NAME=master"
+@set "KITCHENPLAN_CONFIG_BRANCH_NAME=master"
 @set "KITCHENPLAN_ARCHIVE_URL=https://github.disney.com/stwagner/kitchenplan/archive/%KITCHENPLAN_BRANCH_NAME%.zip"
+@set "KITCHENPLAN_CONFIG_ARCHIVE_URL=https://github.disney.com/roderik/kitchenplan-config/archive/%KITCHENPLAN_CONFIG_BRANCH_NAME%.zip"
 @set "GIT_ARCHIVE_URL=https://msysgit.googlecode.com/files/Git-1.8.5.2-preview20131230.exe"
 @set "CHEF_MSI_BASE_URL=https://www.opscode.com/chef/download"
 @set KITCHENPLAN_DIRECTORY=C:\kitchenplan
@@ -237,6 +240,12 @@ echo.objTarget.CopyHere objSource, intOptions
 cscript /nologo C:\chef\wget.vbs /url:"%KITCHENPLAN_ARCHIVE_URL%" /path:"%LOCAL_KITCHENPLAN_ARCHIVE%"
 @echo Decompressing kitchenplan archive into %KITCHENPLAN_DIRECTORY%
 cscript /nologo %KITCHENPLAN_DIRECTORY%\unzip.vbs /inFile:"%LOCAL_KITCHENPLAN_ARCHIVE%" /outFolder:"%KITCHENPLAN_DIRECTORY%"
+
+@set "LOCAL_KITCHENPLAN_CONFIG_ARCHIVE=%TEMP%\kitchenplan-config.zip"
+@echo Attempting to download kitchenplan archive
+cscript /nologo C:\chef\wget.vbs /url:"%KITCHENPLAN_CONFIG_ARCHIVE_URL%" /path:"%LOCAL_KITCHENPLAN_CONFIG_ARCHIVE%"
+@echo Decompressing kitchenplan-config archive into %KITCHENPLAN_DIRECTORY%
+cscript /nologo %KITCHENPLAN_DIRECTORY%\unzip.vbs /inFile:"%LOCAL_KITCHENPLAN_CONFIG_ARCHIVE%" /outFolder:"%KITCHENPLAN_DIRECTORY%\config"
 
 robocopy /move /e /log:%TEMP%\copy_kitchenplan.log %KITCHENPLAN_DIRECTORY%\kitchenplan-%KITCHENPLAN_BRANCH_NAME% %KITCHENPLAN_DIRECTORY%\
 cd %KITCHENPLAN_DIRECTORY%

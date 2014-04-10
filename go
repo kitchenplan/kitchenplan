@@ -12,11 +12,13 @@
 # execution can be customized by the following environmental variables:
 # KITCHENPLAN_PATH - kitchenplan installation path (defaults to /opt/kitchenplan)
 # KITCHENPLAN_REPO - repository to use for recipes/cookbooks (defaults to https://github.com/kitchenplan/kitchenplan)
+# KITCHENPLAN_CONFIG_REPO - repository to use for configuration directory (defaults to https://github.com/roderik/kitchenplan-config)
 
-GO_SCRIPT_VERSION = '1.0.0'
+GO_SCRIPT_VERSION = '1.1.0'
 
 KITCHENPLAN_PATH = ENV.fetch("KITCHENPLAN_PATH", "/opt/kitchenplan")
 KITCHENPLAN_REPO = ENV.fetch("KITCHENPLAN_REPO", "https://github.com/kitchenplan/kitchenplan.git")
+KITCHENPLAN_CONFIG_REPO = ENV.fetch("KITCHENPLAN_CONFIG_REPO", "https://github.com/roderik/kitchenplan-config.git")
 
 require 'optparse'
 options = {}
@@ -141,7 +143,7 @@ puts "  - Command Line Tools if they are not installed"
 puts "  - Chef"
 puts "  - All applications configured in <yourusername>.yml or if not available roderik.yml"
 puts ""
-warn "Unless by chance your user is also named Roderik, and you want exactly the same applications as I, use the KITCHENPLAN_REPO env to point to a fork with a config file named for your username."
+warn "Unless by chance your user is also named Roderik, and you want exactly the same applications as I, use the KITCHENPLAN_CONFIG_REPO env to point to a fork with a config file named for your username."
 puts ""
 
 wait_for_user if options[:interaction]
@@ -164,6 +166,7 @@ else
   sudo "mkdir -p /opt"
   sudo "chown -R #{ENV["USER"]} /opt"
   normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH}"
+  normaldo "git clone -q #{KITCHENPLAN_CONFIG_REPO} #{KITCHENPLAN_PATH}/config"
 end
 
 Dir.chdir KITCHENPLAN_PATH if options[:interaction]
