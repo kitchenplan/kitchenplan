@@ -72,20 +72,6 @@ class Kitchenplan
 	end
     end
 
-    # class method for executing a command as superuser.  because this is platform-specific, it's pulled all the way up to the
-    # root class.
-    def sudo *args
-	detect_platform
-	Kitchenplan::Log.info self.platform.run_privileged(*args)
-	system self.platform.run_privileged(*args)
-    end
-    # class method for executing a regular command.  because this is platform-specific, it's pulled all the way up to the
-    # root class.
-    def normaldo *args
-	detect_platform
-	Kitchenplan::Log.info *args
-	system *args
-    end
     private
     # "something_with_underscores" -> "SomethingWithUnderscores"
     def camelcase(string)
