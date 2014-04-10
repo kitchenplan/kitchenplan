@@ -6,10 +6,11 @@ class Kitchenplan
   class Application < Kitchenplan
     attr_accessor :options, :config
     include Kitchenplan::Mixin::Display
-    include Kitchenplan::Mixin::Commands
     include Kitchenplan::Mixin::Optparse
     # Main point of entry for kitchenplan binary.  #run starts the app.
     def initialize
+      # get options.  This function comes from {Kitchenplan::Mixin::Optparse}.
+      self.options = parse_commandline()
       super
       configure_logging
       detect_platform()
@@ -34,7 +35,14 @@ class Kitchenplan
     end
     # load our application config and make it available elsewhere.
     def load_config()
+      if self.options[:config_dir]
+	config = Kitchenplan::Config.new(parse_configs=false)
+	config.config_path = self.options[:config_dir]
+	config.do_parse_configs()
+	self.config = config.config()
+      else
       self.config = Kitchenplan::Config.new().config
+      end
     end
     # Generate Chef configs based on the merged Kitchenplan config hints and run lists.
     def generate_chef_config()
@@ -52,12 +60,12 @@ class Kitchenplan
       self.resolver.debug = self.options[:debug]
       unless File.exists?("cookbooks")
 	Kitchenplan::Log.info "No cookbooks directory found.  Running Librarian to download necessary cookbooks."
-	self.normaldo self.resolver.fetch_dependencies()
+	self.platform.normaldo self.resolver.fetch_dependencies()
 	#self.normaldo "bin/librarian-chef install --clean #{(self.options[:debug] ? '--verbose' : '--quiet')}"
       end
       if self.options[:update_cookbooks]
 	Kitchenplan::Log.info "Updating cookbooks with #{self.resolver.name}"
-	self.normaldo self.resolver.update_dependencies()
+	self.platform.normaldo self.resolver.update_dependencies()
 	#self.normaldo "bin/librarian-chef update #{(self.options[:debug] ? '--verbose' : '--quiet')}"
       end
     end
@@ -72,7 +80,6 @@ class Kitchenplan
     def run
       Kitchenplan::Log.info "Kitchenplan starting up."
       # get options.  This function comes from {Kitchenplan::Mixin::Optparse}.
-      self.options = parse_commandline()
       Kitchenplan::Log.debug "Started with options: #{options.inspect}"
       Kitchenplan::Log.info "Gathering prerequisites..."
       self.platform.prerequisites()
@@ -81,7 +88,7 @@ class Kitchenplan
       Kitchenplan::Log.info "Verifying cookbook dependencies with #{self.resolver.name}..."
       ping_google_analytics() if 0 == 1
       update_cookbooks()
-      self.platform.run_chef(use_solo=true,log_level="debug",recipes=self.config['recipes'])
+      self.platform.sudo(self.platform.run_chef(use_solo=true,log_level="debug",recipes=self.config['recipes']))
       self.exit!("Chef run complete.  Exiting normally.")
     end
     # In a Chef-like manner, log a fatal message to stderr/logger and exit with this error code.
