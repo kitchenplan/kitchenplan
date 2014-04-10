@@ -8,4 +8,6 @@ group :test, :development do
   gem "simplecov"
   gem "chefspec"
   gem "fauxhai"
+  gem "guard"
+  gem "guard-rspec"
 end
