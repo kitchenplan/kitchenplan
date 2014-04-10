@@ -22,12 +22,6 @@ class Kitchenplan
       def prerequisites
 	super
       end
-      private
-      # Run sudo commands.
-      # TODO: This probably doesn't need to be here anymore...
-      def sudo *args
-	Kitchenplan::Application.new().sudo(*args)
-      end
     end
   end
 end

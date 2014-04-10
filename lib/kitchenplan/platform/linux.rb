@@ -60,12 +60,6 @@ class Kitchenplan
 	Kitchenplan::Log.info "#{self.class} : Run kitchenplan bundle install"
 	sudo "bundle install --binstubs=bin --quiet"
       end
-      private
-      # sudo things.
-      # TODO: this probably doesn't belong here anymore since it's in {::Kitchenplan}
-      def sudo *args
-	Kitchenplan::Application.new().sudo(*args)
-      end
     end
   end
 end
