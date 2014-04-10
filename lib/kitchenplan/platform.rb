@@ -23,10 +23,16 @@ class Kitchenplan
     def prerequisites
       Kitchenplan::Log.warn "No prerequisites defined for platform '#{@platform}'"
     end
+    # shouldn't run kitchenplan as superuser.  we can elevate where needed.
+    def running_as_superuser?
+      Kitchenplan::Log.debug "#{self.class} : Running as superuser? UID = #{Process.uid} == 0?"
+      Process.uid == 0
+    end
     # run_privileged, for when we want to run something as root.  we just format the command syntax here.
     # execution happens elsewhere.
     def run_privileged *args
       args = if args.length > 1
+	       puts "Removing a sudo"
 	       args.unshift "/usr/bin/sudo"
 	     else
 	       "/usr/bin/sudo #{args.first}"
@@ -37,7 +43,18 @@ class Kitchenplan
     # Boolean use_solo determines whether or not chef-solo or chef-zero (Chef 11.8 or newer) is used.
     def run_chef(use_solo=true, log_level='info', recipes=[])
       chef_bin = use_solo ? "chef-solo" : "chef-client -z"
-      sudo "bin/#{chef_bin} --log_level #{log_level} -c solo.rb -j kitchenplan-attributes.json -o #{recipes.join(",")}"
+      "bin/#{chef_bin} --log_level #{log_level} -c solo.rb -j kitchenplan-attributes.json -o #{recipes.join(",")}"
+    end
+    # run commands as sudo.  the name is legacy (and short, so we like it), but privilege escalation may involve
+    # a different command on your platform.
+    def sudo *args
+      Kitchenplan::Log.info run_privileged(*args)
+      system run_privileged(*args) 
+    end
+    # class method for executing a regular command. implementation may be platform-specific, so it's defined here. 
+    def normaldo *args
+      Kitchenplan::Log.info *args
+      system *args
     end
 
   end
