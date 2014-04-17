@@ -99,7 +99,7 @@ module Kitchenplan
             out.write(JSON.pretty_generate(config.config['attributes']))
           end
           File.open('tmp/solo.rb', 'w') do |out|
-            out.write("cookbook_path      [ \"#{Dir.pwd}/vendor/cookbooks\" ]")
+            out.write("cookbook_path      [ \"#{Dir.pwd}/vendor/cookbooks\" ]\n")
             out.write("ssl_verify_mode :verify_peer")
           end
           return config.config['recipes']
