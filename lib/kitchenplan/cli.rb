@@ -189,7 +189,7 @@ module Kitchenplan
           dorun('mkdir -p vendor/cache')
           dorun('sudo gem install bundler --no-rdoc --no-ri') unless Kernel.system "gem query --name-matches '^bundler$' --installed > /dev/null 2>&1"
           dorun('rm -rf vendor/bundle/config')
-          dorun('bundle install --quiet --binstubs vendor/bin --path vendor/bundle')
+          dorun('ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future bundle install --quiet --binstubs vendor/bin --path vendor/bundle')
         end
       end
 
