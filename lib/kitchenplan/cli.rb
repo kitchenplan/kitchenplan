@@ -1,4 +1,3 @@
-
 require 'thor'
 
 module Kitchenplan
@@ -101,6 +100,7 @@ module Kitchenplan
           end
           File.open('tmp/solo.rb', 'w') do |out|
             out.write("cookbook_path      [ \"#{Dir.pwd}/vendor/cookbooks\" ]")
+            out.write("ssl_verify_mode :verify_peer")
           end
           return config.config['recipes']
         end
