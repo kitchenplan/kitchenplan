@@ -24,7 +24,9 @@ describe Kitchenplan do
 		platforms.each do |platform, versions|
 			versions.each do |version|
 				context "On #{platform} #{version}" do
-					let(:config) { Kitchenplan::Config.new(parse_configs=false,ohai=Fauxhai.mock(platform:platform, version:version).data)}
+					let(:faux) { Fauxhai.mock(platform:platform, version:version) }
+					let(:kp) { Kitchenplan.new(ohai=faux.data) }
+					#let(:config) { Kitchenplan::Config.new(ohai=Fauxhai.mock(platform:platform, version:version).data, parse_configs=false)}
 					it 'should load the corresponding Kitchenplan platform class' do
 						case platform
 						when /redhat|amazon|centos|xenserver|oracle/
@@ -34,16 +36,19 @@ describe Kitchenplan do
 						else
 							my_platform = platform
 						end
-						expect(config.platform.name).to eq(my_platform)
+						expect(kp.platform.name).to eq(my_platform)
 					end
 				end
 			end
 		end
 
+		context 'On an unsupported platform' do
+					let(:faux) { Fauxhai.mock(platform:'freebsd', version:'9.1') }
+					let(:kp) { Kitchenplan.new(ohai=faux.data) }
 		it 'should raise an exception on an unsupported platform' do
-			# sorry, FBSD'ers.  :D
 			# TODO: Replace FreeBSD with a locally-distributed and wholly fictitious fixture
-			expect { Kitchenplan::Config.new(parse_configs=false,ohai=Fauxhai.mock(platform:'freebsd', version:'9.1').data) }.to raise_error
+			expect { kp }.to raise_error
+		end
 		end
 	end
 	describe "#detect_resolver" do

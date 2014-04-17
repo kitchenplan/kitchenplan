@@ -3,10 +3,24 @@ require 'ohai'
 require 'kitchenplan'
 
 describe Kitchenplan::Config do
-	let(:kc) { Kitchenplan::Config }
+	let(:fake_ohai) do
+		{
+			"fqdn" => "hostname.example.org",
+			"hostname" => "hostname",
+			"machinename" => "machinename",
+			"platform" => "example-platform",
+			"platform_version" => "example-platform-1.0",
+			"platform_family" => "example",
+			"data" => {}
+		}
+	end
+	let(:fake_options) do
+		{
+			:debug=>false, :config_dir=>"config/", :chef=>true
+		}
+	end
 	let(:kcf) do
-		kcf = Kitchenplan::Config.new(parse_configs=false)
-		kcf.config_path=FIXTURE_CONFIG_DIR 
+		kcf = Kitchenplan::Config.new(ohai=fake_ohai,parse_configs=false,config_path=FIXTURE_CONFIG_DIR)
 		kcf.stub(:detect_platform)
 		kcf
 	end
@@ -14,33 +28,32 @@ describe Kitchenplan::Config do
 		[true, false].each do |configs|
 			context "when parse_configs is #{configs}" do
 				it "run or don't run do_parse_configs" do
-					Kitchenplan::Config.any_instance.stub :do_parse_configs
-					Kitchenplan::Config.any_instance.stub :detect_platform
+					Kitchenplan::Config.any_instance.stub(:do_parse_configs => true, :detect_platform => true)
 					if configs == true
-						ki = Kitchenplan::Config.new(parse_configs=true)
-					expect(ki).to receive :do_parse_configs
+						expect_any_instance_of(Kitchenplan::Config).to receive :do_parse_configs
+						ki = Kitchenplan::Config.new(ohai=fake_ohai,parse_configs=true)
 					else
-						kci = Kitchenplan::Config.new(parse_configs=configs)
-					expect(kci).not_to receive :do_parse_configs
+						expect_any_instance_of(Kitchenplan::Config).not_to receive :do_parse_configs
+						kci = Kitchenplan::Config.new(ohai=fake_ohai,parse_configs=false).stub(:do_parse_configs)
 					end
 				end
 			end
 		end
 	end
 	describe "#do_parse_configs" do
-		let(:kci) { Kitchenplan::Config.new() }
+		let(:kci) { Kitchenplan::Config.new(ohai=fake_ohai,parse_configs=false) }
 		context "with default parameters" do
 			path_value="config"
 
 			it "sets self.config_path" do
-				kci.do_parse_configs(path=path_value)
+				kci.do_parse_configs(config_path=path_value)
 				expect(kci.config_path).to eq path_value
 			end
 		end
 		context "with custom parameters" do
 			path_value=FIXTURE_CONFIG_DIR
 			it "sets self.config_path" do
-				kci.do_parse_configs(path=path_value)
+				kci.do_parse_configs(config_path=path_value)
 				expect(kci.config_path).to eq path_value
 			end
 		end
@@ -104,12 +117,10 @@ describe Kitchenplan::Config do
 		end
 		it "raises an exception if it encounters a YAML parse error on a file" do
 			Kitchenplan::Log.stub(:error)
-			expect(kcf).to raise_error(StandardError, /Error parsing/)
-			kcf.parse_config("#{kcf.config_path}/bad.yml")
+			expect { kcf.parse_config("#{kcf.config_path}/bad.yml") }.to raise_error(StandardError, /Error parsing/)
 		end
 		it "handles ERB templates properly" do
-			expect(kcf).not_to raise_error()
-			kcf.parse_config("#{kcf.config_path}/erbtest.yml")
+			expect { kcf.parse_config("#{kcf.config_path}/erbtest.yml") }.not_to raise_error
 		end
 	end
 	describe "#config" do
@@ -122,6 +133,27 @@ describe Kitchenplan::Config do
 				Etc.stub(:getlogin => "user1" )
 				kcf.do_parse_configs()
 				expect(kcf.config()).to include("recipes","attributes")
+			end
+		end
+		context "using two group configs" do
+			let(:group_configs) do
+				{
+					"group1" => {
+					"recipes" => { "global" => ["a::default"] },
+					"attributes" => { "foo" => "bar" },
+					},
+					"group2" => {
+					"recipes" => { "example" => ["b::default"] },
+					"attributes" => { "bar" => "baz" }
+					}
+
+				}
+			end
+			it "merges in a platform-specific recipe" do
+				kcf.do_parse_configs()
+				puts "kcf: #{kcf.ohai['platform_family']}"
+				kcf.instance_variable_set(:@group_configs,group_configs)
+				expect(kcf.config()["recipes"]).to include("b::default")
 			end
 		end
 	end
