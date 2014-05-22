@@ -1,26 +1,49 @@
+# Copyright 2014 Disney Enterprises, Inc. All rights reserved
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are
+#  met:
+#
+#   * Redistributions of source code must retain the above copyright
+#   notice, this list of conditions and the following disclaimer.
+#
+#   * Redistributions in binary form must reproduce the above copyright
+#   notice, this list of conditions and the following disclaimer in
+#   the documentation and/or other materials provided with the
+#   distribution.
+
+require 'kitchenplan'
+require 'kitchenplan/application'
 class Kitchenplan
   class Platform
     # OS X support.  This is probably the primary development platform for Kitchenplan today and
     # this code should therefore work real good.
     class MacOsX < Kitchenplan::Platform
+      attr_accessor :omnibus_path
       def initialize(ohai)
 	# haven't tested on Lion yet, unfortunately.  if you have and this works, let me know. -sw
 	@lowest_version_supported = "10.8"
-	self.ohai = ohai.nil? ? get_system_ohai() : ohai
+	self.ohai = ohai
 	self.name = self.ohai["platform_family"]
 	self.version = self.ohai["platform_version"]
+	# dangerous assumption:  you're installing Chef to your system.  like, for real.
+	self.omnibus_path = "/usr"
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)
-      def running_as_superuser?
-	Kitchenplan::Log.debug "#{self.class} : Running as superuser? UID = #{Process.uid} == 0?"
-	Process.uid == 0
+      def running_as_normaluser?
+	Kitchenplan::Log.debug "#{self.class} : Running as superuser? UID = #{Process.uid} != 0?"
+	Process.uid != 0
       end
       # is this version of the platform supported by the kitchenplan codebase?
       def version_supported?
 	Kitchenplan::Log.debug "#{self.class} : Is platform version lower than #{@lowest_version_supported}?"
 	return false if self.version.to_s <  @lowest_version_supported
 	true
+      end
+      # is the user part of the admin group?
+      def user_is_admin?
+	`groups`.split.include? "admin"
       end
       # test to see if the Bundler gem is installed.
       def bundler_installed?
@@ -43,8 +66,9 @@ class Kitchenplan
       end
       # TODO: Move up to base
       def prerequisites
-	Kitchenplan::Application.fatal! "Don't run this as root!" if running_as_superuser?
-	Kitchenplan::Log.warn "Platform version too low.  Your version: #{self.version}" unless version_supported?
+	Kitchenplan::Application.fatal! "Don't run this as root!" unless running_as_normaluser?
+	Kitchenplan::Application.fatal! "#{ENV['USER']} needs to be part of the 'admin' group!" unless user_is_admin?
+	Kitchenplan::Application.fatal! "Platform version too low.  Your version: #{self.version}" unless version_supported?
 	install_bundler
 	# needed for proper librarian usage
 	install_git

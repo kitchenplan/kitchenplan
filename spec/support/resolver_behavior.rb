@@ -13,17 +13,16 @@
 #   distribution.
 
 require 'spec_helper'
-require 'ohai'
 require 'kitchenplan'
+require 'kitchenplan/resolver'
 
-describe Ohai::System do
-	let(:ohai) { Ohai::System.new }
-
-	%w{ os platform }.each do |n|
-		it "should load the required #{n} ohai plugin" do
-			expect(ohai.require_plugin(n)).to eq(true)
-			expect(ohai.seen_plugins).to include(n => true)
-			expect(ohai.data).to include(n)
+shared_examples "a Kitchenplan resolver" do
+	let(:kr) { described_class.new(debug=true) }
+	describe "#name" do
+		it "returns a string" do
+			expect(kr.name).to be_a(String)
 		end
 	end
+
+
 end

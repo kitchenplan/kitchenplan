@@ -14,14 +14,14 @@
 
 require 'spec_helper'
 require 'kitchenplan'
-require 'kitchenplan/resolver/librarian'
+require 'kitchenplan/resolver/berkshelf'
 
-describe Kitchenplan::Resolver::Librarian do
+describe Kitchenplan::Resolver::Berkshelf do
 	it_behaves_like "a Kitchenplan resolver"
 	let(:kr) { described_class.new(debug=true) }
 	describe "#name" do
-		it "returns the name 'librarian-chef'" do
-			expect(kr.name).to eq "librarian-chef"
+		it "returns the name 'Berkshelf'" do
+			expect(kr.name).to eq "Berkshelf"
 		end
 	end
 
@@ -31,13 +31,13 @@ describe Kitchenplan::Resolver::Librarian do
 			kr.instance_variable_set(:@debug, dbg)
 		end
 		describe "#fetch_dependencies" do
-			it "returns a command line with --verbose" do
-				expect(kr.fetch_dependencies()).to include("--verbose")
+			it "returns a command line with -d" do
+				expect(kr.fetch_dependencies()).to include("-d")
 			end
 		end
 		describe "#update_dependencies" do
-			it "returns a command line with --verbose" do
-				expect(kr.update_dependencies()).to include("--verbose")
+			it "returns a command line with -d" do
+				expect(kr.update_dependencies()).to include("-d")
 			end
 		end
 	end
@@ -47,17 +47,16 @@ describe Kitchenplan::Resolver::Librarian do
 			kr.instance_variable_set(:@debug, dbg)
 		end
 		describe "#fetch_dependencies" do
-			it "returns a command line with --quiet" do
-				expect(kr.fetch_dependencies()).to include("--quiet")
+			it "returns a command line with -q" do
+				expect(kr.fetch_dependencies()).to include("-q")
 			end
 		end
 		describe "#update_dependencies" do
-			it "returns a command line with --verbose" do
-				expect(kr.update_dependencies()).to include("--quiet")
+			it "returns a command line with -q" do
+				expect(kr.update_dependencies()).to include("-q")
 			end
 		end
 
 	end
-
 
 end

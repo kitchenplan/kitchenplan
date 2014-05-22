@@ -1,3 +1,17 @@
+# Copyright 2014 Disney Enterprises, Inc. All rights reserved
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are
+#  met:
+#
+#   * Redistributions of source code must retain the above copyright
+#   notice, this list of conditions and the following disclaimer.
+#
+#   * Redistributions in binary form must reproduce the above copyright
+#   notice, this list of conditions and the following disclaimer in
+#   the documentation and/or other materials provided with the
+#   distribution.
+
 require 'spec_helper'
 require 'ohai'
 require 'kitchenplan'
@@ -5,6 +19,11 @@ require 'kitchenplan/application'
 require 'kitchenplan/resolver/librarian'
 
 describe Kitchenplan::Application do
+	before do
+		# suppresses all logging.
+		Kitchenplan::Log::MultiIO.any_instance.stub(:write => "")
+		Kitchenplan::Application.any_instance.stub(:puts => "")
+	end
 	let(:fake_ohai) do 
 		{
 			"fqdn" => "hostname.example.org",
@@ -18,7 +37,7 @@ describe Kitchenplan::Application do
 	end
 	let(:fake_options) do
 		{
-			:debug=>false, :config_dir=>"config/", :chef=>true 
+			:log_level=>"none", :log_file => nil, :config_dir=>"config/", :chef=>true, :chef_mode => "solo", :fake => true
 		}
 	end
 	let(:kp) { Kitchenplan::Platform.new(ohai=fake_ohai) }
@@ -71,7 +90,7 @@ describe Kitchenplan::Application do
 						expect(ka).not_to receive :prepare
 					else
 						pending "prepare() doesn't receive the signal for some reason" do
-						expect(ka).to receive :prepare
+							expect(ka).to receive :prepare
 						end
 					end
 					ka
@@ -80,17 +99,14 @@ describe Kitchenplan::Application do
 		end
 	end
 	describe "#prepare" do
-		before do
-			#Kitchenplan::Application.any_instance.stub(:parse_commandline => {}, :configure_logging => true, :detect_platform => true, :detect_resolver => true, :load_config => true)
-		end
 		it "populates self.options with the result of #parse_commandline" do
-			kac.stub(:parse_commandline => { 'a' => 'b' })
+			kac.stub(:parse_commandline => fake_options)
 			kac.stub(:platform => kpd)
-				kac.prepare([])
-			expect(kac.options).to include('a' => 'b')
+			kac.prepare(argv=[])
+			expect(kac.options).to include(:fake => true)
 		end
 
-		%w{ parse_commandline configure_logging detect_platform detect_resolver load_config }.each do |f|
+		%w{ configure_logging detect_platform detect_resolver load_config }.each do |f|
 			it "runs ##{f}()" do
 				kac.stub(:platform => kpd)
 				kac.stub(:load_config => {}) unless f == "load_config"
@@ -110,12 +126,6 @@ describe Kitchenplan::Application do
 				expect { ka.parse_commandline(argv) }.to raise_error(SystemExit)
 			end
 		end
-		%w{ -d --debug }.each do |flag|
-			it "should set the debug flag when passed '#{flag}'" do
-				argv = [ flag ]
-				expect(ka.parse_commandline(argv)).to include( :debug => true )
-			end
-		end
 		%w{ -c --config-dir }.each do |flag|
 			it "should set the config dir to a custom value" do
 				argv = [ flag, "/custom_directory" ]
@@ -133,6 +143,10 @@ describe Kitchenplan::Application do
 				argv = [ flag, "debug" ]
 				expect(ka.parse_commandline(argv)).to include( :log_level => "debug" )
 			end
+		end
+		it "should set the log file argument when a parameter is passed" do
+			argv = [ "--log-file", "example.txt" ]
+			expect(ka.parse_commandline(argv)).to include( :log_file => "example.txt" )
 		end
 		%w{ a foo::bar foo::default,bar::default }.each do |recipe_str|
 			it "should populate recipes with #{recipe_str}" do
@@ -167,11 +181,11 @@ describe Kitchenplan::Application do
 			it "should return a config hash that has an 'attributes' key" do
 				kac.config.instance_variable_set(:@ohai,fake_ohai)
 				expect(kac.config).not_to eq nil
-				expect(kac.config.config()).to include("attributes")
+				expect(kac.config).to include("attributes")
 			end
 			it "should return a config hash that has a 'recipes' key" do
 				kac.config.instance_variable_set(:@ohai,fake_ohai)
-				expect(kac.config.config()).to include("recipes")
+				expect(kac.config).to include("recipes")
 			end
 		end
 	end
@@ -218,7 +232,7 @@ describe Kitchenplan::Application do
 		end
 		context "when update_cookbooks is set" do
 			before do
-			kac.options = { :debug => false, :update_cookbooks => true }
+				kac.options = { :debug => false, :update_cookbooks => true }
 			end
 			it "should tell the resolver to update cookbooks with resolver#update_dependencies" do
 				expect(kac.resolver).to receive :update_dependencies
@@ -227,20 +241,27 @@ describe Kitchenplan::Application do
 		end
 	end
 	describe "#ping_google_analytics" do
-		pending
+		before do
+			Gabba::Gabba.any_instance.stub(:event => "got it")
+		end
+		it "should send an event through Gabba" do
+			expect(kac.ping_google_analytics()).to eq "got it"
+		end
 	end
 	describe "#run" do
 		before do
-			kac.stub(:parse_options => { :debug=>false, :config_dir=>"config/", :chef=>true }, 
-				 :detect_resolver => Kitchenplan::Resolver::Librarian.new(),
+			kac.stub(:parse_options => fake_options,
+				 :detect_resolver => Kitchenplan::Resolver::Librarian.new(debug=true),
 				 :configure_logging => true,
 				 :load_config => true,
 				 :generate_chef_config => true,
 				 :ping_google_analytics => true,
 				 :update_cookbooks => true,
 				 :exit! => true,
-				 :config => { 'recipes' => [], 'attributes' => {} }
+				 :options => fake_options,
+				 :config => { 'recipes' => ["a::default"], 'attributes' => {"b" => "c"} }
 				)
+			Gabba::Gabba.any_instance.stub(:event => "got it")
 		end
 		it "calls the platform object to ensure prerequisites are installed" do
 			kac.run()
@@ -251,19 +272,21 @@ describe Kitchenplan::Application do
 			expect(kac).to have_received :generate_chef_config
 		end
 		it "pings google analytics" do
-			pending
+			pending "ignore this until submission"
+			kac.run()
+			expect(kac).to have_received :ping_google_analytics
 		end
 		it "tells the resolver to update cookbooks" do
-			pending
+			kac.run()
+			expect(kac).to have_received :update_cookbooks
 		end
 		it "runs chef as superuser via platform object" do
 			pending
 		end
 	end
-	describe "#fatal!" do
-		pending
-	end
-	describe "#exit!" do
-		pending
+	%w{fatal exit}.each do |f|
+		describe "##{f}!" do
+			pending
+		end
 	end
 end

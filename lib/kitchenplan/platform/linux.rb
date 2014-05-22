@@ -1,3 +1,19 @@
+# Copyright 2014 Disney Enterprises, Inc. All rights reserved
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are
+#  met:
+#
+#   * Redistributions of source code must retain the above copyright
+#   notice, this list of conditions and the following disclaimer.
+#
+#   * Redistributions in binary form must reproduce the above copyright
+#   notice, this list of conditions and the following disclaimer in
+#   the documentation and/or other materials provided with the
+#   distribution.
+
+require 'kitchenplan/application'
+
 class Kitchenplan
   class Platform
     # linux support is provided by this class.  honestly this is here as a bit of a best guess
@@ -5,16 +21,18 @@ class Kitchenplan
     # TODO: Test generic Linux support and update this class as needed.
     class Linux < Kitchenplan::Platform
       # instantiate class with a name and version.
-      def initialize
+      def initialize(ohai)
 	@lowest_version_supported = "00"
+	self.ohai = ohai
 	self.name = self.ohai["platform_family"]
 	self.version = self.ohai["platform_version"]
+	self.omnibus_path = "/opt/chef"
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)
-      def running_as_superuser?
-	Kitchenplan::Log.debug "#{self.class} : Running as superuser? UID = #{Process.uid} == 0?"
-	Process.uid == 0
+      def running_as_normaluser?
+	Kitchenplan::Log.debug "#{self.class} : Running as normal user? UID = #{Process.uid} != 0?"
+	Process.uid != 0
       end
       # is this version of the platform supported by the kitchenplan codebase?
       def version_supported?
@@ -46,8 +64,8 @@ class Kitchenplan
       end
       # TODO: Move up to base
       def prerequisites
-	Kitchenplan::Application.fatal! "Don't run this as root!" if running_as_superuser?
-	Kitchenplan::Application.fatal! "#{ENV['USER']} needs to be part of the 'admin' group!" if user_is_admin?
+	Kitchenplan::Application.fatal! "Don't run this as root!" unless running_as_normaluser?
+	Kitchenplan::Application.fatal! "#{ENV['USER']} needs to be part of the 'admin' group!" unless user_is_admin?
 	Kitchenplan::Application.fatal! "Platform version too low.  Your version: #{self.version}" unless version_supported?
 	install_bundler
 	# needed for proper librarian usage

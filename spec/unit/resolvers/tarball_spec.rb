@@ -13,17 +13,19 @@
 #   distribution.
 
 require 'spec_helper'
-require 'ohai'
 require 'kitchenplan'
+require 'kitchenplan/resolver/tarball'
 
-describe Ohai::System do
-	let(:ohai) { Ohai::System.new }
-
-	%w{ os platform }.each do |n|
-		it "should load the required #{n} ohai plugin" do
-			expect(ohai.require_plugin(n)).to eq(true)
-			expect(ohai.seen_plugins).to include(n => true)
-			expect(ohai.data).to include(n)
+describe Kitchenplan::Resolver::Tarball do
+	before do
+		kr.url = "https://github.com/gofullstack/tar-cookbook/archive/master.zip"
+	end
+	it_behaves_like "a Kitchenplan resolver"
+	let(:kr) { described_class.new(debug=true) }
+	describe "#name" do
+		it "returns the name 'Tar'" do
+			expect(kr.name).to eq "Tar"
 		end
 	end
+
 end

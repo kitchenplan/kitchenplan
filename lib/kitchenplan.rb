@@ -1,10 +1,24 @@
+# Copyright 2014 Disney Enterprises, Inc. All rights reserved
+#  
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are
+#  met:
+#   
+#   * Redistributions of source code must retain the above copyright
+#   notice, this list of conditions and the following disclaimer.
+#    
+#   * Redistributions in binary form must reproduce the above copyright
+#   notice, this list of conditions and the following disclaimer in
+#   the documentation and/or other materials provided with the
+#   distribution.
 require 'json'
 require 'ohai'
-require 'kitchenplan/mixins'
+require 'kitchenplan/exceptions'
 require 'kitchenplan/log'
 require 'kitchenplan/config'
 # platform-specificity
 require 'kitchenplan/platform'
+require 'kitchenplan/version'
 
 # Top-level class for all Kitchenplan-y operations.
 class Kitchenplan
@@ -34,14 +48,15 @@ class Kitchenplan
     # return a usable Ohai object with only the plugins we need to get Kitchenplan going.
     def get_system_ohai(plugins=["os","platform"])
 	o = Ohai::System.new
-	plugins.each { |n| o.require_plugin(n) }
+	o.load_plugins
+	o.run_plugins(safe=false, attribute_filter=plugins)
 	o
     end
 
 
     # invoke resolver detection code.  start with library resolvers and auto-load them.  then walk {Kitchenplan::Resolver} subclasses and take the first one that works.
     # TODO: may want to allow the user to specify a resolver preference.
-    def detect_resolver
+    def detect_resolver(debug=false)
 	if defined?(self.resolver) and self.resolver.nil? == false
 	    return self.resolver
 	end
@@ -58,11 +73,17 @@ class Kitchenplan
 	# loop through the resolver classes we just loaded and see which (if any) will load up for us.
 	# this should catch plugins, too, if you cleverly load them somehow.
 	Kitchenplan::Resolver.constants.each do |resolver_candidate|
-	    Kitchenplan::Log.info "resolver candidate: #{resolver_candidate.to_s}"
+	    Kitchenplan::Log.debug "resolver candidate: #{resolver_candidate.to_s}"
 	    begin
-		self.resolver = eval("Kitchenplan::Resolver::#{resolver_candidate.to_s}.new()") unless self.resolver.nil? == false
+		self.resolver = eval("Kitchenplan::Resolver::#{resolver_candidate.to_s}.new(debug=debug)") unless self.resolver.nil? == false
+		# now that we've instantiated the new resolver, ask if it's present and happy.
+		# if it's not ... back to the pit with it!
+		if self.resolver.present?
 		Kitchenplan::Log.debug "self.resolver == #{self.resolver.class}"
 		break
+		else
+		    self.resolver = nil unless self.resolver.present?
+		end
 	    rescue Exception => e
 		Kitchenplan::Log.debug "Resolver instantiation error: #{e.message} #{e.backtrace}"
 	    end
@@ -71,6 +92,7 @@ class Kitchenplan
 	    Kitchenplan::Log.warn "No resolvers loaded.  This could be a problem."
 	end
     end
+
 
     private
     # "something_with_underscores" -> "SomethingWithUnderscores"

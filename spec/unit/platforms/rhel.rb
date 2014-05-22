@@ -13,17 +13,9 @@
 #   distribution.
 
 require 'spec_helper'
-require 'ohai'
 require 'kitchenplan'
+require 'kitchenplan/platform/rhel'
 
-describe Ohai::System do
-	let(:ohai) { Ohai::System.new }
-
-	%w{ os platform }.each do |n|
-		it "should load the required #{n} ohai plugin" do
-			expect(ohai.require_plugin(n)).to eq(true)
-			expect(ohai.seen_plugins).to include(n => true)
-			expect(ohai.data).to include(n)
-		end
-	end
+describe Kitchenplan::Platform::Rhel do
+	it_behaves_like "a Kitchenplan platform"
 end

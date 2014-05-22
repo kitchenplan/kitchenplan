@@ -14,23 +14,14 @@
 
 require 'spec_helper'
 require 'kitchenplan'
-require 'kitchenplan/platform/mac_os_x'
+require 'kitchenplan/platform/linux'
 
-describe Kitchenplan::Platform::MacOsX do
+describe Kitchenplan::Platform::Linux do
 	it_behaves_like "a Kitchenplan platform"
 	let(:kp) do
-		kp = Kitchenplan::Platform::MacOsX.new(ohai=@fake_ohai)
+		kp = described_class.new(ohai=@fake_ohai)
 		kp.stub(:sudo => true, :normaldo => true)
 		kp
-	end
-	before do
-		Kitchenplan::Application.stub(:fatal!)
-	end
-	describe "#kitchenplan_bundle_install" do
-		it "runs sudo with the 'bundle install' command" do
-			expect(kp).to receive(:sudo).with(/bundle install/)
-			kp.kitchenplan_bundle_install()
-		end
 	end
 	describe "#bundler_installed?" do
 		it "should run 'gem spec bundler' on the host" do
