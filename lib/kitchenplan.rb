@@ -13,7 +13,6 @@
 #   distribution.
 require 'json'
 require 'ohai'
-require 'kitchenplan/exceptions'
 require 'kitchenplan/log'
 require 'kitchenplan/config'
 # platform-specificity
