@@ -7,6 +7,7 @@ gem "ffi", "= 1.9.3"
 
 group :test, :development do
   gem "simplecov", :require => false
+  gem "yard"
   gem "chefspec"
   gem "fauxhai"
   gem "guard"
