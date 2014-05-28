@@ -1,5 +1,5 @@
 #require 'bundler/gem_tasks'
-require 'cucumber/rake/task'
+#require 'cucumber/rake/task'
 require 'rspec/core/rake_task'
 require 'yard/rake/yardoc_task'
 require 'yard'
