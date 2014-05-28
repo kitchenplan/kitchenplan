@@ -1,3 +1,5 @@
 language: objective-c
 cache: bundler
-script: "./go --no-interaction"
+script:
+  - "rake test"
+  - "./go --no-interaction"
