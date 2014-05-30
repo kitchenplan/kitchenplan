@@ -108,7 +108,7 @@ module Kitchenplan
 
       def send_ping
         print_step('Sending a ping to Google Analytics')
-        require 'Gabba'
+        require 'gabba'
         Gabba::Gabba.new('UA-46288146-1', 'github.com').event('Kitchenplan', 'Run', ENV['USER'])
       end
 
