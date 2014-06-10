@@ -14,7 +14,7 @@ module Kitchenplan
     LONGDESC
     def setup(gitrepo=nil, targetdir='/opt')
       logo
-      install_clt unless `pkgutil --pkg-info=com.apple.pkg.CLTools_Executables`
+      install_clt unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
       if gitrepo
         fetch(gitrepo, targetdir)
       else
