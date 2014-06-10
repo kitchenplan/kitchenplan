@@ -197,6 +197,9 @@ module Kitchenplan
         print_step('Installing XCode CLT')
         osx_ver = dorun('sw_vers -productVersion | awk -F "." \'{print $2}\'', true).to_i
         if osx_ver >= 9
+          if osx_ver >= 10
+            print_failure('Until CLT is available via softwareupdate, please install both the CLT and XCode from https://developer.apple.com')
+          end
           dorun('touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress')
           prod = dorun('softwareupdate -l | grep -B 1 "Developer" | head -n 1 | awk -F"*" \'{print $2}\'', true)
           dorun("softwareupdate -i #{prod} -v")
