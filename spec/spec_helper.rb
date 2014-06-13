@@ -15,6 +15,7 @@
 require 'simplecov'
 require 'chefspec'
 require 'gabba'
+require 'coveralls'
 
 RSpec.configure do |config|
   config.before(:all) do
@@ -30,6 +31,10 @@ RSpec.configure do |config|
       }
   end
 end
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+      Coveralls::SimpleCov::Formatter
+]
 SimpleCov.start do
   add_filter "/spec/"
 end
