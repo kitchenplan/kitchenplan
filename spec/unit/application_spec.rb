@@ -54,7 +54,7 @@ describe Kitchenplan::Application do
 	end
 	let(:krl) do
 		krl = double("Kitchenplan::Resolver::Librarian")
-		krl.stub(:name => "Librarian", :fetch_dependencies => true, :update_dependencies => true)
+		krl.stub(:name => "Librarian", :fetch_dependencies => true, :update_dependencies => true, :debug => true)
 		krl
 	end
 	let(:kac) do
@@ -210,7 +210,7 @@ describe Kitchenplan::Application do
 		end
 		it "should set self.resolver.debug to the options debug value" do
 			kac.update_cookbooks()
-			expect { kac.resolver.debug }.to be_true
+			expect(kac.resolver.debug).to be_true
 		end
 		context "when 'cookbooks' exists" do
 			before { File.new("cookbooks","w") }
@@ -271,7 +271,6 @@ describe Kitchenplan::Application do
 			expect(kac).to have_received :generate_chef_config
 		end
 		it "pings google analytics" do
-			pending "ignore this until submission"
 			kac.run()
 			expect(kac).to have_received :ping_google_analytics
 		end
@@ -280,7 +279,7 @@ describe Kitchenplan::Application do
 			expect(kac).to have_received :update_cookbooks
 		end
 		it "runs chef as superuser via platform object" do
-			pending
+			pending "Not implemented yet."
 		end
 	end
 	%w{fatal exit}.each do |f|

@@ -20,9 +20,12 @@ describe Ohai::System do
 	let(:ohai) { Ohai::System.new }
 
 	%w{ os platform }.each do |n|
+		before do
+			ohai.load_plugins
+		end
 		it "should load the required #{n} ohai plugin" do
-			expect(ohai.require_plugin(n)).to eq(true)
-			expect(ohai.seen_plugins).to include(n => true)
+			ohai.run_plugins(safe=false, attribute_filter=n)
+			ohai.require_plugin(n)
 			expect(ohai.data).to include(n)
 		end
 	end

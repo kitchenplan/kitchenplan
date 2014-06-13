@@ -20,11 +20,12 @@ describe Kitchenplan do
 	describe "#detect_platform" do
 		let(:system_ohai) { Ohai::System.new() }
 		it "uses system ohai if the passed ohai param is nil" do
-			system_ohai.require_plugin("os")
-			system_ohai.require_plugin("platform")
+			system_ohai.load_plugins
+			system_ohai.run_plugins(safe=false, attribute_filter=['platform','os'])
+			@sys = system_ohai
 			kp = Kitchenplan.new(ohai=nil)
 			kp.detect_platform(ohai=nil)
-			expect(kp.platform.ohai).to match system_ohai
+			expect(kp.platform.ohai.data['os']).to eq @sys.data['os']
 		end
 	end
 	describe "#detect_platform" do
