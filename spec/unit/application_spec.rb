@@ -210,7 +210,7 @@ describe Kitchenplan::Application do
 		end
 		it "should set self.resolver.debug to the options debug value" do
 			kac.update_cookbooks()
-			expect(kac.resolver.debug).to be_true
+			expect(kac.resolver.debug).to eq true
 		end
 		context "when 'cookbooks' exists" do
 			before { File.new("cookbooks","w") }
@@ -277,9 +277,6 @@ describe Kitchenplan::Application do
 		it "tells the resolver to update cookbooks" do
 			kac.run()
 			expect(kac).to have_received :update_cookbooks
-		end
-		it "runs chef as superuser via platform object" do
-			pending "Not implemented yet."
 		end
 	end
 	%w{fatal exit}.each do |f|
