@@ -70,7 +70,7 @@ class Kitchenplan
 	    Kitchenplan::Log.error "Ack!  #{e.message}"
 	end
 	# loop through the resolver classes we just loaded and see which (if any) will load up for us.
-	# this should catch plugins, too, if you cleverly load them somehow.
+	# this should catch plugins, too, if you cleverly load them somehow in the Ruby environment.
 	Kitchenplan::Resolver.constants.each do |resolver_candidate|
 	    Kitchenplan::Log.debug "resolver candidate: #{resolver_candidate.to_s}"
 	    begin

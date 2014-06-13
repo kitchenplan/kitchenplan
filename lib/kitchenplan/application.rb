@@ -107,7 +107,7 @@ class Kitchenplan
       Kitchenplan::Log.info "Generating Chef configs..."
       generate_chef_config()
       Kitchenplan::Log.info "Verifying cookbook dependencies using '#{self.resolver.name}'..."
-      ping_google_analytics() if 0 == 1
+      ping_google_analytics()
       update_cookbooks()
       use_solo = options[:chef_mode].include?("solo") ? true : false
       log_level = options[:log_level]
