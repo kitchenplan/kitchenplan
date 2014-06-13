@@ -6,6 +6,7 @@ gem "deep_merge", "~> 1.0.1"
 gem "ffi", "= 1.9.3"
 
 group :test, :development do
+  gem "rake"
   gem "simplecov", :require => false
   gem "yard"
   gem "chefspec"
