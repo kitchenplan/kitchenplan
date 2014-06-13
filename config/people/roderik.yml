@@ -53,8 +53,8 @@ recipes:
         - osxdefaults::set_computer_name
 attributes:
     kdeploydeps:
-	php: php54
-        computername: Sinope
+    php: php54
+    computername: Sinope
     dotfiles:
         vimusers:
             - root
