@@ -94,7 +94,7 @@ class Kitchenplan
     def ping_google_analytics()
       # Trying to get some metrics for usage, just comment out if you don't want it.
       Kitchenplan::Log.info 'Sending a ping to Google Analytics to count usage'
-      require 'Gabba'
+      require 'gabba'
       Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
     end
     # main point of entry for the class.
