@@ -89,9 +89,8 @@ describe Kitchenplan::Application do
 					if bareflag == true
 						expect(ka).not_to receive :prepare
 					else
-						pending "prepare() doesn't receive the signal for some reason" do
-							expect(ka).to receive :prepare
-						end
+						pending "prepare() doesn't receive the signal for some reason"
+						expect(ka).to receive :prepare
 					end
 					ka
 				end
