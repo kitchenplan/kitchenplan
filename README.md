@@ -1,4 +1,6 @@
+[![Build Status](https://travis-ci.org/leftathome/kitchenplan-1.svg?branch=master)](https://travis-ci.org/leftathome/kitchenplan-1) [![Coverage Status](https://img.shields.io/coveralls/leftathome/kitchenplan-1.svg)](https://coveralls.io/r/leftathome/kitchenplan-1?branch=master)
 # Kitchenplan
+
 
 ## Why Kitchenplan?
 
