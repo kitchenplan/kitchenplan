@@ -1,5 +1,2 @@
-language: objective-c
+language: ruby
 cache: bundler
-script:
-  - "rake test"
-  - "./go --no-interaction"
