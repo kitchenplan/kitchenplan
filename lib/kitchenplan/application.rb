@@ -64,7 +64,7 @@ class Kitchenplan
     # load our application config and make it available elsewhere.
     def load_config()
       Kitchenplan::Log.debug "Loading configs from #{self.options[:config_dir]} ..."
-      Kitchenplan::Log.debug self.platform.ohai.data.inspect
+      Kitchenplan::Log.debug self.platform.ohai.inspect
       self.config = Kitchenplan::Config.new(self.platform.ohai, parse_configs=true,config_path=self.options[:config_dir]).config()
     end
     # Generate Chef configs based on the merged Kitchenplan config hints and run lists.
