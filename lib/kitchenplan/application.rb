@@ -36,7 +36,7 @@ class Kitchenplan
       detect_resolver()
       load_config()
       if options[:log_level] == "debug"
-	self.resolver.debug = true
+	self.resolver.debug = true unless self.resolver.nil?
       end
     end
     # Ensure that we can gracefully and quickly terminate.  People love that.
@@ -109,6 +109,9 @@ class Kitchenplan
       if self.resolver.nil?
 	Kitchenplan::Log.info "Checking for resolvers again now that dependencies are satisfied ... "
 	detect_resolver()
+        if options[:log_level] == "debug"
+	  self.resolver.debug = true unless self.resolver.nil?
+	end
 	Kitchenplan::Log.warn "Still couldn't find a resolver after installing prerequisites!" if self.resolver.nil?
       end
       Kitchenplan::Log.info "Generating Chef configs..."
