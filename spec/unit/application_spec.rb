@@ -260,11 +260,27 @@ describe Kitchenplan::Application do
 				 :options => fake_options,
 				 :config => { 'recipes' => ["a::default"], 'attributes' => {"b" => "c"} }
 				)
-			Gabba::Gabba.any_instance.stub(:event => "got it")
+				Gabba::Gabba.any_instance.stub(:event => "got it")
 		end
 		it "calls the platform object to ensure prerequisites are installed" do
 			kac.run()
 			expect(ka.platform).to have_received :prerequisites
+		end
+		context "when resolver is not loaded" do
+			before do
+				kac.resolver = nil
+				kac.stub(:detect_resolver => true)
+			end
+
+			it "re-runs detect_resolver() after prerequisites are installed" do
+				kac.run()
+				expect(kac).to have_received :detect_resolver
+			end
+			it "does not run #update_cookbooks()" do
+				kac.run()
+				expect(kac).not_to have_received :update_cookbooks
+			end
+
 		end
 		it "generates the Chef attribute JSON and run list" do
 			kac.run()

@@ -97,6 +97,8 @@ class Kitchenplan
       require 'gabba'
       Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
     end
+    def redetect_resolver()
+    end
     # main point of entry for the class.
     def run
       begin
@@ -104,16 +106,16 @@ class Kitchenplan
       Kitchenplan::Log.debug "Started with options: #{options.inspect}"
       Kitchenplan::Log.info "Validating dependencies for platform '#{self.platform.name}'..."
       self.platform.prerequisites()
-      if self.resolver.name == "undefined"
+      if self.resolver.nil?
 	Kitchenplan::Log.info "Checking for resolvers again now that dependencies are satisfied ... "
-	self.resolver = nil
 	detect_resolver()
+	Kitchenplan::Log.warn "Still couldn't find a resolver after installing prerequisites!" if self.resolver.nil?
       end
       Kitchenplan::Log.info "Generating Chef configs..."
       generate_chef_config()
-      Kitchenplan::Log.info "Verifying cookbook dependencies using '#{self.resolver.name}'..."
+      Kitchenplan::Log.info "Verifying cookbook dependencies using '#{self.resolver.name}'..." unless self.resolver.nil?
       ping_google_analytics()
-      update_cookbooks()
+      update_cookbooks() unless self.resolver.nil?
       use_solo = options[:chef_mode].include?("solo") ? true : false
       log_level = options[:log_level]
       log_file = options[:log_file]
