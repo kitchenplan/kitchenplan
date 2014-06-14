@@ -104,6 +104,11 @@ class Kitchenplan
       Kitchenplan::Log.debug "Started with options: #{options.inspect}"
       Kitchenplan::Log.info "Validating dependencies for platform '#{self.platform.name}'..."
       self.platform.prerequisites()
+      if self.resolver.name == "undefined"
+	Kitchenplan::Log.info "Checking for resolvers again now that dependencies are satisfied ... "
+	self.resolver = nil
+	detect_resolver()
+      end
       Kitchenplan::Log.info "Generating Chef configs..."
       generate_chef_config()
       Kitchenplan::Log.info "Verifying cookbook dependencies using '#{self.resolver.name}'..."
