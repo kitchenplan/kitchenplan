@@ -170,4 +170,5 @@ else
 end
 
 Dir.chdir KITCHENPLAN_PATH if options[:interaction]
-normaldo "./kitchenplan -c #{KITCHENPLAN_PATH}/config"
+debugstr = "-l debug" unless options[:interaction]
+normaldo "./kitchenplan -c #{KITCHENPLAN_PATH}/config #{debugstr}"
