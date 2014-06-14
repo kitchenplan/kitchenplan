@@ -14,7 +14,7 @@
 # KITCHENPLAN_REPO - repository to use for recipes/cookbooks (defaults to https://github.com/kitchenplan/kitchenplan)
 # KITCHENPLAN_CONFIG_REPO - repository to use for configuration directory (defaults to https://github.com/roderik/kitchenplan-config)
 
-GO_SCRIPT_VERSION = '1.1.0'
+GO_SCRIPT_VERSION = '1.1.1'
 
 KITCHENPLAN_PATH = ENV.fetch("KITCHENPLAN_PATH", "/opt/kitchenplan")
 KITCHENPLAN_REPO = ENV.fetch("KITCHENPLAN_REPO", "https://github.com/kitchenplan/kitchenplan.git")
@@ -170,4 +170,4 @@ else
 end
 
 Dir.chdir KITCHENPLAN_PATH if options[:interaction]
-normaldo "./kitchenplan"
+normaldo "./kitchenplan -c #{KITCHENPLAN_PATH}/config"
