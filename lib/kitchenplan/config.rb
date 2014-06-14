@@ -32,7 +32,7 @@ class Kitchenplan
       @ohai = ohai
 
       if parse_configs == true
-        self.do_parse_configs()
+        self.do_parse_configs(config_path)
       end
     end
 
