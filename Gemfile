@@ -14,4 +14,5 @@ group :test, :development do
   gem "fauxhai"
   gem "guard"
   gem "guard-rspec"
+  gem "berkshelf"
 end
