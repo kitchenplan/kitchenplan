@@ -81,6 +81,7 @@ class Kitchenplan
     end
     # using our chosen resolver, ensure that our cookbooks/ directory is up-to-date before we run Chef.
     def update_cookbooks()
+      self.resolver.config_dir = self.options[:config_dir] if self.resolver.respond_to?(:config_dir)
       unless File.exists?("cookbooks")
 	Kitchenplan::Log.info "No cookbooks directory found.  Running #{self.resolver.name} to download necessary cookbooks."
 	self.platform.normaldo self.resolver.fetch_dependencies()
@@ -96,8 +97,6 @@ class Kitchenplan
       Kitchenplan::Log.info 'Sending a ping to Google Analytics to count usage'
       require 'gabba'
       Gabba::Gabba.new("UA-46288146-1", "github.com").event("Kitchenplan", "Run", ENV['USER'])
-    end
-    def redetect_resolver()
     end
     # main point of entry for the class.
     def run
