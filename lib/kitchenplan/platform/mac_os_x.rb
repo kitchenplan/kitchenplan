@@ -27,7 +27,7 @@ class Kitchenplan
 	self.name = self.ohai["platform_family"]
 	self.version = self.ohai["platform_version"]
 	# dangerous assumption:  you're installing Chef to your system.  like, for real.
-	self.omnibus_path = "/usr"
+	self.omnibus_path = "/opt/kitchenplan"
 	Kitchenplan::Log.debug "#{self.class} : Platform name: #{self.name}  Version: #{self.version}"
       end
       # are we running as superuser?  (we shouldn't be.  we'll sudo/elevate as needed.)
