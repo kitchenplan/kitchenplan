@@ -78,7 +78,7 @@ class Kitchenplan
       # TODO: move up into base
       def kitchenplan_bundle_install
 	Kitchenplan::Log.info "#{self.class} : Run kitchenplan bundle install"
-	sudo "bundle install --binstubs=bin --quiet"
+	sudo "bundle install --binstubs=#{self.omnibus_path}/bin --quiet"
       end
     end
   end
