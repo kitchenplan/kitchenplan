@@ -32,15 +32,19 @@ class Kitchenplan
       end
       # is this dependency resolver present?  should we use it?
       def present?
-	File.exist?("Berksfile") and system("berks > /dev/null 2>&1")
+	if @config_dir
+	  File.exist?("#{@config_dir}/Berksfile") and system("bin/berks > /dev/null 2>&1")
+	else
+	  File.exist?("Berksfile") and system("bin/berks > /dev/null 2>&1")
+	end
       end
       # actually run the resolver and download the cookbooks we need.
       def fetch_dependencies()
-	"berks vendor cookbooks #{(@debug ? '-d' : '-q')}"
+	"#{prepend_chdir()}bin/berks vendor cookbooks #{(@debug ? '-d' : '-q')}"
       end
       # update dependencies after the initial install
       def update_dependencies()
-	"berks vendor cookbooks #{(@debug ? '-d' : '-q')}"
+	"#{prepend_chdir()}bin/berks vendor cookbooks #{(@debug ? '-d' : '-q')}"
       end
     end
   end

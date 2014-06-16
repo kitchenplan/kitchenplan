@@ -36,16 +36,6 @@ class Kitchenplan
 	  File.exist?("Cheffile") and system("bin/librarian-chef > /dev/null 2>&1")
 	end
       end
-      # Librarian expects a Cheffile in the repository root, which we potentially relocate
-      # as config_dir ... if this happens, we need to cd into the right directory before running Librarian.
-      def prepend_chdir()
-        if @config_dir
-	  Kitchenplan::Log.debug "Invoking librarian-chef from #{@config_dir}"
-	  "cd #{@config_dir} ; #{Dir.pwd}/"
-	else
-	  ""
-	end
-      end
       # actually run the resolver and download the cookbooks we need.
       def fetch_dependencies()
 	"#{prepend_chdir()}bin/librarian-chef install --clean #{(@debug ? '--verbose' : '--quiet')}"

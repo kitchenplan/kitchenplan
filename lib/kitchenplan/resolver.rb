@@ -20,12 +20,23 @@ class Kitchenplan
     # debug flag - if we're being run at a high enough debug level to make it worth
     # running our resolver(s) in verbose mode and logging it.
     attr_accessor :debug
+    # the config directory is assumed to contain a dependency file (Berksfile/Cheffile).
+    attr_accessor :config_dir
     # load up whatever information is necessary to use this dependency resolver.
     def initialize(debug=false)
       @debug = debug
     end
     def name
       "undefined"
+    end
+    # convenience function that, if config_dir is set, chdir to it before running resolver commands.
+    def prepend_chdir()
+      if @config_dir
+	Kitchenplan::Log.debug "Invoking resolver #{self.name} from #{@config_dir}"
+	"cd #{@config_dir} ; #{Dir.pwd}/"
+      else
+	""
+      end
     end
     # is this dependency resolver present?  should we use it?
     def present?

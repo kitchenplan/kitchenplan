@@ -81,7 +81,7 @@ class Kitchenplan
     end
     # using our chosen resolver, ensure that our cookbooks/ directory is up-to-date before we run Chef.
     def update_cookbooks()
-      self.resolver.config_dir = self.options[:config_dir] if self.resolver.respond_to?(:config_dir)
+      self.resolver.config_dir = self.options[:config_dir]
       unless File.exists?("cookbooks")
 	Kitchenplan::Log.info "No cookbooks directory found.  Running #{self.resolver.name} to download necessary cookbooks."
 	self.platform.normaldo self.resolver.fetch_dependencies()
@@ -136,7 +136,7 @@ class Kitchenplan
     end
     def parse_commandline(argv=ARGV)
       options = {
-	:config_dir => "config",
+	:config_dir => "config/",
 	:log_level => "info",
 	:log_file => nil,
 	:chef => true,
