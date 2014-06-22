@@ -61,7 +61,7 @@ describe Kitchenplan::Application do
 		kac = Kitchenplan::Application.new(bare=true,argv=[] )
 		kac.platform = kpd
 		kac.resolver = krl
-		kac.stub(:exit! => false, :fatal! => false )
+		kac.stub(:exit! => false, :fatal! => false, :config_dir => FIXTURE_CONFIG_DIR, :config_dir= => true )
 		kac
 	end
 	let(:ka) do
