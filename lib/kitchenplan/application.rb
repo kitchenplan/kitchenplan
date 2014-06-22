@@ -122,6 +122,7 @@ class Kitchenplan
       log_level = options[:log_level]
       log_file = options[:log_file]
       recipes = self.config['recipes']
+      Kitchenplan::Log.debug "self.resolver.config_dir = #{self.resolver.config_dir}, self.config = #{self.config}, recipes = #{self.config['recipes']}"
       self.platform.sudo(self.platform.run_chef(use_solo=use_solo,log_level=log_level,log_file=log_file,recipes=recipes))
       Kitchenplan::Log.info "Chef run completed."
       self.exit!("Kitchenplan run complete.  Exiting normally.")
