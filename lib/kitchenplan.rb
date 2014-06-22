@@ -59,7 +59,7 @@ class Kitchenplan
 	if defined?(self.resolver) and self.resolver.nil? == false
 	    return self.resolver
 	end
-	Kitchenplan::Log.debug "self.resolver == #{self.resolver.class}"
+	Kitchenplan::Log.debug " detect_resolver(): self.resolver == #{self.resolver.class}"
 	# look for all resolvers in our lib directory and attempt to include them.
 	begin
 	    Dir.glob(File.expand_path("../kitchenplan/resolver/*.rb", __FILE__)).each do |file|
@@ -81,6 +81,7 @@ class Kitchenplan
 		Kitchenplan::Log.debug "self.resolver == #{self.resolver.class}"
 		break
 		else
+		    Kitchenplan::Log.debug "present? : #{self.resolver.present?}"
 		    self.resolver = nil unless self.resolver.present?
 		end
 	    rescue Exception => e
