@@ -75,7 +75,8 @@ class Kitchenplan
 	Kitchenplan::Resolver.constants.each do |resolver_candidate|
 	    Kitchenplan::Log.debug "resolver candidate: #{resolver_candidate.to_s}"
 	    begin
-		self.resolver = eval("Kitchenplan::Resolver::#{resolver_candidate.to_s}.new(debug=debug,config_dir='#{config_dir}')") unless self.resolver.nil? == false
+		self.resolver = eval("Kitchenplan::Resolver::#{resolver_candidate.to_s}.new(debug=debug)") unless self.resolver.nil? == false
+		self.resolver.config_dir = config_dir
 		# now that we've instantiated the new resolver, ask if it's present and happy.
 		# if it's not ... back to the pit with it!
 		if self.resolver.present?
