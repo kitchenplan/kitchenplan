@@ -23,6 +23,7 @@ class Kitchenplan
     attr_accessor :options, :config
     # Main point of entry for kitchenplan binary.  #run starts the app.
     def initialize(bare=false,argv=ARGV)
+      @use_debug = false
       Kitchenplan::Log.info "Kitchenplan starting up."
       unless bare == true
 	prepare(argv)
@@ -33,11 +34,10 @@ class Kitchenplan
       self.options = parse_commandline(argv)
       configure_logging(loglevel=options[:log_level].to_sym)
       detect_platform()
-      detect_resolver()
+      @use_debug = true if options[:log_level] == "debug"
+      detect_resolver(debug=@use_debug, config_dir=options[:config_dir])
       load_config()
-      if options[:log_level] == "debug"
-	self.resolver.debug = true unless self.resolver.nil?
-      end
+      self.resolver.debug = @use_debug unless self.resolver.nil?
     end
     # Ensure that we can gracefully and quickly terminate.  People love that.
     def trap_signals
@@ -81,7 +81,7 @@ class Kitchenplan
     end
     # using our chosen resolver, ensure that our cookbooks/ directory is up-to-date before we run Chef.
     def update_cookbooks()
-      self.resolver.config_dir = self.options[:config_dir]
+      self.resolver.config_dir = self.options[:config_dir] ? self.options[:config_dir] : Dir.pwd
       unless File.exists?("cookbooks")
 	Kitchenplan::Log.info "No cookbooks directory found.  Running #{self.resolver.name} to download necessary cookbooks."
 	self.platform.normaldo self.resolver.fetch_dependencies()
@@ -107,10 +107,8 @@ class Kitchenplan
       self.platform.prerequisites()
       if self.resolver.nil?
 	Kitchenplan::Log.info "Checking for resolvers again now that dependencies are satisfied ... "
-	detect_resolver()
-        if options[:log_level] == "debug"
-	  self.resolver.debug = true unless self.resolver.nil?
-	end
+	detect_resolver(debug=@use_debug,config_dir=options[:config_dir])
+	self.resolver.debug = @use_debug unless self.resolver.nil?
 	Kitchenplan::Log.warn "Still couldn't find a resolver after installing prerequisites!" if self.resolver.nil?
       end
       Kitchenplan::Log.info "Generating Chef configs..."
@@ -122,7 +120,8 @@ class Kitchenplan
       log_level = options[:log_level]
       log_file = options[:log_file]
       recipes = self.config['recipes']
-      Kitchenplan::Log.debug "self.resolver.config_dir = #{self.resolver.config_dir}, self.config = #{self.config}, recipes = #{self.config['recipes']}"
+      Kitchenplan::Log.debug "self.resolver.config_dir = #{self.resolver.config_dir}" unless self.resolver.nil?
+      Kitchenplan::Log.debug "self.config = #{self.config}, recipes = #{self.config['recipes']}"
       self.platform.sudo(self.platform.run_chef(use_solo=use_solo,log_level=log_level,log_file=log_file,recipes=recipes))
       Kitchenplan::Log.info "Chef run completed."
       self.exit!("Kitchenplan run complete.  Exiting normally.")

@@ -55,11 +55,12 @@ class Kitchenplan
 
     # invoke resolver detection code.  start with library resolvers and auto-load them.  then walk {Kitchenplan::Resolver} subclasses and take the first one that works.
     # TODO: may want to allow the user to specify a resolver preference.
-    def detect_resolver(debug=false)
+    def detect_resolver(debug=false,config_dir=Dir.pwd)
 	if defined?(self.resolver) and self.resolver.nil? == false
 	    return self.resolver
 	end
 	Kitchenplan::Log.debug " detect_resolver(): self.resolver == #{self.resolver.class}"
+	Kitchenplan::Log.debug " detect_resolver() params: debug = #{debug} , config_dir = #{config_dir}"
 	# look for all resolvers in our lib directory and attempt to include them.
 	begin
 	    Dir.glob(File.expand_path("../kitchenplan/resolver/*.rb", __FILE__)).each do |file|
@@ -74,7 +75,7 @@ class Kitchenplan
 	Kitchenplan::Resolver.constants.each do |resolver_candidate|
 	    Kitchenplan::Log.debug "resolver candidate: #{resolver_candidate.to_s}"
 	    begin
-		self.resolver = eval("Kitchenplan::Resolver::#{resolver_candidate.to_s}.new(debug=debug)") unless self.resolver.nil? == false
+		self.resolver = eval("Kitchenplan::Resolver::#{resolver_candidate.to_s}.new(debug=debug,config_dir=#{config_dir})") unless self.resolver.nil? == false
 		# now that we've instantiated the new resolver, ask if it's present and happy.
 		# if it's not ... back to the pit with it!
 		if self.resolver.present?

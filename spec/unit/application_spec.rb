@@ -54,7 +54,7 @@ describe Kitchenplan::Application do
 	end
 	let(:krl) do
 		krl = double("Kitchenplan::Resolver::Librarian")
-		krl.stub(:name => "Librarian", :fetch_dependencies => true, :update_dependencies => true, :debug => true)
+		krl.stub(:name => "Librarian", :fetch_dependencies => true, :update_dependencies => true, :debug => true, :debug= => nil, :config_dir => FIXTURE_CONFIG_DIR, :config_dir= => true )
 		krl
 	end
 	let(:kac) do
@@ -258,7 +258,8 @@ describe Kitchenplan::Application do
 				 :update_cookbooks => true,
 				 :exit! => true,
 				 :options => fake_options,
-				 :config => { 'recipes' => ["a::default"], 'attributes' => {"b" => "c"} }
+				 :config => { 'recipes' => ["a::default"], 'attributes' => {"b" => "c"} },
+				:config_dir => FIXTURE_CONFIG_DIR
 				)
 				Gabba::Gabba.any_instance.stub(:event => "got it")
 		end
