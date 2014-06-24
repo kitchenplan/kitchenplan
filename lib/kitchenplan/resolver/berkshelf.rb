@@ -22,6 +22,8 @@ class Kitchenplan
     class Berkshelf < Kitchenplan::Resolver
       # should commands be run with debug output?
       attr_accessor :debug
+      # the config directory is assumed to contain a dependency file (Berksfile/Cheffile).
+      attr_accessor :config_dir
       # load up whatever information is necessary to use this dependency resolver.
       def initialize(debug=false)
 	@debug = debug
