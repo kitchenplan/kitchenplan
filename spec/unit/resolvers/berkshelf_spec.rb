@@ -20,8 +20,8 @@ describe Kitchenplan::Resolver::Berkshelf do
 	it_behaves_like "a Kitchenplan resolver"
 	let(:kr) { described_class.new(debug=true) }
 	describe "#name" do
-		it "returns the name 'Berkshelf'" do
-			expect(kr.name).to eq "Berkshelf"
+		it "returns the name 'berks'" do
+			expect(kr.name).to eq "berks"
 		end
 	end
 

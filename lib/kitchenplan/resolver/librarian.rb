@@ -31,18 +31,18 @@ class Kitchenplan
       # is this dependency resolver present?  should we use it?
       def present?
 	if @config_dir
-	  File.exist?("#{@config_dir}/Cheffile") and system("bin/librarian-chef > /dev/null 2>&1")
+	  File.exist?("#{@config_dir}/Cheffile") and system("#{self.binary} > /dev/null 2>&1")
 	else
-	  File.exist?("Cheffile") and system("bin/librarian-chef > /dev/null 2>&1")
+	  File.exist?("Cheffile") and system("#{self.binary} > /dev/null 2>&1")
 	end
       end
       # actually run the resolver and download the cookbooks we need.
       def fetch_dependencies()
-	"#{prepend_chdir()}bin/librarian-chef install --clean #{(@debug ? '--verbose' : '--quiet')}"
+	"#{prepend_chdir()}#{self.binary} install --clean #{(@debug ? '--verbose' : '--quiet')}"
       end
       # update dependencies after the initial install
       def update_dependencies()
-	"#{prepend_chdir()}bin/librarian-chef update --clean #{(@debug ? '--verbose' : '--quiet')}"
+	"#{prepend_chdir()}#{self.binary} update --clean #{(@debug ? '--verbose' : '--quiet')}"
       end
     end
   end

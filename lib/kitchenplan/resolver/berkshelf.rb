@@ -30,18 +30,18 @@ class Kitchenplan
       end
       # return the name of this resolver.
       def name
-	"Berkshelf"
+	"berks"
       end
       # is this dependency resolver present?  should we use it?
       def present?
 	if @config_dir
 	  Kitchenplan::Log.debug("Config dir has Berksfile? #{File.exist?("#{@config_dir}/Berksfile")}")
-	  Kitchenplan::Log.debug("bin/berks exists? #{File.exist?("bin/berks")}")
-	  File.exist?("#{@config_dir}/Berksfile") and system("bin/berks > /dev/null 2>&1")
+	  Kitchenplan::Log.debug("#{self.binary} exists? #{File.exist?("#{self.binary}")}")
+	  File.exist?("#{@config_dir}/Berksfile") and system("#{self.binary} > /dev/null 2>&1")
 	else
 	  Kitchenplan::Log.debug("Current directory has Berksfile? #{File.exist?("Berksfile")}")
-	  Kitchenplan::Log.debug("bin/berks exists? #{File.exist?("bin/berks")}")
-	  File.exist?("Berksfile") and system("bin/berks > /dev/null 2>&1")
+	  Kitchenplan::Log.debug("#{self.binary} exists? #{File.exist?("#{self.binary}")}")
+	  File.exist?("Berksfile") and system("#{self.binary} > /dev/null 2>&1")
 	end
       end
       # actually run the resolver and download the cookbooks we need.
