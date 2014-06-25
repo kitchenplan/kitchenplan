@@ -32,11 +32,12 @@ class Kitchenplan
       @ohai = ohai
 
       if parse_configs == true
+        Kitchenplan::Log.debug "Kitchenplan::Config: Parsing configs from #{config_path} on init"
         self.do_parse_configs(config_path)
       end
     end
 
-    def do_parse_configs(config_path="config")
+    def do_parse_configs(config_path=self.config_path)
       self.config_path = config_path
       Kitchenplan::Log.debug "Now parsing configs in #{self.config_path}..."
       self.parse_default_config
@@ -119,9 +120,9 @@ class Kitchenplan
             config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
         end
         people_attributes = @people_config['attributes'] || {}
-        Kitchenplan::Log.debug "parse_config: @people_config = #{@people_config.inspect}"
-        Kitchenplan::Log.debug "parse_config: @group_configs = #{@group_configs.inspect}"
-        Kitchenplan::Log.debug "parse_config: @default_config = #{@default_config.inspect}"
+        Kitchenplan::Log.debug "config(): @people_config = #{@people_config.inspect}"
+        Kitchenplan::Log.debug "config(): @group_configs = #{@group_configs.inspect}"
+        Kitchenplan::Log.debug "config(): @default_config = #{@default_config.inspect}"
         config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
         config
     end
