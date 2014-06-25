@@ -12,6 +12,7 @@
 #   the documentation and/or other materials provided with the
 #   distribution.
 
+require 'kitchenplan/resolver'
 class Kitchenplan
   class Resolver
     # This class contains support for the Berkshelf resolver (berkshelf.com).
@@ -26,7 +27,7 @@ class Kitchenplan
       attr_accessor :config_dir
       # load up whatever information is necessary to use this dependency resolver.
       def initialize(debug=false)
-	@debug = debug
+	super
       end
       # return the name of this resolver.
       def name
@@ -46,11 +47,12 @@ class Kitchenplan
       end
       # actually run the resolver and download the cookbooks we need.
       def fetch_dependencies()
-	"#{prepend_chdir()}bin/berks vendor cookbooks #{(@debug ? '-d' : '-q')}"
+	"#{prepend_chdir()}#{self.binary} vendor cookbooks #{(@debug ? '-d' : '-q')}"
       end
       # update dependencies after the initial install
       def update_dependencies()
-	"#{prepend_chdir()}bin/berks vendor cookbooks #{(@debug ? '-d' : '-q')}"
+	"#{prepend_chdir()}#{self.binary} vendor cookbooks #{(@debug ? '-d' : '-q')}"
+	@bin_path
       end
     end
   end

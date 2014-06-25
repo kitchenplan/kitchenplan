@@ -39,28 +39,28 @@ class Kitchenplan
 	""
       end
     end
-      # find and return a valid path without relying on 'which' ... which is OS-specific.
-     
-      def binary
+    # find and return a valid path without relying on 'which' ... which is OS-specific.
+
+    def binary
       @bin_path unless @bin_path.nil?
-  [Dir.pwd,
-    "bin",
-    "/usr/bin",
-    "/usr/local/bin",
-    "/opt/chef/bin/",
-    "/opt/chef/embedded/bin",
-    "/opt/kitchenplan/bin",
-    "/opt/kitchenplan/embedded/bin",
-    "/kitchenplan/bin",
-    "C:/chef/bin",
-    "/bin"
-  ].each do |p|
-    if File.exist?("#{p}/#{self.name}")
-      @bin_path = "#{p}/#{self.name}"
-    end
-    @bin_path
-  end
+      [Dir.pwd,
+	"bin",
+	"/usr/bin",
+	"/usr/local/bin",
+	"/opt/chef/bin/",
+	"/opt/chef/embedded/bin",
+	"/opt/kitchenplan/bin",
+	"/opt/kitchenplan/embedded/bin",
+	"/kitchenplan/bin",
+	"C:/chef/bin",
+	"/bin"
+      ].each do |p|
+	if File.exist?("#{p}/#{self.name}")
+	  @bin_path = "#{p}/#{self.name}"
+	end
       end
+      @bin_path
+    end
     # is this dependency resolver present?  should we use it?
     def present?
       Kitchenplan::Log.warn "No detection method defined for resolver #{self.name}."

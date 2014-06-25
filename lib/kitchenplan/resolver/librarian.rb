@@ -12,6 +12,8 @@
 #   the documentation and/or other materials provided with the
 #   distribution.
 
+require 'kitchenplan/resolver'
+
 class Kitchenplan
   class Resolver
     # support for Librarian as a Chef cookbook dependency resolver.  There must be a Cheffile in the repository
