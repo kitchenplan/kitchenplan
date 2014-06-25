@@ -39,10 +39,13 @@ class Kitchenplan
 
     def do_parse_configs(config_path=self.config_path)
       self.config_path = config_path
-      Kitchenplan::Log.debug "Now parsing configs in #{self.config_path}..."
+      Kitchenplan::Log.debug "do_parse_config(): Looking in #{self.config_path}..."
       self.parse_default_config
+      Kitchenplan::Log.debug "do_parse_config(): @default_config=#{@default_config}..."
       self.parse_people_config
+      Kitchenplan::Log.debug "do_parse_config(): @people_config=#{@people_config}..."
       self.parse_group_configs
+      Kitchenplan::Log.debug "do_parse_config(): @group_config=#{@group_config}..."
     end
 
 
