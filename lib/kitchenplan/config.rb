@@ -94,6 +94,7 @@ class Kitchenplan
     def parse_config(filename)
       begin
             Kitchenplan::Log.debug "parse_config(): Loading file: #{filename}"
+            Kitchenplan::Log.debug "output: #{YAML.load(Erubis::Eruby.new(File.read(filename)).evaluate(:node => self.ohai)).inspect if File.exist?(filename)}"
             ( YAML.load(Erubis::Eruby.new(File.read(filename)).evaluate(:node => self.ohai)) if File.exist?(filename) ) || {}
       rescue Psych::SyntaxError => e
         Kitchenplan::Log.error "There was an error parsing config file #{filename}: #{e.message}"
