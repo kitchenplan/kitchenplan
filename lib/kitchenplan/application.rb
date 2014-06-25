@@ -32,10 +32,10 @@ class Kitchenplan
     def prepare(argv=ARGV)
       # get command-line options.
       self.options = parse_commandline(argv)
-      configure_logging(loglevel=options[:log_level].to_sym)
+      configure_logging(loglevel=self.options[:log_level].to_sym)
       detect_platform()
       @use_debug = true if options[:log_level] == "debug"
-      detect_resolver(debug=@use_debug, config_dir=options[:config_dir])
+      detect_resolver(debug=@use_debug, config_dir=self.options[:config_dir])
       load_config()
       self.resolver.debug = @use_debug unless self.resolver.nil?
     end
