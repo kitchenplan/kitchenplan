@@ -89,6 +89,7 @@ class Kitchenplan
     # territory for anyone who's worked with chef...
     def parse_config(filename)
       begin
+            Kitchenplan::Log.debug "parse_config(): Loading file: #{filename}"
             ( YAML.load(Erubis::Eruby.new(File.read(filename)).evaluate(:node => self.ohai)) if File.exist?(filename) ) || {}
       rescue Psych::SyntaxError => e
         Kitchenplan::Log.error "There was an error parsing config file #{filename}: #{e.message}"
@@ -118,6 +119,9 @@ class Kitchenplan
             config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
         end
         people_attributes = @people_config['attributes'] || {}
+        Kitchenplan::Log.debug "parse_config: @people_config = #{@people_config.inspect}"
+        Kitchenplan::Log.debug "parse_config: @group_configs = #{@group_configs.inspect}"
+        Kitchenplan::Log.debug "parse_config: @default_config = #{@default_config.inspect}"
         config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
         config
     end
