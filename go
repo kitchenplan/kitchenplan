@@ -72,7 +72,7 @@ def warn warning
 end
 
 def system *args
-  abort "Failed during: #{args.shell_s}" unless Kernel.system *args
+  abort "Failed with #{$?} during: #{args.shell_s}" unless Kernel.system *args
 end
 
 def warnandexit message
