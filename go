@@ -167,7 +167,7 @@ else
   sudo "chown -R #{ENV["USER"]} /opt"
   normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH}"
   normaldo "git clone -q #{KITCHENPLAN_CONFIG_REPO} #{KITCHENPLAN_PATH}/config"
-  normaldo "mv #{KITCHENPLAN_PATH}/config/config/* #{KITCHENPLAN_PATH}/config" if File.directory("#{KITCHENPLAN_PATH}/config/config")
+  normaldo "mv #{KITCHENPLAN_PATH}/config/config/* #{KITCHENPLAN_PATH}/config" if File.directory?("#{KITCHENPLAN_PATH}/config/config")
 end
 
 Dir.chdir KITCHENPLAN_PATH if options[:interaction]
