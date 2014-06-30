@@ -124,7 +124,7 @@ class Kitchenplan
       Kitchenplan::Log.debug "self.config = #{self.config}, recipes = #{self.config['recipes']}"
       self.platform.sudo(self.platform.run_chef(use_solo=use_solo,log_level=log_level,log_file=log_file,recipes=recipes))
       Kitchenplan::Log.info "Chef run completed."
-      self.exit!("Kitchenplan run complete.  Exiting normally.")
+      self.exit!("Kitchenplan run complete.  Exiting normally.",0)
       rescue RuntimeError => e
 	Kitchenplan::Log.error "An error was encountered shelling out and running a command to configure your system."
 	Kitchenplan::Log.error "This could be due to a bug in Kitchenplan or an unexpected configuration on your system."
