@@ -48,11 +48,11 @@ class Kitchenplan
       end
       # actually run the resolver and download the cookbooks we need.
       def fetch_dependencies()
-	"cd #{self.config_dir} ; #{self.binary} vendor cookbooks #{(@debug ? '-d' : '-q')} #{Dir.pwd}/cookbooks"
+	"cd #{self.config_dir} ; #{self.binary} vendor #{(@debug ? '-d' : '-q')} #{Dir.pwd}/cookbooks"
       end
       # update dependencies after the initial install
       def update_dependencies()
-	"cd #{self.config_dir} ; #{self.binary} vendor cookbooks #{(@debug ? '-d' : '-q')} #{Dir.pwd}/cookbooks"
+	"cd #{self.config_dir} ; #{self.binary} vendor #{(@debug ? '-d' : '-q')} #{Dir.pwd}/cookbooks"
 	@bin_path
       end
     end
