@@ -40,11 +40,11 @@ class Kitchenplan
       end
       # actually run the resolver and download the cookbooks we need.
       def fetch_dependencies()
-	"cd #{self.config_dir} ; #{self.binary} install --clean #{(@debug ? '--verbose' : '--quiet')} --path=#{Dir.pwd}/config"
+	"cd #{self.config_dir} ; #{self.binary} install --clean #{(@debug ? '--verbose' : '--quiet')} --path=#{Dir.pwd}/cookbooks"
       end
       # update dependencies after the initial install
       def update_dependencies()
-	"cd #{self.config_dir} ; #{self.binary} update --clean #{(@debug ? '--verbose' : '--quiet')} --path=#{Dir.pwd}/config"
+	"cd #{self.config_dir} ; #{self.binary} update --clean #{(@debug ? '--verbose' : '--quiet')} --path=#{Dir.pwd}/cookbooks"
       end
     end
   end

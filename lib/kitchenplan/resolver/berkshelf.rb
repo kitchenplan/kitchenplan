@@ -38,6 +38,7 @@ class Kitchenplan
 	if @config_dir
 	  Kitchenplan::Log.debug("Config dir has Berksfile? #{File.exist?("#{@config_dir}/Berksfile")}")
 	  Kitchenplan::Log.debug("#{self.binary} exists? #{File.exist?("#{self.binary}")}")
+	  Kitchenplan::Log.debug `which berks`
 	  File.exist?("#{@config_dir}/Berksfile") and system("#{self.binary} > /dev/null 2>&1")
 	else
 	  Kitchenplan::Log.debug("Current directory has Berksfile? #{File.exist?("Berksfile")}")
