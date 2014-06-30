@@ -44,9 +44,8 @@ class Kitchenplan
     def binary
       @bin_path unless @bin_path.nil?
       [Dir.pwd,
+	ENV['PATH'].split(/:|;/),
 	"bin",
-	"/usr/bin",
-	"/usr/local/bin",
 	"/opt/chef/bin/",
 	"/opt/chef/embedded/bin",
 	"/opt/kitchenplan/bin",
