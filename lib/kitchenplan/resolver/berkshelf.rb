@@ -53,7 +53,6 @@ class Kitchenplan
       # update dependencies after the initial install
       def update_dependencies()
 	"cd #{self.config_dir} ; #{self.binary} vendor #{(@debug ? '-d' : '-q')} #{Dir.pwd}/cookbooks"
-	@bin_path
       end
     end
   end
