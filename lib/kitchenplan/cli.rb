@@ -202,7 +202,7 @@ module Kitchenplan
           end
           dorun('touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress')
           prod = dorun('softwareupdate -l | grep -B 1 "Developer" | head -n 1 | awk -F"*" \'{print $2}\'', true)
-          dorun("softwareupdate -i #{prod} -v")
+          dorun("softwareupdate -i #{prod.chomp} -v")
         else
           dmg = nil
           if osx_ver == 7
