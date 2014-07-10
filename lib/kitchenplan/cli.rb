@@ -15,7 +15,7 @@ module Kitchenplan
     def setup(gitrepo=nil, targetdir='/opt')
       logo
       install_clt unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
-      if gitrepo
+      if gitrepo || File.exists?("#{targetdir}/kitchenplan")
         fetch(gitrepo, targetdir)
       else
         has_config = yes?('Do you have a config repository? [y,n]', :green)
