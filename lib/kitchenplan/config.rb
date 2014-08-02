@@ -3,7 +3,6 @@ require 'etc'
 #require 'ohai'
 require 'erb'
 require 'deep_merge'
-require 'thor'
 
 module Kitchenplan
 
