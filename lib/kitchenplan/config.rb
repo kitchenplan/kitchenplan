@@ -46,7 +46,6 @@ module Kitchenplan
 
     def parse_system_config
       system_config_path = "config/system/#{hardware_model}.yml"
-      print system_config_path
       @system_config = (YAML.load(ERB.new(File.read(system_config_path)).result) if File.exist?(system_config_path)) || {}
     end
 

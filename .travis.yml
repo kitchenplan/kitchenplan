@@ -9,5 +9,5 @@ script:
     - bundle exec rake build
     - sudo gem install ./pkg/kitchenplan*
     - kitchenplan setup https://github.com/kitchenplan/kitchenplan-config-test.git
-    - kitchenplan provision
+    - kitchenplan provision --debug
 #    - sudo rake test
