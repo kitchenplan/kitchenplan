@@ -7,7 +7,6 @@ rvm:
 
 script:
     - bundle exec rake install
-    - sudo find / -name "kitchenplan"
-    - kitchenplan setup https://github.com/kitchenplan/kitchenplan-config-test.git
-    - kitchenplan provision
+    - bundle exec kitchenplan setup https://github.com/kitchenplan/kitchenplan-config-test.git
+    - bundle exec kitchenplan provision
 #    - sudo rake test
