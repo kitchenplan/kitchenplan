@@ -1,4 +1,4 @@
-# Kitchenplan [![Build Status](https://travis-ci.org/kitchenplan/kitchenplan.png?branch=master)](https://travis-ci.org/kitchenplan/kitchenplan)
+# Kitchenplan
 
 Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all the hard parts.
 
