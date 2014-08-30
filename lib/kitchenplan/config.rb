@@ -46,6 +46,7 @@ module Kitchenplan
 
     def parse_system_config
       system_config_path = "config/system/#{hardware_model}.yml"
+      print system_config_path
       @system_config = (YAML.load(ERB.new(File.read(system_config_path)).result) if File.exist?(system_config_path)) || {}
     end
 
@@ -80,14 +81,21 @@ module Kitchenplan
       people_recipes = @people_config['recipes'] || {}
       config['recipes'] |= people_recipes['global'] || []
       config['recipes'] |= people_recipes[@platform] || []
+
+      # First take the attributes from default.yml
       config['attributes'] = {}
       config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
+
+      # then override and extend them with the group attributes
       @group_configs.each do |group_name, group_config|
         config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
       end
+
+      # then override and extend them with the people attributes
       people_attributes = @people_config['attributes'] || {}
       config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
 
+      # lastly override from the system files
       system_recipes = @system_config['recipes'] || {}
       config['recipes'] |= system_recipes['global'] || []
       config['recipes'] |= system_recipes[@platform] || []
