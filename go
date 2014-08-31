@@ -11,14 +11,18 @@
 #
 # execution can be customized by the following environmental variables:
 # KITCHENPLAN_PATH - kitchenplan installation path (defaults to /opt/kitchenplan)
-# KITCHENPLAN_REPO - repository to use for recipes/cookbooks (defaults to https://github.com/kitchenplan/kitchenplan)
-# KITCHENPLAN_CONFIG_REPO - repository to use for configuration directory (defaults to https://github.com/roderik/kitchenplan-config)
+# KITCHENPLAN_REPO - repository to use to fetch Kitchenplan application (defaults to https://github.com/kitchenplan/kitchenplan)
+# KITCHENPLAN_REPO_BRANCH - branch of repository to use for Kitchenplan application (defaults to 'version2')
+# KITCHENPLAN_CONFIG_REPO - repository to use for configuration and cookbook dependencies directory (defaults to https://github.com/roderik/kitchenplan-config)
+# KITCHENPLAN_CONFIG_REPO_BRANCH - branch of config/dependency repo to use (defaults to 'master')
 
-GO_SCRIPT_VERSION = '1.1.1'
+GO_SCRIPT_VERSION = '1.2.0'
 
 KITCHENPLAN_PATH = ENV.fetch("KITCHENPLAN_PATH", "/opt/kitchenplan")
 KITCHENPLAN_REPO = ENV.fetch("KITCHENPLAN_REPO", "https://github.com/kitchenplan/kitchenplan.git")
+KITCHENPLAN_REPO_BRANCH = ENV.fetch("KITCHENPLAN_REPO_BRANCH", "version2")
 KITCHENPLAN_CONFIG_REPO = ENV.fetch("KITCHENPLAN_CONFIG_REPO", "https://github.com/roderik/kitchenplan-config.git")
+KITCHENPLAN_CONFIG_REPO_BRANCH = ENV.fetch("KITCHENPLAN_CONFIG_REPO_BRANCH", "master")
 
 require 'optparse'
 options = {}
