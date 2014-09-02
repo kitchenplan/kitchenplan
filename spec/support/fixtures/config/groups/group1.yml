@@ -1,0 +1,7 @@
+recipes:
+    global:
+        - group1::default
+attributes:
+    group1:
+        group1:
+            - things

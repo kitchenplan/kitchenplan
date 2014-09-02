@@ -1,0 +1,16 @@
+groups:
+      - group1
+recipes:
+    global:
+    - applications::vlc
+    mac_os_x:
+    - osx::default
+    rhel:
+    - rhel::default
+    debian:
+    - debian::default
+    windows:
+    - windows::default
+attributes:
+    loginmessage: Test message
+ aasdfoasdfoijasdfoij

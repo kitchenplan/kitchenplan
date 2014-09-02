@@ -1,0 +1,10 @@
+groups:
+    group2
+recipes:
+    global:
+        - globaluser::default
+    windows:
+        - windows::user
+attributes:
+    user: user
+    computername: kitchenplantest

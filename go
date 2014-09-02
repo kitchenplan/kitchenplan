@@ -11,10 +11,18 @@
 #
 # execution can be customized by the following environmental variables:
 # KITCHENPLAN_PATH - kitchenplan installation path (defaults to /opt/kitchenplan)
-# KITCHENPLAN_REPO - repository to use for recipes/cookbooks (defaults to https://github.com/kitchenplan/kitchenplan.git)
+# KITCHENPLAN_REPO - repository to use to fetch Kitchenplan application (defaults to https://github.com/kitchenplan/kitchenplan)
+# KITCHENPLAN_REPO_BRANCH - branch of repository to use for Kitchenplan application (defaults to 'version2')
+# KITCHENPLAN_CONFIG_REPO - repository to use for configuration and cookbook dependencies directory (defaults to https://github.com/roderik/kitchenplan-config)
+# KITCHENPLAN_CONFIG_REPO_BRANCH - branch of config/dependency repo to use (defaults to 'master')
+
+GO_SCRIPT_VERSION = '1.2.0'
 
 KITCHENPLAN_PATH = ENV.fetch("KITCHENPLAN_PATH", "/opt/kitchenplan")
 KITCHENPLAN_REPO = ENV.fetch("KITCHENPLAN_REPO", "https://github.com/kitchenplan/kitchenplan.git")
+KITCHENPLAN_REPO_BRANCH = ENV.fetch("KITCHENPLAN_REPO_BRANCH", "version2")
+KITCHENPLAN_CONFIG_REPO = ENV.fetch("KITCHENPLAN_CONFIG_REPO", "https://github.com/roderik/kitchenplan-config.git")
+KITCHENPLAN_CONFIG_REPO_BRANCH = ENV.fetch("KITCHENPLAN_CONFIG_REPO_BRANCH", "master")
 
 require 'optparse'
 options = {}
@@ -23,20 +31,20 @@ OptionParser.new do |opts|
 
     options[:interaction] = true
     opts.on("--[no-]interaction", "Run the go script without user interaction") do |interaction|
-        options[:interaction] = interaction
+	options[:interaction] = interaction
     end
 
     opts.separator ""
     opts.separator "Common options:"
 
     opts.on_tail("-h", "--help", "Show this message") do
-        puts opts
-        exit
+	puts opts
+	exit
     end
 
     opts.on_tail("--version", "Show version") do
-        puts "1.0.0"
-        exit
+	puts GO_SCRIPT_VERSION
+	exit
     end
 
 end.parse!
@@ -68,7 +76,7 @@ def warn warning
 end
 
 def system *args
-  abort "Failed during: #{args.shell_s}" unless Kernel.system *args
+  abort "Failed with #{$?} during: #{args.shell_s}" unless Kernel.system *args
 end
 
 def warnandexit message
@@ -139,7 +147,7 @@ puts "  - Command Line Tools if they are not installed"
 puts "  - Chef"
 puts "  - All applications configured in <yourusername>.yml or if not available roderik.yml"
 puts ""
-warn "Unless by chance your user is also named Roderik, and you want exactly the same applications as I, use the KITCHENPLAN_REPO env to point to a fork with a config file named for your username."
+warn "Unless by chance your user is also named Roderik, and you want exactly the same applications as I, use the KITCHENPLAN_CONFIG_REPO env to point to a fork with a config file named for your username."
 puts ""
 
 wait_for_user if options[:interaction]
@@ -161,9 +169,22 @@ else
   ohai "Setting up the Kitchenplan installation..."
   sudo "mkdir -p #{KITCHENPLAN_PATH}"
   sudo "chown -R #{ENV["USER"]} #{KITCHENPLAN_PATH}"
-  normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH}"
+  normaldo "git clone -q #{KITCHENPLAN_REPO} #{KITCHENPLAN_PATH} -b #{KITCHENPLAN_REPO_BRANCH}"
   Dir.chdir KITCHENPLAN_PATH
-  normaldo "git checkout version2"
+  if KITCHENPLAN_CONFIG_REPO.length > 0
+    ohai "Separate config repository specified.  Cloning into #{KITCHENPLAN_PATH}/config ..."
+    if File.directory?("#{KITCHENPLAN_PATH}/config")
+      warn "Config directory already exists in application directory!"
+      puts "Removing it before cloning from #{KITCHENPLAN_CONFIG_REPO} @ #{KITCHENPLAN_CONFIG_REPO_BRANCH}."
+      normaldo "rm -rf #{KITCHENPLAN_PATH}/config"
+    end
+    normaldo "git clone -q #{KITCHENPLAN_CONFIG_REPO} #{KITCHENPLAN_PATH}/config -b #{KITCHENPLAN_CONFIG_REPO_BRANCH}"
+    # maybe you put your configs under the config/ directory?
+    normaldo "mv #{KITCHENPLAN_PATH}/config/config/* #{KITCHENPLAN_PATH}/config" if File.directory?("#{KITCHENPLAN_PATH}/config/config")
+  end
 end
 
-normaldo "./kitchenplan #{options[:interaction] ? '': '-d'}"
+Dir.chdir KITCHENPLAN_PATH if options[:interaction]
+debugstr = "-l debug" unless options[:interaction]
+normaldo "bundle install"
+normaldo "bundle exec ./kitchenplan -c #{KITCHENPLAN_PATH}/config #{debugstr}"

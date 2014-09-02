@@ -1,0 +1,10 @@
+groups:
+    group1
+recipes:
+    global:
+        - globaluser::default
+    mac_os_x:
+        - mac_os_x::user
+attributes:
+    user: roderik
+    computername: kitchenplantest
