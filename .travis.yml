@@ -1,8 +1,5 @@
 language: objective-c
 cache: bundler
-env:
-  - KITCHENPLAN_CONFIG_REPO=https://github.com/leftathome/kitchenplan-config-test.git
-  - KITCHENPLAN_CONFIG_REPO=https://github.com/leftathome/kitchenplan-berkshelf-config-test.git
 script:
   - "rake test"
   - "./go --no-interaction"

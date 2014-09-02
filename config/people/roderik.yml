@@ -93,3 +93,7 @@ attributes:
             - virtualbox
             - vagrant
             - hazel
+            - sonos
+    nodejs:
+        apps:
+            - pageres
