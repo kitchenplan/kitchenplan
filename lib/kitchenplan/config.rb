@@ -18,7 +18,7 @@ module Kitchenplan
       self.detect_platform
       self.parse_default_config
       self.parse_people_config
-#      self.parse_system_config
+      self.parse_system_config
       self.parse_group_configs
     end
 
@@ -30,9 +30,9 @@ module Kitchenplan
       @platform = 'mac_os_x' # We only support osx at the moment, and it saves a large dependency
     end
 
-#    def hardware_model
-#      `system_profiler SPHardwareDataType | awk '/Identifier/ {print $3}' | tr -d '\n'`
-#    end
+   def hardware_model
+      `sysctl -n hw.model | tr -d '\n'`
+   end
 
     def parse_default_config
       default_config_path = 'config/default.yml'
@@ -44,10 +44,10 @@ module Kitchenplan
       @people_config = (YAML.load(ERB.new(File.read(people_config_path)).result) if File.exist?(people_config_path)) || {}
     end
 
-#    def parse_system_config
-#      system_config_path = "config/system/#{hardware_model}.yml"
-#      @system_config = (YAML.load(ERB.new(File.read(system_config_path)).result) if File.exist?(system_config_path)) || {}
-#    end
+    def parse_system_config
+      system_config_path = "config/system/#{hardware_model}.yml"
+      @system_config = (YAML.load(ERB.new(File.read(system_config_path)).result) if File.exist?(system_config_path)) || {}
+    end
 
     def parse_group_configs(group = (( @default_config['groups'] || [] ) | ( @people_config['groups'] || [] )))
       @group_configs = @group_configs || {}
@@ -95,16 +95,16 @@ module Kitchenplan
       config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
 
       # lastly override from the system files
-      # system_recipes = @system_config['recipes'] || {}
-      # config['recipes'] |= system_recipes['global'] || []
-      # config['recipes'] |= system_recipes[@platform] || []
-      # config['attributes'] = {}
-      # config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
-      # @group_configs.each do |group_name, group_config|
-      #   config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
-      # end
-      # system_attributes = @system_config['attributes'] || {}
-      # config['attributes'].deep_merge!(system_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
+      system_recipes = @system_config['recipes'] || {}
+      config['recipes'] |= system_recipes['global'] || []
+      config['recipes'] |= system_recipes[@platform] || []
+      config['attributes'] = {}
+      config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
+      @group_configs.each do |group_name, group_config|
+       config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
+      end
+      system_attributes = @system_config['attributes'] || {}
+      config['attributes'].deep_merge!(system_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
 
       config
     end
