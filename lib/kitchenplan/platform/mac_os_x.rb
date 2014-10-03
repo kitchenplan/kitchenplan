@@ -38,7 +38,7 @@ class Kitchenplan
       # is this version of the platform supported by the kitchenplan codebase?
       def version_supported?
 	Kitchenplan::Log.debug "#{self.class} : Is platform version lower than #{@lowest_version_supported}?"
-	return false if self.version.to_s <  @lowest_version_supported
+	return false if Gem::Version.new(self.version.to_s) <  Gem::Version.new(@lowest_version_supported)
 	true
       end
       # is the user part of the admin group?
