@@ -80,6 +80,10 @@ module Kitchenplan
       people_recipes = @people_config['recipes'] || {}
       config['recipes'] |= people_recipes['global'] || []
       config['recipes'] |= people_recipes[@platform] || []
+          
+      system_recipes = @system_config['recipes'] || {}  
+      config['recipes'] |= system_recipes['global'] || []
+      config['recipes'] |= system_recipes[@platform] || []
 
       # First take the attributes from default.yml
       config['attributes'] = {}
@@ -95,13 +99,6 @@ module Kitchenplan
       config['attributes'].deep_merge!(people_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
 
       # lastly override from the system files
-      system_recipes = @system_config['recipes'] || {}
-      config['recipes'] |= system_recipes['global'] || []
-      config['recipes'] |= system_recipes[@platform] || []
-      config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
-      @group_configs.each do |group_name, group_config|
-       config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
-      end
       system_attributes = @system_config['attributes'] || {}
       config['attributes'].deep_merge!(system_attributes) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
 
