@@ -98,7 +98,6 @@ module Kitchenplan
       system_recipes = @system_config['recipes'] || {}
       config['recipes'] |= system_recipes['global'] || []
       config['recipes'] |= system_recipes[@platform] || []
-      config['attributes'] = {}
       config['attributes'].deep_merge!(@default_config['attributes'] || {}) { |key, old, new| Array.wrap(old) + Array.wrap(new) }
       @group_configs.each do |group_name, group_config|
        config['attributes'].deep_merge!(group_config['attributes']) { |key, old, new| Array.wrap(old) + Array.wrap(new) } unless group_config['attributes'].nil?
