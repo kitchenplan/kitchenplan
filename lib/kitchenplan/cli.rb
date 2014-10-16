@@ -36,7 +36,8 @@ module Kitchenplan
 
     option :debug, :type => :boolean
     option :recipes, :type => :array
-    desc 'provision [<target directory>] [--debug] [--recipes=x y z]', 'Provision your workstation with Kitchenplan'
+    option :solorb, :type => :string, :default => 'tmp/solo.rb'
+    desc 'provision [<target directory>] [--debug] [--recipes=x y z] [--solorb=path]', 'Provision your workstation with Kitchenplan'
     long_desc <<-LONGDESC
     `kitchenplan provision` will use the configuration in /opt/kitchenplan (or <target directory>
     if you pass it along) to provision your workstation using Chef.
@@ -52,16 +53,16 @@ module Kitchenplan
       send_ping
       recipes = parse_config(targetdir)
       fetch_cookbooks(targetdir, options[:debug])
-      run_chef(targetdir, (options[:recipes] ? options[:recipes] : recipes), options[:debug])
+      run_chef(targetdir, (options[:recipes] ? options[:recipes] : recipes), options[:solorb], options[:debug])
       cleanup(targetdir, options[:debug])
       print_notice('Installation complete!')
     end
 
     no_commands do
 
-      def run_chef(targetdir, recipes, debug=false)
+      def run_chef(targetdir, recipes, solo_rb, debug=false)
         inside("#{targetdir}/kitchenplan") do
-          dorun "sudo vendor/bin/chef-solo #{( debug ? ' --log_level debug' : ' ' )} -c tmp/solo.rb -j tmp/kitchenplan-attributes.json -o #{recipes.join(',')}"
+          dorun "sudo vendor/bin/chef-solo #{( debug ? ' --log_level debug' : ' ' )} -c #{solo_rb} -j tmp/kitchenplan-attributes.json -o #{recipes.join(',')}"
         end
       end
 
