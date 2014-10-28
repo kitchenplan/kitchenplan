@@ -121,7 +121,7 @@ module Kitchenplan
 
       def fetch(gitrepo, targetdir)
         prepare_folders(targetdir)
-        if File.exists?("#{targetdir}/kitchenplan")
+        if system("cd #{File.join(targetdir, 'kitchenplan')} && git remote -v | grep origin")
           print_step "#{targetdir}/kitchenplan already exists, updating from git."
           inside("#{targetdir}/kitchenplan") do
             dorun('git pull -q')
