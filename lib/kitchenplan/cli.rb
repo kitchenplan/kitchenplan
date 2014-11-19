@@ -35,14 +35,17 @@ module Kitchenplan
     end
 
     option :debug, :type => :boolean
+    option 'no-fetch', :type => :boolean
     option :recipes, :type => :array
     option :solorb, :type => :string, :default => 'tmp/solo.rb'
-    desc 'provision [<target directory>] [--debug] [--recipes=x y z] [--solorb=path]', 'Provision your workstation with Kitchenplan'
+    desc 'provision [<target directory>] [--debug] [--recipes=x y z] [--solorb=path] [--no-fetch]', 'Provision your workstation with Kitchenplan'
     long_desc <<-LONGDESC
     `kitchenplan provision` will use the configuration in /opt/kitchenplan (or <target directory>
     if you pass it along) to provision your workstation using Chef.
 
     You can optionally pass --debug to see more detail of what's happening.
+
+    Passing --no-fetch will skip updating the librarian sources from remote sources.
 
     If you just want to install a few recipes pass them along with --recipes and it will override the run list (not the attributes!)
     LONGDESC
@@ -52,7 +55,7 @@ module Kitchenplan
       install_bundler(targetdir)
       send_ping
       recipes = parse_config(targetdir)
-      fetch_cookbooks(targetdir, options[:debug])
+      fetch_cookbooks(targetdir, options[:debug]) unless options['no-fetch']
       run_chef(targetdir, (options[:recipes] ? options[:recipes] : recipes), options[:solorb], options[:debug])
       cleanup(targetdir, options[:debug])
       print_notice('Installation complete!')
