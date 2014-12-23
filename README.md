@@ -2,10 +2,6 @@
 
 Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all the hard parts.
 
-## History
-
-This is a brand new implementation of Kitchenplan. If you have issues with this new versions, please use [version2](https://github.com/kitchenplan/kitchenplan/blob/version2/README.md) for now.
-
 ## Using kitchenplan
 
 ### Installation
@@ -78,6 +74,15 @@ Please enter the clone URL of your git config repository: https://github.com/rod
          run  git clone -q https://github.com/roderik/kitchenplan-config.git kitchenplan from "/opt"
 ```
 
+*WARNING: Chef v12 breaks everyhting related to the way users work in Kitchenplan. Please update your Gemfile to look like:*
+
+```
+source "https://rubygems.org"
+
+gem "chef", "~> 11.0"
+gem "librarian-chef", "~> 0.0.2"
+```
+
 ### Editing the config files in /opt/kitchenplan/config
 
 The most important file is named after your user in config/people/. In my case a roderik.yml file since my username on my Mac is roderik. When running `kitchenplan setup` will create a YAML file in this folder with your username. You can use your config repository for everyone in your organisation by adding a file per username in the people folder.
@@ -128,6 +133,10 @@ At this point Chef will start installing everything you configured. Depending on
 
 * [Setting up my perfect dev environment on OSX 10.9 using Chef / Kitchenplan](http://vanderveer.be/setting-up-my-perfect-dev-environment-on-osx-10-9-using-chef-kitchenplan/)
 * [Presenting Kitchenplan @ vanderveer.be](http://vanderveer.be/blog/2013/04/14/presenting-kitchenplan/)
+
+## History
+
+This is a brand new implementation of Kitchenplan. If you have issues with this new versions, please use [version2](https://github.com/kitchenplan/kitchenplan/blob/version2/README.md) for now.
 
 ## Contributing to kitchenplan
 
