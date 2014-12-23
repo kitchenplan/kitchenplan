@@ -55,18 +55,17 @@ module Kitchenplan
     LONGDESC
     def provision(targetdir='/opt')
       logo
-      inside("#{targetdir}/kitchenplan") do
-          pid = Process.fork do
-            dorun "while true; do sudo -n true; sleep 60; kill -0 \"$$\" || exit; done 2>/dev/null"
-          end
-          Process.detach pid
+      pid = Process.fork do
+        dorun "while true; do sudo -n true; sleep 60; kill -0 \"$$\" || exit; done 2>/dev/null"
       end
+      Process.detach pid
       prepare_folders(targetdir)
       install_bundler(targetdir)
       recipes = parse_config(targetdir)
       fetch_cookbooks(targetdir, options[:debug]) unless options['no-fetch']
       run_chef(targetdir, (options[:recipes] ? options[:recipes] : recipes), options[:solorb], options[:debug])
       cleanup(targetdir, options[:debug])
+      Process.kill(9, pid)
       print_notice('Installation complete!')
     end
 
