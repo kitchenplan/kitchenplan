@@ -58,7 +58,10 @@ module Kitchenplan
     def provision(targetdir='/opt')
       logo
       inside("#{targetdir}/kitchenplan") do
-          dorun "while true; do sudo -n true; sleep 60; kill -0 \"$$\" || exit; done 2>/dev/null"
+          pid = Process.fork do
+            dorun "while true; do sudo -n true; sleep 60; kill -0 \"$$\" || exit; done 2>/dev/null"
+          end
+          Process.detach pid
       end
       prepare_folders(targetdir)
       install_bundler(targetdir)
