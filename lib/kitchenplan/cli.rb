@@ -80,7 +80,7 @@ module Kitchenplan
           if File.exists?('vendor/cookbooks')
             dorun "vendor/bin/librarian-chef update #{( debug ? ' ' : '2>&1 > /dev/null' )}"
           else
-            dorun "vendor/bin/librarian-chef install --clean #{( debug ? ' ' : '--quiet' )} --path=vendor/cookbooks"
+            dorun "vendor/bin/librarian-chef install --clean #{( debug ? '--verbose' : '--quiet' )} --path=vendor/cookbooks"
           end
         end
       end
