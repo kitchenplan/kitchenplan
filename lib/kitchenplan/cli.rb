@@ -3,7 +3,7 @@ require 'thor'
 module Kitchenplan
   class Cli < Thor
     include Thor::Actions
-   
+
     option :gitrepo, :type => :string, :desc => 'Repo with kitchenplan configs', :default => nil
     option :targetdir, :type => :string, :desc => "Target dir for configs", :default => '/opt'
     option :config, :type => :boolean, :desc => 'Create <username>.yml'
@@ -57,6 +57,9 @@ module Kitchenplan
     LONGDESC
     def provision(targetdir='/opt')
       logo
+      inside("#{targetdir}/kitchenplan") do
+          dorun "while true; do sudo -n true; sleep 60; kill -0 \"$$\" || exit; done 2>/dev/null"
+      end
       prepare_folders(targetdir)
       install_bundler(targetdir)
       recipes = parse_config(targetdir)
