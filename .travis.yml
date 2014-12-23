@@ -8,6 +8,6 @@ rvm:
 script:
     - bundle exec rake build
     - sudo gem install ./pkg/kitchenplan*
-    - kitchenplan setup https://github.com/kitchenplan/kitchenplan-config-test.git
+    - kitchenplan setup --gitrepo https://github.com/kitchenplan/kitchenplan-config-test.git
     - kitchenplan provision --debug
 #    - sudo rake test

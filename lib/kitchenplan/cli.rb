@@ -5,9 +5,8 @@ module Kitchenplan
     include Thor::Actions
 
     option :gitrepo, :type => :string, :desc => 'Repo with kitchenplan configs', :default => nil
-    option :targetdir, :type => :string, :desc => "Target dir for configs", :default => '/opt'
     option :config, :type => :boolean, :desc => 'Create <username>.yml'
-    desc 'setup [options]', 'Setup your workstation to run Kitchenplan and create an example configuration'
+    desc 'setup [<target directory>] [--config] [--gitrepo=http://...]', 'Setup your workstation to run Kitchenplan and create an example configuration'
     long_desc <<-LONGDESC
     `kitchenplan setup` will install the dependencies of Kitchenplan and create a configuration in /opt/kitchenplan (or <target directory>
     if you pass it along) to use with the `kitchenplan provision` command.
@@ -15,9 +14,8 @@ module Kitchenplan
     If you already have a configuration stored in git somewhere, it will ask you to pass the git repo url. If you want to bypass the
     prompt, pass it along on the commandline. (see .travis.yml for an example)
     LONGDESC
-    def setup
+    def setup(targetdir='/opt')
       gitrepo = options[:gitrepo]
-      targetdir = options[:targetdir]
       logo
       install_clt unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
       if gitrepo || File.exists?("#{targetdir}/kitchenplan")
