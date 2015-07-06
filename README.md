@@ -35,7 +35,7 @@ Next up we can start the setup of Kitchenplan. Just run `kitchenplan setup` and 
 Do you have a config repository? [y,n] n
 ```
 
-If this is you first install using v2.1 of Kitchenplan, your aswer will be no. By doing so Kitchenplan will setup '/opt', create the kitchenplan folder structure, setup a bare configuration and put it all in a local git repository. Put this repository on Github (or any git server) and get to working on the configuration files.
+If this is your first install using v2.1 of Kitchenplan, your aswer will be no. By doing so Kitchenplan will setup '/opt', create the kitchenplan folder structure, setup a bare configuration and put it all in a local git repository. Put this repository on Github (or any git server) and get to working on the configuration files.
 
 ```
 -> Making sure /opt exists and I can write to it
