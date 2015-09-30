@@ -1,3 +1,5 @@
+** [I've recently released a new, cleaner, faster solution based on Ansible. Please read about it in this blog post](http://vanderveer.be/2015/09/27/using-ansible-to-automate-osx-installs-via-superlumic.html)***
+
 # Kitchenplan
 
 Kitchenplan is a small tool to fully automate the installation and configuration of an OSX workstation (or server for that matter) using Chef. But while doing so manually is not a trivial undertaking, Kitchenplan has abstracted away all the hard parts.
