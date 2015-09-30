@@ -1,4 +1,4 @@
-** [I've recently released a new, cleaner, faster solution based on Ansible. Please read about it in this blog post](http://vanderveer.be/2015/09/27/using-ansible-to-automate-osx-installs-via-superlumic.html)***
+**[I've recently released a new, cleaner, faster solution based on Ansible. Please read about it in this blog post](http://vanderveer.be/2015/09/27/using-ansible-to-automate-osx-installs-via-superlumic.html)**
 
 # Kitchenplan
 
